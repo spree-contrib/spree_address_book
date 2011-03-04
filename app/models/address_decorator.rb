@@ -1,6 +1,5 @@
 Address.class_eval do
   belongs_to :user
-  before_update :check_address
   
   # can modify an address if it's not been used in an order 
   def editable?
@@ -15,9 +14,13 @@ Address.class_eval do
     "#{firstname} #{lastname}: #{address1} #{address2}"
   end
   
-  private
-  
-  def check_address
-    self.editable?
+  def destroy_with_saving_used
+    if can_be_deleted?
+      destroy_without_saving_used
+    else
+      update_attribute(:deleted_at, Time.now)
+    end
   end
+  alias_method_chain :destroy, :saving_used
+
 end

@@ -42,9 +42,9 @@
 <% if @addresses.present? %>
   <%= javascript_tag do %>
   $(document).ready(function(){
-    /*$(".inner input").attr('disabled', 'disabled');
+    $(".inner input").attr('disabled', 'disabled');
     $(".inner select").attr('disabled', 'disabled');
-    $(".inner").hide();*/
+    $(".inner").hide();
     
     $("input[name='order[bill_address_id]']:radio").change(function(){
       if ($("input[name='order[bill_address_id]']:checked").val() == '0') {
