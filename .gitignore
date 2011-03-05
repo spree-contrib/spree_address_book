@@ -8,3 +8,5 @@ tmp
 nbproject
 *.swp
 *.bak
+spec/test_app
+Gemfile

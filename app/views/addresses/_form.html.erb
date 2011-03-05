@@ -1,10 +1,11 @@
 <% ["firstname", "lastname", "address1", "address2", "city", "state", "zipcode", "country", "phone"].each do |field| %>
   <p id="<%= [address_name, field].join('_') %>" class="field">
-    <%= address_form.label field, t(field, :scope => [:activerecord, :attributes, :address]) %>
     <% if field == "country" %>
+      <%= address_form.label :country_id, t(field, :scope => [:activerecord, :attributes, :address]) %>
       <span><%= address_form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required'} %></span>
       <span class="req">*</span>
     <% elsif field == "state" && Spree::Config[:address_requires_state] %>
+      <%= address_form.label :state_id, t(field, :scope => [:activerecord, :attributes, :address]) %>
       <span id="state">
         <% have_states = !address.country.states.empty? %>
         <noscript>
@@ -29,8 +30,10 @@
       </span>
       <span class="req">*</span>
     <% elsif field == "address2" %>
+      <%= address_form.label field, t(field, :scope => [:activerecord, :attributes, :address]) %>
       <%= address_form.text_field field %>
     <% else %>
+      <%= address_form.label field, t(field, :scope => [:activerecord, :attributes, :address]) %>
       <%= address_form.text_field field, :class => 'required' %><span class="req">*</span>
     <% end %>
   </p>
