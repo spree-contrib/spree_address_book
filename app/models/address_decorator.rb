@@ -3,7 +3,7 @@ Address.class_eval do
   
   # can modify an address if it's not been used in an order 
   def editable?
-    new_record? || (shipments.empty? && Order.complete.where("bill_address_id = ? OR ship_address_id = ?", self.id, self.id).count == 0)
+    new_record? || (shipments.empty? && (Order.where("bill_address_id = ?", self.id).count + Order.where("bill_address_id = ?", self.id).count <= 1) && Order.complete.where("bill_address_id = ? OR ship_address_id = ?", self.id, self.id).count == 0)
   end
   
   def can_be_deleted?
@@ -11,7 +11,7 @@ Address.class_eval do
   end
   
   def to_s
-    "#{firstname} #{lastname}: #{address1} #{address2}"
+    "#{firstname} #{lastname}: #{zipcode}, #{country}, #{state}, #{address1} #{address2}"
   end
   
   def destroy_with_saving_used
