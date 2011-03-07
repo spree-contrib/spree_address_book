@@ -1,13 +1,10 @@
 SpreeAddressBook
 ================
 
-Introduction goes here.
+This extension allows users select `bill_address` and `ship_address` from addresses, which was already entered by current user.
 
 
-Example
-=======
-
-Example goes here.
 
 
-Copyright (c) 2011 [name of extension creator], released under the New BSD License
+
+Copyright (c) 2011 Roman Smirnov, released under the New BSD License
