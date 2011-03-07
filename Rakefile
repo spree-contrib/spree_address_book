@@ -42,7 +42,7 @@ task :default => [ :spec ]
 desc "Regenerates a rails 3 app for testing"
 task :test_app do
   require '../spree/lib/generators/spree/test_app_generator'
-  class AdvancedCartTestAppGenerator < Spree::Generators::TestAppGenerator
+  class AddressBookTestAppGenerator < Spree::Generators::TestAppGenerator
 
     def install_gems
       inside "test_app" do
@@ -66,7 +66,7 @@ gem 'spree_address_book', :path => \'#{File.dirname(__FILE__)}\'
     end
 
   end
-  AdvancedCartTestAppGenerator.start
+  AddressBookTestAppGenerator.start
 end
 
 namespace :test_app do

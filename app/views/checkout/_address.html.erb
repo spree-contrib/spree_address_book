@@ -10,15 +10,22 @@
 <% address_name = "#{address_type[0...4]}_address" %>
 <fieldset id="<%= address_type %>">
   <legend><%= t(address_type + "_address")%></legend>
+  <% if address_type == 'shipping' %>
+    <p class="field checkbox">
+      <label for="order_use_billing" id="use_billing">
+        <%= check_box_tag 'order[use_billing]', '1', (!(@order.bill_address.empty? && @order.ship_address.empty?) && @order.bill_address.eql?(@order.ship_address)) %> <%= t("use_billing_address") %>
+      </label>
+    </p>
+  <% end %>
   <div class="select_address">
     <p class="field">
       <% if @addresses.present? %>
         <% @addresses.each do |address| %>
         <span id="<%= [address_type, dom_id(address)].join('_') %>">
-          <label><%= form.radio_button "#{address_name}_id", address.id %> <%= address %></label> <%= link_to 'remove', address, :method => :delete, :remote => true %><br />
+          <label><%= form.radio_button "#{address_name}_id", address.id %> <%= address %></label> <%= link_to t(:remove), address, :method => :delete, :remote => true %><br />
         </span>
         <% end %>
-        <label><%= form.radio_button "#{address_name}_id", 0 %> <%= ('other') %></label>
+        <label><%= form.radio_button "#{address_name}_id", 0 %> <%= t('other_address') %></label>
       <% end %>
     </p>
   </div>

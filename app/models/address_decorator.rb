@@ -11,7 +11,7 @@ Address.class_eval do
   end
   
   def to_s
-    "#{firstname} #{lastname}: #{zipcode}, #{country}, #{state}, #{address1} #{address2}"
+    "#{firstname} #{lastname}: #{zipcode}, #{country}, #{state || state_name}, #{city}, #{address1} #{address2}"
   end
   
   def destroy_with_saving_used

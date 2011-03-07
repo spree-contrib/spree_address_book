@@ -2,8 +2,8 @@ Order.class_eval do
   attr_accessible :bill_address_id, :ship_address_id
 
   def clone_billing_address
-    if bill_address and self.ship_address.nil?
-      self.ship_address_id = bill_address.id
+    if self.bill_address
+      self.ship_address = self.bill_address
     end
     true
   end
