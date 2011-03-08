@@ -37,8 +37,8 @@
       <%= address_form.text_field field, :class => 'required' %><span class="req">*</span>
     <% end %>
   </p>
-<% end %>  
-<% if Spree::Config["alternative_#{}_phone"] %>
+<% end %>
+<% if Spree::Config["alternative_#{address_name}_phone"] %>
   <p id="altphone">
     <%= address_form.label :alternative_phone, t(:alternative_phone) %>
     <%= address_form.text_field :alternative_phone %>
