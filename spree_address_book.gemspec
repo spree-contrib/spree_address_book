@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_address_book'
-  s.version     = '0.40.0'
+  s.version     = '0.50.0'
   s.summary     = 'Adds address book for users to Spree'
   #s.description = 'Add (optional) gem description here'
   s.required_ruby_version = '>= 1.8.7'
@@ -18,6 +18,6 @@ Gem::Specification.new do |s|
 
   s.has_rdoc = true
 
-  s.add_dependency('spree_core', '>= 0.40.0')
-  s.add_dependency('spree_auth', '>= 0.40.0')
+  s.add_dependency('spree_core', '>= 0.50.0')
+  s.add_dependency('spree_auth', '>= 0.50.0')
 end
