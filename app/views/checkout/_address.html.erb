@@ -4,6 +4,8 @@
   .hidden { display: none; }
   div#checkout #checkout_form_address #billing .select_address label { float:none; }
   div#checkout #checkout_form_address #shipping .select_address label { float:none; }
+  div#checkout #checkout_form_address #billing input[type=radio] { width: auto; }
+  div#checkout #checkout_form_address #shipping input[type=radio] { width: auto; }
 </style>
 
 <% ['billing', 'shipping'].each do |address_type|
@@ -21,9 +23,9 @@
   <div class="select_address">
     <p class="field">
       <% if @addresses.present? %>
-        <% @addresses.each do |address| %>
+        <% @addresses.each_with_index do |address, idx| %>
         <span id="<%= [address_type, dom_id(address)].join('_') %>">
-          <label><%= form.radio_button "#{address_name}_id", address.id %> <%= address %></label> <%= link_to t(:remove), address, :method => :delete, :remote => true %><br />
+          <label><%= form.radio_button "#{address_name}_id", address.id, :checked => (idx == 0) %> <%= address %></label> <%= link_to t(:edit), edit_address_path(address) %><br />
         </span>
         <% end %>
         <label><%= form.radio_button "#{address_name}_id", 0 %> <%= t('other_address') %></label>
@@ -36,7 +38,7 @@
       <%= render :partial => 'addresses/form', :locals => {
         :address_name => address_name,
         :address_form => address_form,
-        :address => @order.send(address_name)
+        :address => Address.default
       } %>    
     </div>
   <% end %>

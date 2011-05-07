@@ -1,0 +1,20 @@
+<% if current_user.addresses.present? %>
+<h2><%= t("addresses") %></h2>
+<table class="order-summary" width="545">
+  <thead>
+    <tr>
+      <th><%= t("address") %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% current_user.addresses.each do |address| %>
+    <tr class="<%= cycle('even', 'odd') %>">
+      <td><%= address %></td>
+      <td><%= link_to t(:edit), edit_address_path(address) %></td>
+      <td><%= link_to t(:remove), address_path(address), :method => :delete, :confirm => t(:are_you_sure) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<% end %>

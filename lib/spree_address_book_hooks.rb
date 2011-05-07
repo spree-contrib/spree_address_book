@@ -1,3 +1,3 @@
 class SpreeAddressBookHooks < Spree::ThemeSupport::HookListener
-  # custom hooks go here
+  insert_after :account_my_orders, :partial => 'users/addresses'
 end
