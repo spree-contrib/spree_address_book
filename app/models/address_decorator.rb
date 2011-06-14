@@ -1,5 +1,10 @@
 Address.class_eval do
   belongs_to :user
+
+  def self.required_fields
+    validator = Address.validators.find{|v| v.kind_of?(ActiveModel::Validations::PresenceValidator)}
+    validator ? validator.attributes : []
+  end
   
   # can modify an address if it's not been used in an order 
   def editable?
