@@ -27,8 +27,9 @@ ApplicationHelper.module_eval do
                       :disabled => have_states)
       ].join.gsub('"', "'").gsub("\n", "")
            
-    form.label(:state, t(:state)) + '<span class="req">*</span><br />'.html_safe +
+    form.label(:state, t(:state)) +
       content_tag(:noscript, form.text_field(:state_name, :class => 'required')) +
+      '<span class="req">*</span><br />'.html_safe +
       javascript_tag("document.write(\"#{state_elements.html_safe}\");")
   end
 end
