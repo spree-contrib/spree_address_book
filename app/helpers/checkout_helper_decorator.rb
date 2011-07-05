@@ -6,8 +6,9 @@ ApplicationHelper.module_eval do
       else
         is_required = Address.required_fields.include?(method)
         separator = is_required ? '<span class="req">*</span><br />' : '<br />' 
-        form.label(method) + separator.html_safe + 
-        form.text_field(method, :class => is_required ? 'required' : nil)
+        form.label(method) + 
+          form.text_field(method, :class => is_required ? 'required' : nil) +
+          separator.html_safe 
       end
     end
   end

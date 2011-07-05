@@ -1,5 +1,5 @@
 <% ADDRESS_FIELDS.each do |field| %>
-  <p id="<%= [address_name, field].join('_') %>" class="field">
+
     <% if field == "country" %>
       <%= address_form.label :country_id, t(field, :scope => [:activerecord, :attributes, :address]) %><span class="req">*</span><br />
       <span><%= address_form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required'} %></span>
@@ -8,7 +8,7 @@
     <% else %>
       <%= address_field(address_form, field.to_sym, address_name) %>
     <% end %>
-  </p>
+
 <% end %>
 <% if Spree::Config["alternative_#{address_name}_phone"] %>
   <%= address_field(address_form, :alternative_phone, address_name) %>
