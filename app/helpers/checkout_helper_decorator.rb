@@ -29,7 +29,7 @@ ApplicationHelper.module_eval do
            
     form.label(:state, t(:state)) +
       content_tag(:noscript, form.text_field(:state_name, :class => 'required')) +
-      '<span class="req">*</span><br />'.html_safe +
-      javascript_tag("document.write(\"#{state_elements.html_safe}\");")
+      javascript_tag("document.write(\"#{state_elements.html_safe}\");") +
+      '<span class="req">*</span>'.html_safe 
   end
 end
