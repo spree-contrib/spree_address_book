@@ -2,6 +2,10 @@
 <style>
   div.inner input[type=text], div.inner select { width: 80%; }
   .hidden { display: none; }
+  div#checkout #checkout_form_address #billing .select_address label { float:none; }
+  div#checkout #checkout_form_address #shipping .select_address label { float:none; }
+  div#checkout #checkout_form_address #billing input[type=radio] { width: auto; }
+  div#checkout #checkout_form_address #shipping input[type=radio] { width: auto; }
 </style>
 
 <% ['billing', 'shipping'].each do |address_type|
