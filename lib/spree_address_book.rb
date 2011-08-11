@@ -1,5 +1,4 @@
 require 'spree_core'
-require 'spree_address_book_hooks'
 
 module SpreeAddressBook
   class Engine < Rails::Engine
