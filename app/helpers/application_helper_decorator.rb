@@ -5,8 +5,9 @@ ApplicationHelper.module_eval do
         handler.call
       else
         is_required = Address.required_fields.include?(method)
-        separator = is_required ? '<span class="req">*</span><br />' : '<br />' 
-        form.label(method) + separator.html_safe + 
+        required_warning = is_required ? '<span class="req">*</span>' : '' 
+        separator = '<br />'
+        form.label(method, raw("#{t(method, :scope => [:activerecord, :attributes, :address])} #{required_warning}")) + separator.html_safe +
         form.text_field(method, :class => is_required ? 'required' : nil)
       end
     end
