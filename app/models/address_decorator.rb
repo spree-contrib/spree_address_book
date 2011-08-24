@@ -27,5 +27,4 @@ Address.class_eval do
     end
   end
   alias_method_chain :destroy, :saving_used
-
 end
