@@ -27,9 +27,11 @@ CheckoutController.class_eval do
     if @order.bill_address_id != @order.ship_address_id && @order.bill_address.same_as?(@order.ship_address)
       @order.bill_address.destroy
       @order.update_attribute(:bill_address_id, @order.ship_address.id)
-    else
+    elsif @order.bill_address
       @order.bill_address.update_attribute(:user_id, current_user.try(:id))
     end
-    @order.ship_address.update_attribute(:user_id, current_user.try(:id))
+    if @order.ship_address
+      @order.ship_address.update_attribute(:user_id, current_user.try(:id))
+    end
   end
 end
