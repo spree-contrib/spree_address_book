@@ -1,9 +1,9 @@
 <% if current_user.addresses.present? %>
-<h2><%= Address.human_name(:count => 2) %></h2>
+<h2><%= t(:address_book) %></h2>
 <table class="order-summary" width="545">
   <thead>
     <tr>
-      <th><%= Address.human_name %></th>
+      <th><%= t(:your_addresses) %></th>
       <th></th>
     </tr>
   </thead>
