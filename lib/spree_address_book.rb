@@ -2,7 +2,8 @@ require 'spree_core'
 
 module SpreeAddressBook
   class Engine < Rails::Engine
-
+    engine_name 'spree_address_book'
+    
     config.autoload_paths += %W(#{config.root}/lib)
 
     def self.activate
