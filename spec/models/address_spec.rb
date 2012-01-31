@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Address do
+describe Spree::Address do
 
 end
