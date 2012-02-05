@@ -33,4 +33,3 @@ RSpec.configure do |config|
   config.include Spree::UrlHelpers
 end
 
-@configuration ||= AppConfiguration.find_or_create_by_name("Default configuration")
