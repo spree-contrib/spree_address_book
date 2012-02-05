@@ -1,21 +1,21 @@
-Order.class_eval do
+Spree::Order.class_eval do
   attr_accessible :bill_address_id, :ship_address_id
   before_validation :clone_shipping_address, :if => "Spree::Config[:disable_bill_address]"
-  
+
   def clone_shipping_address
     if self.ship_address
       self.bill_address = self.ship_address
     end
-    true  
+    true
   end
-  
+
   def clone_billing_address
     if self.bill_address
       self.ship_address = self.bill_address
     end
     true
   end
-  
+
   def bill_address_id=(id)
     address = Address.find(id)
     if address && address.user_id == self.user_id
@@ -25,7 +25,7 @@ Order.class_eval do
       self["bill_address_id"] = nil
     end
   end
-  
+
   def bill_address_attributes=(attributes)
     self.bill_address = update_or_create_address(attributes)
   end
@@ -39,13 +39,13 @@ Order.class_eval do
       self["ship_address_id"] = nil
     end
   end
-  
+
   def ship_address_attributes=(attributes)
     self.ship_address = update_or_create_address(attributes)
   end
-  
+
   private
-  
+
   def update_or_create_address(attributes)
     address = nil
     if attributes[:id]
@@ -56,13 +56,13 @@ Order.class_eval do
         attributes.delete(:id)
       end
     end
-    
+
     if !attributes[:id]
       address = Address.new(attributes)
       address.save
     end
-    
+
     address
   end
-    
+
 end
