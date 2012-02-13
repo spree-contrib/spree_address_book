@@ -28,6 +28,8 @@ class Spree::AddressesController < Spree::BaseController
     else
       @address.update_attribute(:deleted_at, Time.now)
     end
+    flash[:notice] = I18n.t(:successfully_removed,
+      :resource => I18n.t(:address))
     redirect_to(request.env['HTTP_REFERER'] || account_path) unless request.xhr?
   end
 end
