@@ -24,7 +24,9 @@ Spree::CheckoutController.class_eval do
     return unless params[:state] == "address" && @order.bill_address_id && @order.ship_address_id
     @order.bill_address.reload
     @order.ship_address.reload
-    # ensure that there is no validation errors and addresses was saved
+    # ensure that there is no validation errors and addresses was
+    # saved
+
     return unless @order.bill_address && @order.ship_address
 
     if @order.bill_address_id != @order.ship_address_id && @order.bill_address.same_as?(@order.ship_address)

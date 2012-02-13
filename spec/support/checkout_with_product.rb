@@ -4,6 +4,12 @@ shared_context "checkout with product" do
     @shipping = Spree::ShippingMethod.find_by_name('UPS Ground') ||
       Factory(:shipping_method)
     Factory(:payment_method)
+    reset_spree_preferences do |config|
+      config.company = true
+      config.alternative_billing_phone = true
+      config.alternative_shipping_phone = true
+    end
+
     visit spree.root_path
     click_link 'Ruby on Rails Mug'
     click_button 'add-to-cart-button'
@@ -22,11 +28,14 @@ shared_context "checkout with product" do
     within("#billing") do
       fill_in "First Name", :with => address.firstname
       fill_in "Last Name", :with => address.lastname
+      fill_in "Company", :with => address.company
       fill_in "Street Address", :with => address.address1
+      fill_in "Street Address (cont'd)", :with => address.address2
       select address.state.name, :from => "order_bill_address_attributes_state_id"
       fill_in "City", :with => address.city
       fill_in "Zip", :with => address.zipcode
       fill_in "Phone", :with => address.phone
+      fill_in "Alternative Phone", :with => address.alternative_phone
     end
   end
 
@@ -34,11 +43,14 @@ shared_context "checkout with product" do
     within("#shipping") do
       fill_in "First Name", :with => address.firstname
       fill_in "Last Name", :with => address.lastname
+      fill_in "Company", :with => address.company
       fill_in "Street Address", :with => address.address1
+      fill_in "Street Address (cont'd)", :with => address.address2
       select address.state.name, :from => "order_ship_address_attributes_state_id"
       fill_in "City", :with => address.city
       fill_in "Zip", :with => address.zipcode
       fill_in "Phone", :with => address.phone
+      fill_in "Alternative Phone", :with => address.alternative_phone
     end
   end
 
