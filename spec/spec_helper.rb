@@ -1,17 +1,19 @@
 # Configure Rails Environment
 ENV["RAILS_ENV"] = "test"
 
-require File.expand_path("../dummy/config/environment.rb", __FILE__)
+require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 
 require 'rspec/rails'
-require 'capybara/rspec'
-require 'spree/core/testing_support/env'
-require 'spree/core/testing_support/factories'
-require 'spree/url_helpers'
+require 'database_cleaner'
 
-# Requires supporting files with custom matchers and macros, etc,
-# in ./support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+# Requires supporting ruby files with custom matchers and macros, etc,
+# in spec/support/ and its subdirectories.
+Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each {|f| require f }
+
+# Requires factories defined in spree_core
+require 'spree/core/testing_support/factories'
+require 'spree/core/testing_support/env'
+require 'spree/url_helpers'
 
 RSpec.configure do |config|
   # == Mock Framework
@@ -23,13 +25,33 @@ RSpec.configure do |config|
   # config.mock_with :rr
   config.mock_with :rspec
 
+  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
-  #config.include Devise::TestHelpers, :type => :controller
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, comment the following line or assign false
+  # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
   config.include Spree::UrlHelpers
+
+  config.before(:each) do
+    if example.metadata[:js]
+      DatabaseCleaner.strategy = :truncation, {
+        :except => ['spree_countries', 'spree_zones',
+          'spree_zone_members', 'spree_states', 'spree_roles']
+      }
+    else
+      DatabaseCleaner.strategy = :transaction
+    end
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+    reset_spree_preferences
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 end
 

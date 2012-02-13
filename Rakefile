@@ -7,10 +7,10 @@ require 'spree/core/testing_support/common_rake'
 
 RSpec::Core::RakeTask.new
 
-desc "Default Task"
 task :default => [:spec]
 
 spec = eval(File.read('spree_address_book.gemspec'))
+
 Gem::PackageTask.new(spec) do |p|
   p.gem_spec = spec
 end
@@ -24,7 +24,6 @@ end
 
 desc "Generates a dummy app for testing"
 task :test_app do
-  ENV['LIB_NAME'] = "spree_address_book"
+  ENV['LIB_NAME'] = 'spree_address_book'
   Rake::Task['common:test_app'].invoke
 end
-
