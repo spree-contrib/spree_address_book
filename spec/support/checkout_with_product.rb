@@ -41,4 +41,11 @@ shared_context "checkout with product" do
       fill_in "Phone", :with => address.phone
     end
   end
+
+  def expected_address_format(address)
+    tmp = ''
+    tmp += "#{address.firstname} #{address.lastname}: "
+    tmp += "#{address.zipcode}, #{address.country.name}, "
+    tmp += "#{address.state.name}, #{address.city}, #{address.address1}"
+  end
 end

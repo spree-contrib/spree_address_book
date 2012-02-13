@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Address Selection during Checkout" do
+describe "Address selection during checkout" do
   include_context "store products"
   let(:state) { Spree::State.find_by_name('Arkansas') }
 
@@ -48,12 +48,6 @@ describe "Address Selection during Checkout" do
       Factory.build(:address, :address1 => Faker::Address.street_address,
         :state => state)
     end
-    let(:expected_format) do
-      tmp = ''
-      tmp << "#{billing.firstname} #{billing.lastname}: "
-      tmp << "#{billing.zipcode}, #{billing.country.name}, "
-      tmp << "#{billing.state.name}, #{billing.city}, #{billing.address1}"
-    end
 
     describe "who has no addresses" do
       describe "when valid address is entered for billing", :js => true do
@@ -72,7 +66,7 @@ describe "Address Selection during Checkout" do
           page.should have_content("processed successfully")
           within(:css, "#order > div.row.steps-data > div:nth-child(2)") do
             page.should have_content("Billing Address")
-            page.should have_content(expected_format)
+            page.should have_content(expected_address_format(billing))
           end
         end
       end
@@ -80,7 +74,7 @@ describe "Address Selection during Checkout" do
       describe "when invalid address is entered for billing", :js => true do
         let(:billing) { Factory.build(:address, :firstname => nil,
             :state => state) }
-        it "should show address entry form with error" do
+        it "should show billing address form with error" do
           fill_in_billing_address(billing)
           check "Use Billing Address"
           click_button "Save and Continue"
@@ -91,13 +85,6 @@ describe "Address Selection during Checkout" do
       end
 
       describe "when different valid address is entered for shipping", :js => true do
-        let(:expected_format) do
-          tmp = ''
-          tmp << "#{shipping.firstname} #{shipping.lastname}: "
-          tmp << "#{shipping.zipcode}, #{shipping.country.name}, "
-          tmp << "#{shipping.state.name}, #{shipping.city}, #{shipping.address1}"
-        end
-
         it "should save both addresses for user if they are different" do
           expect do
             fill_in_billing_address(billing)
@@ -113,7 +100,7 @@ describe "Address Selection during Checkout" do
           page.should have_content("processed successfully")
           within(:css, "#order > div.row.steps-data > div:nth-child(1)") do
             page.should have_content("Shipping Address")
-            page.should have_content(expected_format)
+            page.should have_content(expected_address_format(shipping))
           end
         end
       end
@@ -121,7 +108,7 @@ describe "Address Selection during Checkout" do
       describe "when invalid address is entered for shipping", :js => true do
         let(:shipping) { Factory.build(:address, :firstname => nil,
             :state => state) }
-        it "should show address entry form with error" do
+        it "should show shipping address form with error" do
           fill_in_billing_address(billing)
           fill_in_shipping_address(shipping)
           click_button "Save and Continue"
@@ -147,7 +134,7 @@ describe "Address Selection during Checkout" do
           page.should have_content("processed successfully")
           within(:css, "#order > div.row.steps-data > div:nth-child(2)") do
             page.should have_content("Billing Address")
-            page.should have_content(expected_format)
+            page.should have_content(expected_address_format(billing))
           end
         end
 
@@ -158,7 +145,7 @@ describe "Address Selection during Checkout" do
           page.should have_content("processed successfully")
           within(:css, "#order > div.row.steps-data > div:nth-child(1)") do
             page.should have_content("Shipping Address")
-            page.should have_content(expected_format)
+            page.should have_content(expected_address_format(billing))
           end
         end
       end
@@ -202,7 +189,7 @@ describe "Address Selection during Checkout" do
       end
 
       describe "when old address is selected as billing address" do
-        describe "and new shipping address is valid", :js => true do
+        describe "and new shipping address is valid" do
           it "should add 1 new address for the user" do
             expect do
               address = user.addresses.first
@@ -219,41 +206,233 @@ describe "Address Selection during Checkout" do
             end.should change{ user.addresses.count }.by(1)
           end
 
-          pending "should assign selected address as billing address"
-          pending "should assign old address to order as billing address"
-          pending "should assign new address to order as shipping address"
+          it "should assign selected address as billing address" do
+            address = user.addresses.first
+            choose "order_bill_address_id_#{address.id}"
+            within("#shipping") do
+              choose "Other Address"
+            end
+            fill_in_shipping_address(Factory.build(:address,
+                :address1 => Faker::Address.street_address,
+                :state => state))
+            complete_checkout
+            page.should have_content("processed successfully")
+            within(:css, "#order > div.row.steps-data > div:nth-child(2)") do
+              page.should have_content("Billing Address")
+              page.should have_content(expected_address_format(address))
+            end
+          end
+
+          it "should assign new address to order as shipping address" do
+            address = user.addresses.first
+            choose "order_bill_address_id_#{address.id}"
+            within("#shipping") do
+              choose "Other Address"
+            end
+            new_address = Factory.build(:address,
+              :address1 => Faker::Address.street_address,
+              :state => state)
+            fill_in_shipping_address(new_address)
+            complete_checkout
+            page.should have_content("processed successfully")
+            within(:css, "#order > div.row.steps-data > div:nth-child(1)") do
+              page.should have_content("Shipping Address")
+              page.should have_content(expected_address_format(new_address))
+            end
+          end
         end
 
         describe "and new address is invalid" do
-          pending "should show shipping address form"
-          pending "should have old billing address selected"
+          it "should see shipping address form with error" do
+            address = user.addresses.first
+            choose "order_bill_address_id_#{address.id}"
+            within("#shipping") do
+              choose "Other Address"
+            end
+            new_address = Factory.build(:address,
+              :address1 => nil, :state => state)
+            fill_in_shipping_address(new_address)
+            click_button "Save and Continue"
+            within("#saddress1") do
+              page.should have_content("field is required")
+            end
+          end
+
+          it "should have correct billing address selected" do
+            address = user.addresses.first
+            choose "order_bill_address_id_#{address.id}"
+            within("#shipping") do
+              choose "Other Address"
+            end
+            new_address = Factory.build(:address, :address1 => nil,
+              :state => state)
+            click_button "Save and Continue"
+            within("#billing") do
+              find("#order_bill_address_id_#{address.id}").should be_checked
+            end
+          end
         end
 
         describe "and billing address is same as shipping address" do
-          pending "should assign old address to order as billing"
-          pending "should assign old address to order as shipping"
-          pending "should not add addresses to user"
+          it "should assign selected address as billing address" do
+            address = user.addresses.first
+            choose "order_bill_address_id_#{address.id}"
+            check "Use Billing Address"
+            complete_checkout
+            within(:css, "#order > div.row.steps-data > div:nth-child(2)") do
+              page.should have_content("Billing Address")
+              page.should have_content(expected_address_format(address))
+            end
+          end
+
+          it "should assign selected address as shipping address" do
+            address = user.addresses.first
+            choose "order_bill_address_id_#{address.id}"
+            check "Use Billing Address"
+            complete_checkout
+            within(:css, "#order > div.row.steps-data > div:nth-child(1)") do
+              page.should have_content("Shipping Address")
+              page.should have_content(expected_address_format(address))
+            end
+          end
+
+          it "should not add addresses to user" do
+            expect do
+              address = user.addresses.first
+              choose "order_bill_address_id_#{address.id}"
+              check "Use Billing Address"
+              complete_checkout
+            end.should_not change{ user.addresses.count }
+          end
         end
       end
 
       describe "when old address is selected as shipping address" do
         describe "and new address is entered as billing_address" do
           describe "and new address is valid" do
-            pending "should add 1 new address for user"
-            pending "should assign new address to order as billing address"
-            pending "should assign old address to order as shipping address"
+            it "should add 1 new address for user" do
+              expect do
+                address = user.addresses.first
+                choose "order_ship_address_id_#{address.id}"
+                within("#billing") do
+                  choose "Other Address"
+                  find(".inner").should be_visible
+                end
+                fill_in_billing_address(
+                Factory.build(:address,
+                  :address1 => Faker::Address.street_address,
+                  :state => state))
+                complete_checkout
+              end.should change{ user.addresses.count }.by(1)
+            end
+
+            it "should assign new address to order as billing address" do
+              address = user.addresses.first
+              choose "order_ship_address_id_#{address.id}"
+              within("#billing") do
+                choose "Other Address"
+              end
+              new_address = Factory.build(:address,
+                :address1 => Faker::Address.street_address,
+                :state => state)
+              fill_in_billing_address(new_address)
+              complete_checkout
+              within(:css, "#order > div.row.steps-data > div:nth-child(2)") do
+                page.should have_content("Billing Address")
+                page.should have_content(expected_address_format(new_address))
+              end
+            end
+
+            it "should assign select address to order as shipping address" do
+              address = user.addresses.first
+              choose "order_ship_address_id_#{address.id}"
+              within("#billing") do
+                choose "Other Address"
+              end
+              new_address = Factory.build(:address,
+                :address1 => Faker::Address.street_address,
+                :state => state)
+              fill_in_billing_address(new_address)
+              complete_checkout
+              within(:css, "#order > div.row.steps-data > div:nth-child(1)") do
+                page.should have_content("Shipping Address")
+                page.should have_content(expected_address_format(address))
+              end
+            end
           end
 
           describe "and new address is invalid" do
-            pending "should show billing address form"
-            pending "should have old shipping address selected"
+            it "should see billing address form with error" do
+              address = user.addresses.first
+              choose "order_ship_address_id_#{address.id}"
+              within("#billing") do
+                choose "Other Address"
+              end
+              new_address = Factory.build(:address, :address1 => nil,
+                :state => state)
+              fill_in_billing_address(new_address)
+              click_button "Save and Continue"
+              within("#baddress1") do
+                page.should have_content("field is required")
+              end
+            end
+
+            it "should have old shipping address selected" do
+              address = user.addresses.first
+              choose "order_ship_address_id_#{address.id}"
+              within("#billing") do
+                choose "Other Address"
+              end
+              new_address = Factory.build(:address, :address1 => nil,
+                :state => state)
+              click_button "Save and Continue"
+              within("#shipping") do
+                find("#order_ship_address_id_#{address.id}").should be_checked
+              end
+            end
           end
         end
 
         describe "and shipping address is same as billing address" do
-          pending "should not add new address"
-          pending "should assign old address to order as shipping address"
-          pending "should assign old address to order as billing address"
+          it "should assign selected address to order as shipping address" do
+            address = user.addresses.first
+            choose "order_ship_address_id_#{address.id}"
+            within("#billing") do
+              choose "Other Address"
+            end
+            fill_in_billing_address(address)
+            complete_checkout
+            within(:css, "#order > div.row.steps-data > div:nth-child(1)") do
+              page.should have_content("Shipping Address")
+              page.should have_content(expected_address_format(address))
+            end
+          end
+
+          it "should assign selected address to order as billing" do
+            address = user.addresses.first
+            choose "order_ship_address_id_#{address.id}"
+            within("#billing") do
+              choose "Other Address"
+            end
+            fill_in_billing_address(address)
+            complete_checkout
+            within(:css, "#order > div.row.steps-data > div:nth-child(2)") do
+              page.should have_content("Billing Address")
+              page.should have_content(expected_address_format(address))
+            end
+          end
+
+          it "should not add new address for user" do
+            expect do
+              address = user.addresses.first
+              choose "order_ship_address_id_#{address.id}"
+              within("#billing") do
+                choose "Other Address"
+              end
+              fill_in_billing_address(address)
+              complete_checkout
+            end.should_not change{ user.addresses.count }
+          end
         end
       end
     end
