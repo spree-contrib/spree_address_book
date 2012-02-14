@@ -16,6 +16,16 @@ shared_context "checkout with product" do
   end
 
   private
+  def should_have_address_fields
+    page.should have_field("First Name")
+    page.should have_field("Last Name")
+    page.should have_field("Street Address")
+    page.should have_field("City")
+    page.should have_field("Country")
+    page.should have_field("Zip")
+    page.should have_field("Phone")
+  end
+
   def complete_checkout
     click_button "Save and Continue"
     choose "UPS Ground"
@@ -24,34 +34,17 @@ shared_context "checkout with product" do
     click_button "Save and Continue"
   end
 
-  def fill_in_billing_address(address)
-    within("#billing") do
-      fill_in "First Name", :with => address.firstname
-      fill_in "Last Name", :with => address.lastname
-      fill_in "Company", :with => address.company
-      fill_in "Street Address", :with => address.address1
-      fill_in "Street Address (cont'd)", :with => address.address2
-      select address.state.name, :from => "order_bill_address_attributes_state_id"
-      fill_in "City", :with => address.city
-      fill_in "Zip", :with => address.zipcode
-      fill_in "Phone", :with => address.phone
-      fill_in "Alternative Phone", :with => address.alternative_phone
-    end
-  end
-
-  def fill_in_shipping_address(address)
-    within("#shipping") do
-      fill_in "First Name", :with => address.firstname
-      fill_in "Last Name", :with => address.lastname
-      fill_in "Company", :with => address.company
-      fill_in "Street Address", :with => address.address1
-      fill_in "Street Address (cont'd)", :with => address.address2
-      select address.state.name, :from => "order_ship_address_attributes_state_id"
-      fill_in "City", :with => address.city
-      fill_in "Zip", :with => address.zipcode
-      fill_in "Phone", :with => address.phone
-      fill_in "Alternative Phone", :with => address.alternative_phone
-    end
+  def fill_in_address(address, type = :bill)
+    fill_in "First Name", :with => address.firstname
+    fill_in "Last Name", :with => address.lastname
+    fill_in "Company", :with => address.company
+    fill_in "Street Address", :with => address.address1
+    fill_in "Street Address (cont'd)", :with => address.address2
+    select address.state.name, :from => "order_#{type}_address_attributes_state_id"
+    fill_in "City", :with => address.city
+    fill_in "Zip", :with => address.zipcode
+    fill_in "Phone", :with => address.phone
+    fill_in "Alternative Phone", :with => address.alternative_phone
   end
 
   def expected_address_format(address)
