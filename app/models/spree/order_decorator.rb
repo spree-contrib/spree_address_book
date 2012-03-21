@@ -2,12 +2,12 @@ Spree::Order.class_eval do
   attr_accessible :bill_address_id, :ship_address_id
 
   def bill_address_id=(id)
-    address = Spree::Address.find(id)
+    address = Spree::Address.find_by_id(id)
     if address && address.user_id == self.user_id
-      self["bill_address_id"] = address.id
-      self.bill_address.reload
+      write_attribute :bill_address_id, address.id
+      bill_address.reload.id
     else
-      self["bill_address_id"] = nil
+      write_attribute :bill_address_id, nil
     end
   end
 
@@ -16,12 +16,12 @@ Spree::Order.class_eval do
   end
 
   def ship_address_id=(id)
-    address = Spree::Address.find(id)
+    address = Spree::Address.find_by_id(id)
     if address && address.user_id == self.user_id
-      self["ship_address_id"] = address.id
-      self.ship_address.reload
+      write_attribute :ship_address_id, address.id
+      ship_address.reload.id
     else
-      self["ship_address_id"] = nil
+      write_attribute :ship_address_id, nil
     end
   end
 
