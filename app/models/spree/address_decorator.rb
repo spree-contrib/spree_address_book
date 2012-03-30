@@ -16,7 +16,7 @@ Spree::Address.class_eval do
   end
   
   def to_s
-    "#{firstname} #{lastname}: #{zipcode}, #{country}, #{state || state_name}, #{city}, #{address1} #{address2}"
+    "#{firstname} #{lastname}<br/>#{address1} #{address2}<br/>#{city},#{state || state_name} #{zipcode}<br/>#{country}".html_safe
   end
   
   def destroy_with_saving_used
