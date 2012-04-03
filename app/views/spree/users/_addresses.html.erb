@@ -1,0 +1,22 @@
+<% if current_user.addresses.present? %>
+<h3><%= Spree::Address.model_name.human(:count => 2) %></h3>
+<table id="user_addresses">
+  <thead>
+    <tr>
+      <th><%= Spree::Address.model_name.human %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% current_user.addresses.each do |address| %>
+    <tr class="<%= cycle('even', 'odd') %>">
+      <td><%= address %></td>
+      <td>
+        <%= link_to t(:edit), edit_address_path(address) %>&nbsp;
+        <%= link_to t(:remove), address_path(address), :method => :delete, :confirm => t(:are_you_sure) %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<% end %>
