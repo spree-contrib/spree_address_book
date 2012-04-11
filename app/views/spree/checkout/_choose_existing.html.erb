@@ -2,16 +2,16 @@
 <% if @addresses.present? %>
 <div class="select_address">
 	<% @addresses.each_with_index do |address, idx| %>
-		<p class="field">    
+		<p class="field">
 			<span id="<%= dom_id(address) %>">
 				<label>
 					<%= radio_button_tag "order[#{address_type}_address_id]", address.id, (idx == 0) %>
 					<span><%= address %></span>
 				</label>
 			</span>
-		</p>	
+		</p>
 	<% end %>
-	<p class="field">
+	<p class="field other-address">
     <label><%= radio_button_tag "order[#{address_type}_address_id]", 0 %> <%= t('other_address') %></label>
 	</p>
 </div>
