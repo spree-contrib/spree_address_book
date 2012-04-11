@@ -18,3 +18,6 @@
   </tbody>
 </table>
 <% end %>
+<div id="new_address_link">
+  <%= link_to t(:add_new_address), :controller => :addresses, :action => :new, :user_id => current_user.id %>
+</div>

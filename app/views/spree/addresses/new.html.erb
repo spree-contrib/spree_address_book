@@ -9,7 +9,7 @@
   <div class="inner">
     <%= form_for @address do |ship_form| %>
       <legend><%= t(:shipping_address) %></legend>
-      <div class="inner" data-hook="shipping_inner">
+      <div class="inner" data-hook="billing_inner">
         <p class="field" id="sfirstname">
           <%= ship_form.label :firstname, t(:first_name) %><span class="req">*</span><br />
           <%= ship_form.text_field :firstname, :class => 'required' %>
@@ -19,7 +19,7 @@
           <%= ship_form.text_field :lastname, :class => 'required' %>
         </p>
         <% if Spree::Config[:company] %>
-          <p class="field" id="bcompany">
+          <p class="field" id="scompany">
             <%= ship_form.label :company, t(:company) %><br />
             <%= ship_form.text_field :company %>
           </p>
@@ -35,32 +35,15 @@
 
         <p class="field" id="scountry">
           <%= ship_form.label :country_id, t(:country) %><span class="req">*</span><br />
-          <span id="bcountry">
+          <span id="scountry">
             <%= ship_form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required'} %>
           </span>
         </p>
 
         <% if Spree::Config[:address_requires_state] %>
           <p class="field" id="sstate">
-            <% have_states = !@address.country.states.empty? %>
             <%= ship_form.label :state, t(:state) %><span class="req">*</span><br />
-            <noscript>
-              <%= ship_form.text_field :state_name, :class => 'required' %>
-            </noscript>
-            <% state_elements = [
-               ship_form.collection_select(:state_id, @address.country.states,
-                                  :id, :name,
-                                  {:include_blank => true},
-                                  {:class => have_states ? 'required' : 'hidden',
-                                  :disabled => !have_states}) +
-               ship_form.text_field(:state_name,
-                                  :class => !have_states ? 'required' : 'hidden',
-                                  :disabled => have_states)
-               ].join.gsub('"', "'").gsub("\n", "")
-            %>
-            <%= javascript_tag do -%>
-              document.write("<%== state_elements %>");
-            <% end -%>
+            <%= ship_form.text_field :state_name, :class => 'required' %>
           </p>
         <% end %>
 
@@ -77,7 +60,7 @@
           <%= ship_form.label :phone, t(:phone) %><span class="req">*</span><br />
           <%= ship_form.text_field :phone, :class => 'required' %>
         </p>
-        <% if Spree::Config[:alternative_shipping_phone] %>
+        <% if Spree::Config[:alternative_billing_phone] %>
           <p class="field" id="saltphone">
             <%= ship_form.label :alternative_phone, t(:alternative_phone) %><br />
             <%= ship_form.text_field :alternative_phone %>
@@ -86,6 +69,6 @@
       </div>
     <% end %>
   </div>
-  <%= f.submit t(:update) %>
+  <%= f.submit t(:save) %>
 </fieldset>
 <% end %>
