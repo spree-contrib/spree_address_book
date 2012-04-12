@@ -10,7 +10,7 @@ module SpreeAddressBook
          if res == "" || res.downcase == "y"
            run 'bundle exec rake db:migrate'
          else
-           puts "Skiping rake db:migrate, don't forget to run it!"
+           puts "Skipping rake db:migrate, don't forget to run it!"
          end
       end
     end
