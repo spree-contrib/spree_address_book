@@ -2,7 +2,19 @@ class Spree::AddressesController < Spree::BaseController
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
   load_and_authorize_resource
 
+  def new
+    @address = Spree::Address.default
+    session["user_return_to"] = request.env['HTTP_REFERER']
+  end
+
   def create
+    @address.user = current_user
+    if @address.update_attributes(params[:address])
+      flash[:notice] = t(:successfully_saved, :resource => t(:address))
+    else
+      flash[:error] = t(:unsuccessfully_saved, :resource => t(:address))
+    end
+    redirect_back_or_default(account_path)
   end
 
   def edit
@@ -12,8 +24,6 @@ class Spree::AddressesController < Spree::BaseController
   def update
     if @address.editable?
       if @address.update_attributes(params[:address])
-        render :text => @address.inspect
-        return
         flash[:notice] = t(:successfully_updated, :resource => t(:address))
       else
         flash[:error] = t(:unsuccessfully_updated, :resource => t(:address))

@@ -1,3 +1,6 @@
+<% content_for :head do %>
+  <%= javascript_include_tag states_path %>
+<% end %>
 <style>
   form p.field input[type=text], form p.field select { width: 80%; float: none; }
   .hidden { display: none; }
@@ -8,8 +11,8 @@
 <fieldset>
   <div class="inner">
     <%= form_for @address do |ship_form| %>
-      <legend><%= t(:shipping_address) %></legend>
-      <div class="inner" data-hook="billing_inner">
+      <legend><%= t(:new_shipping_address) %></legend>
+      <div class="inner" data-hook="shipping_inner">
         <p class="field" id="sfirstname">
           <%= ship_form.label :firstname, t(:first_name) %><span class="req">*</span><br />
           <%= ship_form.text_field :firstname, :class => 'required' %>
@@ -42,8 +45,23 @@
 
         <% if Spree::Config[:address_requires_state] %>
           <p class="field" id="sstate">
+            <% have_states = !@address.country.states.empty? %>
             <%= ship_form.label :state, t(:state) %><span class="req">*</span><br />
             <%= ship_form.text_field :state_name, :class => 'required' %>
+            <% state_elements = [
+               ship_form.collection_select(:state_id, @address.country.states,
+                                  :id, :name,
+                                  {:include_blank => true},
+                                  {:class => have_states ? 'required' : 'hidden',
+                                  :disabled => !have_states}) +
+               ship_form.text_field(:state_name,
+                                  :class => !have_states ? 'required' : 'hidden',
+                                  :disabled => have_states)
+               ].join.gsub('"', "'").gsub("\n", "")
+            %>
+            <%= javascript_tag do -%>
+              document.write("<%== state_elements %>");
+            <% end -%>
           </p>
         <% end %>
 

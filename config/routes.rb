@@ -1,5 +1,5 @@
 Spree::Core::Engine.routes.prepend do
 
-  resources :addresses #, :only => [:edit, :update, :destroy, :new]
+  resources :addresses #, :only => [:edit, :update, :destroy, :create]
 
 end

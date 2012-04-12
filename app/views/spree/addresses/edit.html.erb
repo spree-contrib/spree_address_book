@@ -1,3 +1,6 @@
+<% content_for :head do %>
+  <%= javascript_include_tag states_path %>
+<% end %>
 <style>
   form p.field input[type=text], form p.field select { width: 80%; float: none; }
   .hidden { display: none; }
@@ -19,7 +22,7 @@
           <%= ship_form.text_field :lastname, :class => 'required' %>
         </p>
         <% if Spree::Config[:company] %>
-          <p class="field" id="bcompany">
+          <p class="field" id="scompany">
             <%= ship_form.label :company, t(:company) %><br />
             <%= ship_form.text_field :company %>
           </p>
@@ -35,7 +38,7 @@
 
         <p class="field" id="scountry">
           <%= ship_form.label :country_id, t(:country) %><span class="req">*</span><br />
-          <span id="bcountry">
+          <span id="scountry">
             <%= ship_form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required'} %>
           </span>
         </p>
@@ -44,9 +47,7 @@
           <p class="field" id="sstate">
             <% have_states = !@address.country.states.empty? %>
             <%= ship_form.label :state, t(:state) %><span class="req">*</span><br />
-            <noscript>
-              <%= ship_form.text_field :state_name, :class => 'required' %>
-            </noscript>
+            <%= ship_form.text_field :state_name, :class => 'required' %>
             <% state_elements = [
                ship_form.collection_select(:state_id, @address.country.states,
                                   :id, :name,
