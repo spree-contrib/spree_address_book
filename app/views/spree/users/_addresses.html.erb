@@ -1,4 +1,3 @@
-<% if current_user.addresses.present? %>
 <h2><%= Spree::Address.model_name.human(:count => 2) %></h2>
 <table class="order-summary" width="545">
   <thead>
@@ -8,16 +7,22 @@
     </tr>
   </thead>
   <tbody>
-  <% current_user.addresses.each do |address| %>
-    <tr class="<%= cycle('even', 'odd') %>">
-      <td><%= address %></td>
-      <td><%= link_to t(:edit), edit_address_path(address) %></td>
-      <td><%= link_to t(:delete), address_path(address), :method => :delete, :confirm => t(:are_you_sure) %></td>
-    </tr>
-  <% end %>
+    <% if current_user.addresses.present? %>
+      <% current_user.addresses.each do |address| %>
+        <tr class="<%= cycle('even', 'odd') %>">
+          <td><%= address %></td>
+          <td><%= link_to t(:edit), edit_address_path(address) %></td>
+          <td><%= link_to t(:delete), address_path(address), :method => :delete, :confirm => t(:are_you_sure) %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td><%= t(:no_shipping_addresses_on_file) %></td>
+        <td colspan="2"></td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
-<% end %>
 <div id="new_address_link">
   <%= link_to t(:add_new_shipping_address), :controller => :addresses, :action => :new %>
 </div>
