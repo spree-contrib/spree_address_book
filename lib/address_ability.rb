@@ -3,7 +3,11 @@ class AddressAbility
 
   def initialize(user)
     can :manage, Spree::Address do |address|
-      address.user == user || address.id.nil?
+      address.user == user
+    end
+
+    can :create, Spree::Address do |address|
+      !user.id.nil?
     end
   end
 end
