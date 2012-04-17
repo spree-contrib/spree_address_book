@@ -3,4 +3,5 @@ en:
   add_new_shipping_address: "Add new shipping address"
   new_shipping_address: "New Shipping Address"
   no_shipping_addresses_on_file: "No shipping addresses on file"
+  shipping_addresses: "Shipping Addresses"
   save: "Save"
