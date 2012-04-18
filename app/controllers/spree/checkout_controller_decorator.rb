@@ -6,7 +6,7 @@ Spree::CheckoutController.class_eval do
   
   def set_addresses
     return unless params[:order] && params[:state] == "address"
-
+    
     if params[:order][:ship_address_id].to_i > 0
       params[:order].delete(:ship_address_attributes)
     else
@@ -18,12 +18,14 @@ Spree::CheckoutController.class_eval do
     else
       params[:order].delete(:bill_address_id)
     end
+    
   end
   
   def normalize_addresses
     return unless params[:state] == "address" && @order.bill_address_id && @order.ship_address_id
     @order.bill_address.reload
     @order.ship_address.reload
+    
     # ensure that there is no validation errors and addresses was saved
     return unless @order.bill_address && @order.ship_address
     

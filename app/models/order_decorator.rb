@@ -6,7 +6,7 @@ Spree::Order.class_eval do
     if self.ship_address
       self.bill_address = self.ship_address
     end
-    true  
+    true
   end
   
   def clone_billing_address
