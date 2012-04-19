@@ -5,6 +5,16 @@ Spree::Address.class_eval do
     validator = Spree::Address.validators.find{|v| v.kind_of?(ActiveModel::Validations::PresenceValidator)}
     validator ? validator.attributes : []
   end
+  
+  # added by matmon
+  # # override same as to ignore new user_id.  workaround for spec
+  # # failure for bad controller filter.
+  # # i don't like overriding same_as? to make controller filter work.
+  # # refactor this.
+  # def same_as?(other)
+  #   return false if other.nil?
+  #   attributes.except('id', 'updated_at', 'created_at', 'user_id') ==  other.attributes.except('id', 'updated_at', 'created_at', 'user_id')
+  # end
 
   # can modify an address if it's not been used in an order
   def editable?

@@ -8,5 +8,8 @@ tmp
 nbproject
 *.swp
 *.bak
-spec/test_app
-Gemfile
+spec/dummy
+Gemfile.lock
+.rvmrc
+.rspec
+.sass-cache
