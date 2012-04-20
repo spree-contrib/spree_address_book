@@ -5,11 +5,6 @@ group :development, :test do
   gem 'sqlite3'
 end
 
-group :assets do
-  gem 'sass', :require => 'sass'
-  gem 'sass-rails'
-end
-
 group :test do
   gem 'rspec-rails', '~> 2.8'
   gem 'capybara', '~> 1.1'
@@ -17,6 +12,13 @@ group :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails', '~> 1.4'
   gem 'ffaker'
+  gem 'shoulda-matchers'
+  gem 'guard-rspec'
+  
+  if RUBY_PLATFORM.downcase.include? "darwin"
+    gem 'rb-fsevent'
+    gem 'growl'
+  end
 end
 
 gemspec

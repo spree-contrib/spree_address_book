@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Address selection during checkout" do
   include_context "store products"
-  let(:state) { Spree::State.find_by_name('Arkansas') }
+  let(:state) { FactoryGirl.create :state }
 
   describe "as guest user" do
     include_context "checkout with product"
@@ -43,12 +43,12 @@ describe "Address selection during checkout" do
       u
     end
     before(:each) { click_link "Checkout"; sign_in!(user); }
-
+  
     it "should not see billing or shipping address form" do
       find("#billing .inner").should_not be_visible
       find("#shipping .inner").should_not be_visible
     end
-
+  
     it "should list saved addresses for billing and shipping" do
       within("#billing .select_address") do
         user.addresses.each do |a|
@@ -61,7 +61,7 @@ describe "Address selection during checkout" do
         end
       end
     end
-
+      
     it "should save 2 addresses for user if they are different" do
       expect do
         within("#billing") do
@@ -75,7 +75,7 @@ describe "Address selection during checkout" do
         complete_checkout
       end.should change { user.addresses.count }.by(2)
     end
-
+  
     it "should save 1 address for user if they are the same" do
       expect do
         within("#billing") do
@@ -89,12 +89,12 @@ describe "Address selection during checkout" do
         complete_checkout
       end.should change { user.addresses.count }.by(1)
     end
-
+      
     describe "when invalid address is entered", :js => true do
       let(:address) do
         Factory.build(:address, :firstname => nil, :state => state)
       end
-
+      
       it "should show address form with error" do
         within("#billing") do
           choose "Other Address"
@@ -113,7 +113,7 @@ describe "Address selection during checkout" do
         end
       end
     end
-
+  
     describe "entering 2 new addresses", :js => true do
       it "should assign 2 new addresses to order" do
         within("#billing") do
@@ -136,13 +136,13 @@ describe "Address selection during checkout" do
         end
       end
     end
-
+  
     describe "using saved address for bill and new ship address", :js => true do
       let(:shipping) do
         Factory.build(:address, :address1 => Faker::Address.street_address,
           :state => state)
       end
-
+  
       it "should save 1 new address for user" do
         expect do
           address = user.addresses.first
@@ -154,7 +154,7 @@ describe "Address selection during checkout" do
           complete_checkout
         end.should change{ user.addresses.count }.by(1)
       end
-
+  
       it "should assign addresses to orders" do
         address = user.addresses.first
         choose "order_bill_address_id_#{address.id}"
@@ -173,7 +173,7 @@ describe "Address selection during checkout" do
           page.should have_content(expected_address_format(shipping))
         end
       end
-
+  
       it "should see form when new shipping address invalid" do
         address = user.addresses.first
         shipping = Factory.build(:address, :address1 => nil, :state => state)
@@ -191,7 +191,7 @@ describe "Address selection during checkout" do
         end
       end
     end
-
+  
     describe "using saved address for billing and shipping", :js => true do
       it "should addresses to order" do
         address = user.addresses.first
@@ -207,7 +207,7 @@ describe "Address selection during checkout" do
           page.should have_content(expected_address_format(address))
         end
       end
-
+  
       it "should not add addresses to user" do
         expect do
           address = user.addresses.first
@@ -217,13 +217,13 @@ describe "Address selection during checkout" do
         end.should_not change{ user.addresses.count }
       end
     end
-
+  
     describe "using saved address for ship and new bill address", :js => true do
       let(:billing) do
         Factory.build(:address, :address1 => Faker::Address.street_address,
           :state => state)
       end
-
+  
       it "should save 1 new address for user" do
         expect do
           address = user.addresses.first
@@ -235,7 +235,7 @@ describe "Address selection during checkout" do
           complete_checkout
         end.should change{ user.addresses.count }.by(1)
       end
-
+  
       it "should assign addresses to orders" do
         address = user.addresses.first
         choose "order_ship_address_id_#{address.id}"
@@ -254,7 +254,7 @@ describe "Address selection during checkout" do
           page.should have_content(expected_address_format(address))
         end
       end
-
+  
       it "should see form when new billing address invalid" do
         address = user.addresses.first
         billing = Factory.build(:address, :address1 => nil, :state => state)
@@ -272,7 +272,7 @@ describe "Address selection during checkout" do
         end
       end
     end
-
+  
     describe "entering address that is already saved", :js => true do
       it "should not save address for user" do
         expect do

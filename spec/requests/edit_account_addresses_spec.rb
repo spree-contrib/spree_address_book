@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "User editing addresses for his account" do
-  let(:state) { Spree::State.find_by_name('Arkansas') }
+  let(:state) { FactoryGirl.create :state }
   let(:address) do
     Factory(:address, :address1 => Faker::Address.street_address,
       :state => state)

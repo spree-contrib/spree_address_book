@@ -1,9 +1,9 @@
 shared_context "checkout with product" do
   before :each do
-    @zone = Spree::Zone.find_by_name('GlobalZone') || Factory(:global_zone)
+    @zone = Spree::Zone.find_by_name('GlobalZone') || FactoryGirl.create(:global_zone)
     @shipping = Spree::ShippingMethod.find_by_name('UPS Ground') ||
-      Factory(:shipping_method)
-    Factory(:payment_method)
+      FactoryGirl.create(:shipping_method)
+    FactoryGirl.create(:payment_method)
     reset_spree_preferences do |config|
       config.company = true
       config.alternative_billing_phone = true
