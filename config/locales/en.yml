@@ -7,4 +7,6 @@ en:
   new_shipping_address: "New Shipping Address"
   no_shipping_addresses_on_file: "No shipping addresses on file"
   shipping_addresses: "Shipping Addresses"
+  successfully_saved: "Saved successfully"
+  unsuccessfully_saved: "There was an error while trying to save!"
   save: "Save"
