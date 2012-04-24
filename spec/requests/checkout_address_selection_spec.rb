@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe "Address selection during checkout" do
   include_context "store products"
-  let(:state) { FactoryGirl.create :state }
+
+  let(:state) {  Spree::State.all.first || FactoryGirl.create(:state) }
 
   describe "as guest user" do
     include_context "checkout with product"
@@ -31,8 +32,7 @@ describe "Address selection during checkout" do
     include_context "checkout with product"
     let(:billing) { Factory.build(:address, :state => state) }
     let(:shipping) do
-      Factory.build(:address, :address1 => Faker::Address.street_address,
-        :state => state)
+      Factory.build(:address, :address1 => Faker::Address.street_address, :state => state)
     end
     let(:user) do
       u = Factory(:user)
@@ -65,11 +65,11 @@ describe "Address selection during checkout" do
     it "should save 2 addresses for user if they are different" do
       expect do
         within("#billing") do
-          choose "Other Address"
+          choose I18n.t(:other_address)
           fill_in_address(billing)
         end
         within("#shipping") do
-          choose "Other Address"
+          choose I18n.t(:other_address)
           fill_in_address(shipping, :ship)
         end
         complete_checkout
@@ -79,11 +79,11 @@ describe "Address selection during checkout" do
     it "should save 1 address for user if they are the same" do
       expect do
         within("#billing") do
-          choose "Other Address"
+          choose I18n.t(:other_address)
           fill_in_address(billing)
         end
         within("#shipping") do
-          choose "Other Address"
+          choose I18n.t(:other_address)
           fill_in_address(billing, :ship)
         end
         complete_checkout
@@ -97,11 +97,11 @@ describe "Address selection during checkout" do
       
       it "should show address form with error" do
         within("#billing") do
-          choose "Other Address"
+          choose I18n.t(:other_address)
           fill_in_address(address)
         end
         within("#shipping") do
-          choose "Other Address"
+          choose I18n.t(:other_address)
           fill_in_address(address, :ship)
         end
         click_button "Save and Continue"
@@ -117,11 +117,11 @@ describe "Address selection during checkout" do
     describe "entering 2 new addresses", :js => true do
       it "should assign 2 new addresses to order" do
         within("#billing") do
-          choose "Other Address"
+          choose I18n.t(:other_address)
           fill_in_address(billing)
         end
         within("#shipping") do
-          choose "Other Address"
+          choose I18n.t(:other_address)
           fill_in_address(shipping, :ship)
         end
         complete_checkout
@@ -148,7 +148,7 @@ describe "Address selection during checkout" do
           address = user.addresses.first
           choose "order_bill_address_id_#{address.id}"
           within("#shipping") do
-            choose "Other Address"
+            choose I18n.t(:other_address)
             fill_in_address(shipping, :ship)
           end
           complete_checkout
@@ -159,7 +159,7 @@ describe "Address selection during checkout" do
         address = user.addresses.first
         choose "order_bill_address_id_#{address.id}"
         within("#shipping") do
-          choose "Other Address"
+          choose I18n.t(:other_address)
           fill_in_address(shipping, :ship)
         end
         complete_checkout
@@ -179,7 +179,7 @@ describe "Address selection during checkout" do
         shipping = Factory.build(:address, :address1 => nil, :state => state)
         choose "order_bill_address_id_#{address.id}"
         within("#shipping") do
-          choose "Other Address"
+          choose I18n.t(:other_address)
           fill_in_address(shipping, :ship)
         end
         click_button "Save and Continue"
@@ -220,8 +220,7 @@ describe "Address selection during checkout" do
   
     describe "using saved address for ship and new bill address", :js => true do
       let(:billing) do
-        Factory.build(:address, :address1 => Faker::Address.street_address,
-          :state => state)
+        Factory.build(:address, :address1 => Faker::Address.street_address, :state => state)
       end
   
       it "should save 1 new address for user" do
@@ -229,7 +228,7 @@ describe "Address selection during checkout" do
           address = user.addresses.first
           choose "order_ship_address_id_#{address.id}"
           within("#billing") do
-            choose "Other Address"
+            choose I18n.t(:other_address)
             fill_in_address(billing)
           end
           complete_checkout
@@ -240,7 +239,7 @@ describe "Address selection during checkout" do
         address = user.addresses.first
         choose "order_ship_address_id_#{address.id}"
         within("#billing") do
-          choose "Other Address"
+          choose I18n.t(:other_address)
           fill_in_address(billing)
         end
         complete_checkout
@@ -260,7 +259,7 @@ describe "Address selection during checkout" do
         billing = Factory.build(:address, :address1 => nil, :state => state)
         choose "order_ship_address_id_#{address.id}"
         within("#billing") do
-          choose "Other Address"
+          choose I18n.t(:other_address)
           fill_in_address(billing)
         end
         click_button "Save and Continue"
@@ -279,7 +278,7 @@ describe "Address selection during checkout" do
           address = user.addresses.first
           choose "order_ship_address_id_#{address.id}"
           within("#billing") do
-            choose "Other Address"
+            choose I18n.t(:other_address)
             fill_in_address(address)
           end
           complete_checkout

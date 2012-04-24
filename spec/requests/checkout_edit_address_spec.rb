@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "User editing saved address during checkout", :js => true do
   include_context "store products"
   include_context "checkout with product"
-  let(:state) { FactoryGirl.create :state }
+  let(:state) {  Spree::State.all.first || FactoryGirl.create(:state) }
   let(:address) do
     Factory(:address,
       :address1 => Faker::Address.street_address,

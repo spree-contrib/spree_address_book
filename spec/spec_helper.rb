@@ -13,7 +13,20 @@ Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each {|f| require f }
 # Requires factories defined in spree_core
 require 'spree/core/testing_support/factories'
 require 'spree/core/testing_support/env'
-require 'spree/url_helpers'
+
+begin
+  require 'spree/url_helpers'
+rescue
+  module Spree
+    module Core
+      module UrlHelpers
+        def spree
+          Spree::Core::Engine.routes.url_helpers
+        end
+      end
+    end
+  end
+end
 
 RSpec.configure do |config|
   # == Mock Framework
@@ -37,8 +50,7 @@ RSpec.configure do |config|
   config.before(:each) do
     if example.metadata[:js]
       DatabaseCleaner.strategy = :truncation, {
-        :except => ['spree_countries', 'spree_zones',
-          'spree_zone_members', 'spree_states', 'spree_roles']
+        :except => ['spree_countries', 'spree_zones', 'spree_zone_members', 'spree_states', 'spree_roles']
       }
     else
       DatabaseCleaner.strategy = :transaction

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "User editing addresses for his account" do
-  let(:state) { FactoryGirl.create :state }
+  let(:state) {  Spree::State.all.first || FactoryGirl.create(:state) }
   let(:address) do
     Factory(:address, :address1 => Faker::Address.street_address,
       :state => state)
@@ -14,16 +14,15 @@ describe "User editing addresses for his account" do
   end
   before(:each) do
     visit spree.root_path
-    click_link "Login";
-    sign_in!(user);
+    click_link "Login"
+    sign_in!(user)
     click_link "My Account"
   end
 
   it "should see list of addresses saved for account" do
     page.should have_content("Addresses")
     within("#user-address-list") do
-      page.should have_selector("li.spree_address",
-        :count => user.addresses.count)
+      page.should have_selector("li.spree_address", :count => user.addresses.count)
     end
   end
 

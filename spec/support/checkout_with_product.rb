@@ -1,8 +1,7 @@
 shared_context "checkout with product" do
   before :each do
     @zone = Spree::Zone.find_by_name('GlobalZone') || FactoryGirl.create(:global_zone)
-    @shipping = Spree::ShippingMethod.find_by_name('UPS Ground') ||
-      FactoryGirl.create(:shipping_method)
+    @shipping = Spree::ShippingMethod.find_by_name('UPS Ground') || FactoryGirl.create(:shipping_method)
     FactoryGirl.create(:payment_method)
     reset_spree_preferences do |config|
       config.company = true
@@ -27,11 +26,12 @@ shared_context "checkout with product" do
   end
 
   def complete_checkout
-    click_button "Save and Continue"
+    sleep(120)
+    click_button I18n.t(:save_and_continue)
     choose "UPS Ground"
-    click_button "Save and Continue"
+    click_button I18n.t(:save_and_continue)
     choose "Check"
-    click_button "Save and Continue"
+    click_button I18n.t(:save_and_continue)
   end
 
   def fill_in_address(address, type = :bill)
