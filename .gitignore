@@ -9,4 +9,5 @@ nbproject
 *.swp
 *.bak
 spec/test_app
+spec/dummy
 Gemfile
