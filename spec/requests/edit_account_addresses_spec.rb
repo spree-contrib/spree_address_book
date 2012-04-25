@@ -15,6 +15,10 @@ describe "User editing addresses for his account" do
     page.should have_selector("#user-address-list > tbody > tr", :count => user.addresses.count)
   end
 
+  it "should be able to add address" do
+    
+  end
+
   it "should be able to edit address" do
     within("#user-address-list > tbody > tr:first") do
       click_link I18n.t(:edit)
@@ -45,7 +49,7 @@ describe "User editing addresses for his account" do
 
     # header still exists for the area - even if it is blank
     page.should have_content("Addresses")
-    
+
     # table is not displayed unless addresses are available
     page.should_not have_selector("#user-address-list")
   end

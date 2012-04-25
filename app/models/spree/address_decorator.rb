@@ -6,15 +6,12 @@ Spree::Address.class_eval do
     validator ? validator.attributes : []
   end
   
-  # added by matmon
-  # # override same as to ignore new user_id.  workaround for spec
-  # # failure for bad controller filter.
-  # # i don't like overriding same_as? to make controller filter work.
-  # # refactor this.
-  # def same_as?(other)
-  #   return false if other.nil?
-  #   attributes.except('id', 'updated_at', 'created_at', 'user_id') ==  other.attributes.except('id', 'updated_at', 'created_at', 'user_id')
-  # end
+  # override same as to ignore new user_id. workaround for spec failure for bad controller filter.
+  # TODO: look into if this is actually needed. I don't want to override methods unless it is really needed
+  def same_as?(other)
+    return false if other.nil?
+    attributes.except('id', 'updated_at', 'created_at', 'user_id') ==  other.attributes.except('id', 'updated_at', 'created_at', 'user_id')
+  end
 
   # can modify an address if it's not been used in an order
   def editable?
@@ -29,13 +26,13 @@ Spree::Address.class_eval do
     "#{firstname} #{lastname}<br/>#{address1} #{address2}<br/>#{city}, #{state || state_name} #{zipcode}<br/>#{country}".html_safe
   end
 
-  def destroy_with_saving_used
+  # as of version 1.1 Spree::Address does not have a custom destroy method
+  # if in the future it is added, this may cause issues
+  def destroy
     if can_be_deleted?
-      destroy_without_saving_used
+      super
     else
       update_attribute(:deleted_at, Time.now)
     end
   end
-  alias_method_chain :destroy, :saving_used
-
 end

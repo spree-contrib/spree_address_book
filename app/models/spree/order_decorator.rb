@@ -34,7 +34,7 @@ Spree::Order.class_eval do
   def update_or_create_address(attributes)
     address = nil
     if attributes[:id]
-      address = Spree::Address.find(attributes[:id])
+      address = Spree::Address.find_by_id(attributes[:id])
       if address && address.editable?
         address.update_attributes(attributes)
       else
