@@ -1,17 +1,8 @@
 require 'spec_helper'
 
 describe "User editing addresses for his account" do
-  let(:state) {  Spree::State.all.first || FactoryGirl.create(:state) }
-  let(:address) do
-    Factory(:address, :address1 => Faker::Address.street_address,
-      :state => state)
-  end
-  let(:user) do
-    u = Factory(:user)
-    u.addresses << address
-    u.save
-    u
-  end
+  include_context "user with address"
+
   before(:each) do
     visit spree.root_path
     click_link "Login"
@@ -21,22 +12,22 @@ describe "User editing addresses for his account" do
 
   it "should see list of addresses saved for account" do
     page.should have_content("Addresses")
-    within("#user-address-list") do
-      page.should have_selector("li.spree_address", :count => user.addresses.count)
-    end
+    page.should have_selector("#user-address-list > tbody > tr", :count => user.addresses.count)
   end
 
   it "should be able to edit address" do
-    new_street = Faker::Address.street_address
-    within("#user-address-list > li:first .controls") do
-      click_link "Edit"
+    within("#user-address-list > tbody > tr:first") do
+      click_link I18n.t(:edit)
     end
     current_path.should == spree.edit_address_path(address)
+
+    new_street = Faker::Address.street_address
     fill_in "Street Address", :with => new_street
     click_button "Update"
     current_path.should == spree.account_path
     page.should have_content("updated")
-    within("#user-address-list > li:first") do
+
+    within("#user-address-list > tbody > tr:first") do
       page.should have_content(new_street)
     end
   end
@@ -44,12 +35,18 @@ describe "User editing addresses for his account" do
   it "should be able to remove address", :js => true do
     # bypass confirm dialog
     page.evaluate_script('window.confirm = function() { return true; }')
-    within("#user-address-list > li:first .controls") do
-      click_link "Remove"
+    within("#user-address-list > tbody > tr:first") do
+      click_link I18n.t(:delete)
     end
     current_path.should == spree.account_path
+
+    # flash message
     page.should have_content("removed")
-    page.should_not have_content("Addresses")
+
+    # header still exists for the area - even if it is blank
+    page.should have_content("Addresses")
+    
+    # table is not displayed unless addresses are available
     page.should_not have_selector("#user-address-list")
   end
 end

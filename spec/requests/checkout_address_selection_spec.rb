@@ -30,15 +30,15 @@ describe "Address selection during checkout" do
 
   describe "as authenticated user with saved addresses", :js => true do
     include_context "checkout with product"
+    # include_context "user with address"
+
     let(:billing) { Factory.build(:address, :state => state) }
     let(:shipping) do
       Factory.build(:address, :address1 => Faker::Address.street_address, :state => state)
     end
     let(:user) do
       u = Factory(:user)
-      u.addresses << Factory(:address,
-        :address1 => Faker::Address.street_address,
-        :state => state)
+      u.addresses << Factory(:address, :address1 => Faker::Address.street_address, :state => state)
       u.save
       u
     end

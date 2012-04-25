@@ -16,6 +16,8 @@ shared_context "checkout with product" do
     click_button 'add-to-cart-button'
   end
 
+  let(:state) { @state }
+
   private
   def should_have_address_fields
     page.should have_field("First Name")
@@ -49,9 +51,6 @@ shared_context "checkout with product" do
   end
 
   def expected_address_format(address)
-    tmp = ''
-    tmp += "#{address.firstname} #{address.lastname}: "
-    tmp += "#{address.zipcode}, #{address.country.name}, "
-    tmp += "#{address.state.name}, #{address.city}, #{address.address1}"
+    Nokogiri::HTML(address.to_s).text
   end
 end
