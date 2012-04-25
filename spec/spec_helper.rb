@@ -14,6 +14,7 @@ Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each {|f| require f }
 require 'spree/core/testing_support/factories'
 require 'spree/core/testing_support/env'
 
+# remove when 1.1 compatible
 begin
   require 'spree/url_helpers'
 rescue
@@ -50,7 +51,12 @@ RSpec.configure do |config|
   config.before(:each) do
     if example.metadata[:js]
       DatabaseCleaner.strategy = :truncation, {
-        :except => ['spree_countries', 'spree_zones', 'spree_zone_members', 'spree_states', 'spree_roles']
+        :except => [
+          # 'spree_countries',
+          # 'spree_zones',
+          # 'spree_zone_members',
+          # 'spree_states',
+          'spree_roles']
       }
     else
       DatabaseCleaner.strategy = :transaction
