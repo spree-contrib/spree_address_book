@@ -11,5 +11,4 @@ nbproject
 spec/dummy
 Gemfile.lock
 .rvmrc
-.rspec
 .sass-cache
