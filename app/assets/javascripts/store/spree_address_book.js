@@ -1,6 +1,6 @@
 (function($){
   $(document).ready(function(){
-    if($('.edit_spree_address, .new_spree_address').is('*')) {
+    if($('.edit_spree_address, .edit_address, .new_spree_address, .new_address').is('*')) {
 
       $('#address_state_name:first').remove();
 

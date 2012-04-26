@@ -9,11 +9,12 @@ describe 'Addresses' do
       address.save
     }
 
+    before(:each) {
+      login_as user, :scope => :user
+    }
+
     it 'should be able to edit an address' do
-      visit spree.login_path
-      fill_in "user_email", :with => user.email
-      fill_in "user_password", :with => user.password
-      click_button "Login"
+      visit spree.root_path
 
       click_link "My Account"
       page.should have_content("Shipping Addresses")

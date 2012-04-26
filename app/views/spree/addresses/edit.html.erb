@@ -7,6 +7,7 @@
   div.inner label { width: auto; padding-right: 5px; display: inline-block; }
   form p.field span.req { float: none; }
 </style>
+<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @address } %>
 <%= form_for @address do |f| %>
 <fieldset>
   <div class="inner">

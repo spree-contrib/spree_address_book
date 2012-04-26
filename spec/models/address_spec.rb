@@ -8,6 +8,7 @@ describe Spree::Address do
     let(:address2) { FactoryGirl.create(:address) }
     let(:order) { FactoryGirl.create(:order) }
     let(:user) { FactoryGirl.create(:user) }
+
     before {
       order.bill_address = address2
       order.save
@@ -34,7 +35,8 @@ describe Spree::Address do
     end
 
     it 'is displayed as string' do
-      address.to_s.should eq("John Doe<br/>10 Lovely Street Northwest<br/>Herndon, Alabama 20170<br/>United States")
+      a = address
+      address.to_s.should eq("#{a.firstname} #{a.lastname}<br/>#{a.address1} #{a.address2}<br/>#{a.city}, #{a.state || a.state_name} #{a.zipcode}<br/>#{a.country}".html_safe)
     end
 
     it 'is destroyed without saving used' do

@@ -12,6 +12,7 @@ Spork.prefork do
 
   # gems
   require 'ffaker'
+  require 'capybara/rspec'
 
   # Requires for spree_core
   require 'spree/core/url_helpers'
@@ -36,13 +37,29 @@ Spork.prefork do
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
     # instead of true.
-    config.use_transactional_fixtures = true
+    config.use_transactional_fixtures = false
+    config.before(:suite) do
+      DatabaseCleaner.strategy = :truncation, { :only => %w[spree_users spree_addresses] }
+    end
+
+    config.before(:each) do
+      DatabaseCleaner.start
+    end
+
+    config.after(:each) do
+      DatabaseCleaner.clean
+    end
+
+    config.after(:suite) do
+      DatabaseCleaner.clean_with(:truncation)
+    end
 
     # DRasband - added to avoid the "undefined method `authenticate' for
     # nil:NilClass" error
     config.include Devise::TestHelpers, :type => :controller
     config.include Spree::Core::UrlHelpers
     config.include Spree::Core::TestingSupport::ControllerRequests, :type => :controller
+    config.include Warden::Test::Helpers
   end
 end
 
