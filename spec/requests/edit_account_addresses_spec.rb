@@ -29,7 +29,7 @@ describe "User editing addresses for his account" do
     fill_in "Street Address", :with => new_street
     click_button "Update"
     current_path.should == spree.account_path
-    page.should have_content("updated")
+    page.should have_content(I18n.t('successfully_updated'))
 
     within("#user-address-list > tbody > tr:first") do
       page.should have_content(new_street)

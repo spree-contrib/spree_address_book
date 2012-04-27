@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'spree/addresses/new' do
 
   it 'renders new.html.erb for new address' do
-    assign(:address, Spree::Address.default)
+    assign(:address, FactoryGirl.build(:address))
     render
     view.should render_template(:template => 'new')
 

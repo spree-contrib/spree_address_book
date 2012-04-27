@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Spree::Order do
   let(:order) { FactoryGirl.create(:order) }
-  let(:address) { FactoryGirl.create(:address) }
+  let(:address) { FactoryGirl.create(:address, :user => order.user) }
 
   describe 'mass attribute assignment for bill_address_id, ship_address_id' do
     it 'should be able to mass assign bill_address_id' do
