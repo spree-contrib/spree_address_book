@@ -1,3 +1,3 @@
-Spree::Core::Engine.routes.draw do
-  resources :addresses
+Spree::Core::Engine.routes.prepend do
+  resources :addresses, :only => [:edit, :update, :destroy]
 end

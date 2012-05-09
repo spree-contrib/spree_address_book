@@ -1,10 +1,6 @@
 source 'http://rubygems.org'
 
 group :test do
-  # gem 'sqlite3'
-  # gem 'rspec-rails'
-  # gem 'capybara'
-
   gem 'launchy'
   gem 'sass'
   gem 'database_cleaner'
@@ -17,5 +13,3 @@ group :test do
     gem 'growl'
   end
 end
-
-gemspec

@@ -1,20 +1,22 @@
 <h2><%= t(:shipping_addresses) %></h2>
 <% if current_user.addresses.present? %>
-<table id="user-address-list">
+<table id="user_addresses">
   <thead>
     <tr>
       <th><%= Spree::Address.model_name.human %></th>
-      <th colspan="2"></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-      <% current_user.addresses.each do |address| %>
-        <tr class="<%= cycle('even', 'odd') %>">
-          <td><%= address %></td>
-          <td><%= link_to t(:edit), edit_address_path(address) %></td>
-          <td><%= link_to t(:delete), address_path(address), :method => :delete, :confirm => t(:are_you_sure) %></td>
-        </tr>
-      <% end %>
+    <% current_user.addresses.each do |address| %>
+    <tr class="<%= cycle('even', 'odd') %>">
+      <td><%= address %></td>
+      <td>
+        <%= link_to t(:edit), edit_address_path(address) %>&nbsp;
+        <%= link_to t(:remove), address_path(address), :method => :delete, :confirm => t(:are_you_sure) %>
+      </td>
+    </tr>
+    <% end %>
   </tbody>
 </table>
 <% else %>
