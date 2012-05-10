@@ -13,3 +13,7 @@ group :test do
     gem 'growl'
   end
 end
+
+gem 'spree', '~> 1.1'
+
+gemspec

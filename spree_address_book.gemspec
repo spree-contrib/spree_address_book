@@ -1,11 +1,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_address_book'
-<<<<<<< HEAD
   s.version     = '1.1.0'
-=======
-  s.version     = '1.0.0.rc'
->>>>>>> romul/master
   s.summary     = 'Adds address book for users to Spree'
 
   s.description = 'Adds address book for users so that they can save shipping addresses to their accounts for later use.'

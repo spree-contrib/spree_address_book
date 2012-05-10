@@ -1,4 +1,6 @@
 Spree::Address.class_eval do
+  attr_accessible :user_id, :deleted_at
+  
   belongs_to :user
 
   def self.required_fields

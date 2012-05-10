@@ -12,15 +12,16 @@ describe "User editing addresses for his account" do
 
   it "should see list of addresses saved for account" do
     page.should have_content("Addresses")
-    page.should have_selector("#user-address-list > tbody > tr", :count => user.addresses.count)
+    page.should have_selector("#user_addresses > tbody > tr", :count => user.addresses.count)
   end
 
   it "should be able to add address" do
     
   end
 
-  it "should be able to edit address" do
-    within("#user-address-list > tbody > tr:first") do
+  it "should be able to edit address", :js => true do
+    page.evaluate_script('window.confirm = function() { return true; }')
+    within("#user_addresses > tbody > tr:first") do
       click_link I18n.t(:edit)
     end
     current_path.should == spree.edit_address_path(address)
@@ -31,7 +32,7 @@ describe "User editing addresses for his account" do
     current_path.should == spree.account_path
     page.should have_content(I18n.t('successfully_updated'))
 
-    within("#user-address-list > tbody > tr:first") do
+    within("#user_addresses > tbody > tr:first") do
       page.should have_content(new_street)
     end
   end
@@ -39,8 +40,8 @@ describe "User editing addresses for his account" do
   it "should be able to remove address", :js => true do
     # bypass confirm dialog
     page.evaluate_script('window.confirm = function() { return true; }')
-    within("#user-address-list > tbody > tr:first") do
-      click_link I18n.t(:delete)
+    within("#user_addresses > tbody > tr:first") do
+      click_link I18n.t(:remove)
     end
     current_path.should == spree.account_path
 
@@ -51,6 +52,6 @@ describe "User editing addresses for his account" do
     page.should have_content("Addresses")
 
     # table is not displayed unless addresses are available
-    page.should_not have_selector("#user-address-list")
+    page.should_not have_selector("#user_addresses")
   end
 end

@@ -13,7 +13,7 @@ Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each {|f| require f }
 # Requires factories defined in spree_core
 require 'spree/core/testing_support/factories'
 require 'spree/core/testing_support/env'
-require 'spree/url_helpers'
+require 'spree/core/url_helpers'
 
 RSpec.configure do |config|
   # == Mock Framework
@@ -32,7 +32,7 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = false
-  config.include Spree::UrlHelpers
+  config.include Spree::Core::UrlHelpers
 
   config.before(:each) do
     if example.metadata[:js]
