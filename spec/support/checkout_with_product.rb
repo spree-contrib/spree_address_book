@@ -22,11 +22,11 @@ shared_context "checkout with product" do
   def should_have_address_fields
     page.should have_field("First Name")
     page.should have_field("Last Name")
-    page.should have_field("Street Address")
+    page.should have_field(I18n.t('activerecord.attributes.spree/address.address1'))
     page.should have_field("City")
     page.should have_field("Country")
-    page.should have_field("Zip")
-    page.should have_field("Phone")
+    page.should have_field(I18n.t(:zip))
+    page.should have_field(I18n.t(:phone))
   end
 
   def complete_checkout
@@ -38,16 +38,16 @@ shared_context "checkout with product" do
   end
 
   def fill_in_address(address, type = :bill)
-    fill_in "First Name", :with => address.firstname
+    fill_in I18n.t(:first_name), :with => address.firstname
     fill_in "Last Name", :with => address.lastname
-    fill_in "Company", :with => address.company
-    fill_in "Street Address", :with => address.address1
-    fill_in "Street Address (cont'd)", :with => address.address2
+    fill_in "Company", :with => address.company if Spree::Config[:company]
+    fill_in I18n.t('activerecord.attributes.spree/address.address1'), :with => address.address1
+    fill_in I18n.t('activerecord.attributes.spree/address.address2'), :with => address.address2
     select address.state.name, :from => "order_#{type}_address_attributes_state_id"
-    fill_in "City", :with => address.city
-    fill_in "Zip", :with => address.zipcode
-    fill_in "Phone", :with => address.phone
-    fill_in "Alternative Phone", :with => address.alternative_phone
+    fill_in I18n.t(:city), :with => address.city
+    fill_in I18n.t(:zip), :with => address.zipcode
+    fill_in I18n.t(:phone), :with => address.phone
+    fill_in "Alternative phone", :with => address.alternative_phone
   end
 
   def expected_address_format(address)
