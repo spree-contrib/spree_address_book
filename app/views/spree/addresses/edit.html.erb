@@ -7,7 +7,7 @@
 <%= form_for @address do |f| %>
 <fieldset>
   <div class="inner">
-    <%= render :partial => 'addresses/form', :locals => {
+    <%= render :partial => 'spree/addresses/form', :locals => {
       :address_name => 'address',
       :address_form => f,
       :address => @address
