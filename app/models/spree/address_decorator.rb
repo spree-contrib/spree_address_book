@@ -12,7 +12,7 @@ Spree::Address.class_eval do
   # TODO: look into if this is actually needed. I don't want to override methods unless it is really needed
   def same_as?(other)
     return false if other.nil?
-    attributes.except('id', 'updated_at', 'created_at', 'user_id') ==  other.attributes.except('id', 'updated_at', 'created_at', 'user_id')
+    attributes.except('id', 'updated_at', 'created_at', 'user_id') == other.attributes.except('id', 'updated_at', 'created_at', 'user_id')
   end
 
   # can modify an address if it's not been used in an order
