@@ -23,9 +23,9 @@ shared_context "user with address" do
     FactoryGirl.create(:address, :address1 => Faker::Address.street_address, :state => state)
   end
 
-  let(:billing) { Factory.build(:address, :state => state) }
+  let(:billing) { FactoryGirl.build(:address, :state => state) }
   let(:shipping) do
-    Factory.build(:address, :address1 => Faker::Address.street_address, :state => state)
+    FactoryGirl.build(:address, :address1 => Faker::Address.street_address, :state => state)
   end
 
   let(:user) do

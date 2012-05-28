@@ -33,8 +33,8 @@ describe 'spree/addresses/edit' do
 
     rendered.should have_field('First Name', :with => address.firstname, :type => 'text')
     rendered.should have_field('Last Name', :with => address.lastname, :type => 'text')
-    rendered.should have_field('Street Address', :with => address.address1, :type => 'text')
-    rendered.should have_field("Street Address (cont'd)", :with => address.address2, :type => 'text')
+    rendered.should have_field(I18n.t('activerecord.attributes.spree/address.address1'), :with => address.address1, :type => 'text')
+    rendered.should have_field(I18n.t('activerecord.attributes.spree/address.address2'), :with => address.address2, :type => 'text')
     # Javascript can't be tested in views spec
     rendered.should have_selector('select#address_country_id', :type => 'text')
     # Javascript can't be tested in views spec

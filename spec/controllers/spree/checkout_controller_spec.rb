@@ -35,7 +35,11 @@ describe Spree::CheckoutController do
     end
     
     it "set address attributes" do
-      put_address_to_order(:bill_address_attributes => @address.clone.attributes, :ship_address_attributes => @address.clone.attributes)
+      # clone the unassigned address for easy creation of valid data
+      # remove blacklisted attributes to avoid mass-assignment error
+      cloned_attributes = @address.clone.attributes.select { |k,v| !['id', 'created_at', 'deleted_at', 'updated_at'].include? k }
+      
+      put_address_to_order(:bill_address_attributes => cloned_attributes, :ship_address_attributes => cloned_attributes)
       @order.bill_address_id.should_not == nil
       @order.ship_address_id.should_not == nil
       @order.bill_address_id.should == @order.ship_address_id

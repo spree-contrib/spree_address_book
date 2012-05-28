@@ -1,3 +1,5 @@
+//= require store/spree_core
+
 (function($) {
   $(document).ready(function(){
     if ($(".select_address").length) {

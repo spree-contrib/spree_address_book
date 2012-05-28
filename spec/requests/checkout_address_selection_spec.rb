@@ -32,13 +32,13 @@ describe "Address selection during checkout" do
     include_context "checkout with product"
     # include_context "user with address"
 
-    let(:billing) { Factory.build(:address, :state => state) }
+    let(:billing) { FactoryGirl.build(:address, :state => state) }
     let(:shipping) do
-      Factory.build(:address, :address1 => Faker::Address.street_address, :state => state)
+      FactoryGirl.build(:address, :address1 => Faker::Address.street_address, :state => state)
     end
     let(:user) do
-      u = Factory(:user)
-      u.addresses << Factory(:address, :address1 => Faker::Address.street_address, :state => state)
+      u = FactoryGirl.create(:user)
+      u.addresses << FactoryGirl.create(:address, :address1 => Faker::Address.street_address, :state => state)
       u.save
       u
     end
@@ -93,10 +93,11 @@ describe "Address selection during checkout" do
       
     describe "when invalid address is entered", :js => true do
       let(:address) do
-        Factory.build(:address, :firstname => nil, :state => state)
+        FactoryGirl.build(:address, :firstname => nil, :state => state)
       end
       
-      # TODO here on down isn't working
+      # TODO the JS error reporting isn't working with our current iteration
+      # this is what this piece of code ('field is required') tests
       it "should show address form with error" do
         within("#billing") do
           choose I18n.t(:other_address)
@@ -106,7 +107,6 @@ describe "Address selection during checkout" do
           choose I18n.t(:other_address)
           fill_in_address(address, :ship)
         end
-
         click_button "Save and Continue"
         within("#bfirstname") do
           page.should have_content("field is required")
@@ -142,7 +142,7 @@ describe "Address selection during checkout" do
   
     describe "using saved address for bill and new ship address", :js => true do
       let(:shipping) do
-        Factory.build(:address, :address1 => Faker::Address.street_address,
+        FactoryGirl.build(:address, :address1 => Faker::Address.street_address,
           :state => state)
       end
   
@@ -179,7 +179,7 @@ describe "Address selection during checkout" do
   
       it "should see form when new shipping address invalid" do
         address = user.addresses.first
-        shipping = Factory.build(:address, :address1 => nil, :state => state)
+        shipping = FactoryGirl.build(:address, :address1 => nil, :state => state)
         choose "order_bill_address_id_#{address.id}"
         within("#shipping") do
           choose I18n.t(:other_address)
@@ -223,7 +223,7 @@ describe "Address selection during checkout" do
   
     describe "using saved address for ship and new bill address", :js => true do
       let(:billing) do
-        Factory.build(:address, :address1 => Faker::Address.street_address, :state => state)
+        FactoryGirl.build(:address, :address1 => Faker::Address.street_address, :state => state)
       end
   
       it "should save 1 new address for user" do
@@ -256,15 +256,17 @@ describe "Address selection during checkout" do
           page.should have_content(expected_address_format(address))
         end
       end
-  
+    
+      # TODO not passing because inline JS validation not working
       it "should see form when new billing address invalid" do
         address = user.addresses.first
-        billing = Factory.build(:address, :address1 => nil, :state => state)
+        billing = FactoryGirl.build(:address, :address1 => nil, :state => state)
         choose "order_ship_address_id_#{address.id}"
         within("#billing") do
           choose I18n.t(:other_address)
           fill_in_address(billing)
         end
+
         click_button "Save and Continue"
         within("#baddress1") do
           page.should have_content("field is required")
@@ -285,7 +287,7 @@ describe "Address selection during checkout" do
             fill_in_address(address)
           end
           complete_checkout
-        end.should_not change{ user.addresses.count }
+        end.should_not change { user.addresses.count }
       end
     end
   end
