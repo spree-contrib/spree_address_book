@@ -9,3 +9,6 @@ nbproject
 *.swp
 *.bak
 spec/dummy
+Gemfile.lock
+.rvmrc
+.sass-cache
