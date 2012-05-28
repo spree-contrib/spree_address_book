@@ -3,13 +3,13 @@ require 'spec_helper'
 describe Spree::CheckoutController do
   
   before(:each) do
-    user = Factory.create(:user)
-    @address = Factory.create(:address, :user => user)
+    user = FactoryGirl.create(:user)
+    @address = FactoryGirl.create(:address, :user => user)
     
-    @order = Factory.create(:order, :bill_address_id => nil, :ship_address_id => nil)
-    @order.add_variant(Factory.create(:product).master, 1)
+    @order = FactoryGirl.create(:order, :bill_address_id => nil, :ship_address_id => nil)
+    @order.add_variant(FactoryGirl.create(:product).master, 1)
     @order.user = user
-    @order.shipping_method = Factory.create(:shipping_method)
+    @order.shipping_method = FactoryGirl.create(:shipping_method)
     @address.user = @order.user
     @order.save
     

@@ -20,14 +20,14 @@ describe Spree::Order do
 
   describe "Create order with the same bill & ship addresses" do
     it "should have equal ids when set ids" do
-      address = Factory.create(:address)
-      @order = Factory.create(:order, :bill_address_id => address.id, :ship_address_id => address.id)
+      address = FactoryGirl.create(:address)
+      @order = FactoryGirl.create(:order, :bill_address_id => address.id, :ship_address_id => address.id)
       @order.bill_address_id.should == @order.ship_address_id
     end
   
     it "should have equal ids when option use_billing is active" do
-      address = Factory.create(:address)
-      @order  = Factory.create(:order, :use_billing => true,
+      address = FactoryGirl.create(:address)
+      @order  = FactoryGirl.create(:order, :use_billing => true,
                         :bill_address_id => address.id, 
                         :ship_address_id => nil)
       @order = @order.reload
