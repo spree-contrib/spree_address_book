@@ -1,4 +1,6 @@
 Spree::CheckoutController.class_eval do
+  helper Spree::AddressesHelper
+  
   after_filter :normalize_addresses, :only => :update
   before_filter :set_addresses, :only => :update
   
@@ -20,7 +22,7 @@ Spree::CheckoutController.class_eval do
     end
     
   end
-  
+
   def normalize_addresses
     return unless params[:state] == "address" && @order.bill_address_id && @order.ship_address_id
     @order.bill_address.reload
