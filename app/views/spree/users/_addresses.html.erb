@@ -1,12 +1,6 @@
-<h2><%= t(:shipping_addresses) %></h2>
+<h3><%= t(:shipping_addresses) %></h3>
 <% if current_user.addresses.present? %>
 <table id="user_addresses">
-  <thead>
-    <tr>
-      <th><%= Spree::Address.model_name.human %></th>
-      <th></th>
-    </tr>
-  </thead>
   <tbody>
     <% current_user.addresses.each do |address| %>
     <tr class="<%= cycle('even', 'odd') %>">
