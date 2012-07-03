@@ -1,4 +1,4 @@
-CheckoutHelper.module_eval do
+module AddressesHelper
   def address_field(form, method, id_prefix = "b", &handler)
     content_tag :p, :id => [id_prefix, method].join, :class => "field" do
       if handler
