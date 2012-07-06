@@ -1,4 +1,4 @@
-class Spree::AddressAbility
+class AddressAbility
   include CanCan::Ability
 
   def initialize(user)
