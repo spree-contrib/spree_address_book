@@ -7,17 +7,17 @@ Gem::Specification.new do |s|
   s.description = 'Adds address book for users so that they can save shipping addresses to their accounts for later use.'
   s.required_ruby_version = '>= 1.8.7'
 
-  s.author            = 'Dan Rasband'
-  s.email             = 'dan@agencyfusion.com'
-  s.homepage          = 'http://github.com/danrasband/spree_address_book'
+  s.author            = 'Roman Smirnov'
+  s.email             = 'roman@railsdog.com'
+  s.homepage          = 'http://github.com/romul/spree_address_book'
 
   #s.files         = `git ls-files`.split("\n")
   #s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency('spree_core', '>= 1.0.0')
-  s.add_dependency('spree_auth', '>= 1.0.0')
+  s.add_dependency('spree_core', '~> 1.1.0')
+  s.add_dependency('spree_auth', '~> 1.1.0')
 
   # test suite
   s.add_development_dependency 'shoulda-matchers'

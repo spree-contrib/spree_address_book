@@ -7,7 +7,7 @@ class Spree::AddressAbility
     end
 
     can :create, Spree::Address do |address|
-      !user.id.nil?
+      user.id.present?
     end
   end
 end
