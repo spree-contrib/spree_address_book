@@ -63,7 +63,6 @@ describe "Address selection during checkout" do
     end
       
     it "should save 2 addresses for user if they are different", :js => true do
-      puts "COMPANY? #{Spree::Config[:company]}"
       expect do
         within("#billing") do
           choose I18n.t(:other_address)
@@ -74,7 +73,7 @@ describe "Address selection during checkout" do
           fill_in_address(shipping, :ship)
         end
         complete_checkout
-      end.should change { user.addresses.count }.by(2)
+      end.to change { user.addresses.count }.by(2)
     end
   
     it "should save 1 address for user if they are the same" do
@@ -88,7 +87,7 @@ describe "Address selection during checkout" do
           fill_in_address(billing, :ship)
         end
         complete_checkout
-      end.should change { user.addresses.count }.by(1)
+      end.to change { user.addresses.count }.by(1)
     end
       
     describe "when invalid address is entered", :js => true do
@@ -155,7 +154,7 @@ describe "Address selection during checkout" do
             fill_in_address(shipping, :ship)
           end
           complete_checkout
-        end.should change{ user.addresses.count }.by(1)
+        end.to change{ user.addresses.count }.by(1)
       end
   
       it "should assign addresses to orders" do
@@ -217,7 +216,7 @@ describe "Address selection during checkout" do
           choose "order_bill_address_id_#{address.id}"
           check "Use Billing Address"
           complete_checkout
-        end.should_not change{ user.addresses.count }
+        end.to_not change{ user.addresses.count }
       end
     end
   
@@ -235,7 +234,7 @@ describe "Address selection during checkout" do
             fill_in_address(billing)
           end
           complete_checkout
-        end.should change{ user.addresses.count }.by(1)
+        end.to change{ user.addresses.count }.by(1)
       end
   
       it "should assign addresses to orders" do
@@ -287,7 +286,7 @@ describe "Address selection during checkout" do
             fill_in_address(address)
           end
           complete_checkout
-        end.should_not change { user.addresses.count }
+        end.to_not change { user.addresses.count }
       end
     end
   end
