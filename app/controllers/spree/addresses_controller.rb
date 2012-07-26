@@ -13,7 +13,10 @@ class Spree::AddressesController < Spree::BaseController
         flash[:notice] = I18n.t(:successfully_updated, :resource => I18n.t(:address))
       end
     else
-      new_address = @address.clone
+      # replaced with .dup since clone produces a MassAssignmentSecurity::Error 
+      # (rdb:3) new_address = @address.clone
+      # ActiveModel::MassAssignmentSecurity::Error Exception: Can't mass-assign protected attributes: user_id, deleted_at
+      new_address = @address.dup
       new_address.attributes = params[:address]
       @address.update_attribute(:deleted_at, Time.now)
       if new_address.save
