@@ -16,13 +16,6 @@ require 'spree/core/testing_support/env'
 require 'spree/core/url_helpers'
 
 RSpec.configure do |config|
-  # == Mock Framework
-  #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-  #
-  # config.mock_with :mocha
-  # config.mock_with :flexmock
-  # config.mock_with :rr
   config.mock_with :rspec
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -33,6 +26,7 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = false
   config.include Spree::Core::UrlHelpers
+  # config.include Spree::AddressBook::Engine::UrlHelpers
 
   config.before(:each) do
     if example.metadata[:js]
