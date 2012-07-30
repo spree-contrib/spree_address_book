@@ -34,7 +34,7 @@ Spree::Address.class_eval do
     if can_be_deleted?
       super
     else
-      update_attribute(:deleted_at, Time.now)
+      update_column(:deleted_at, Time.now)
     end
   end
 end

@@ -28,10 +28,10 @@ Spree::CheckoutController.class_eval do
 
       if @order.bill_address_id != @order.ship_address_id && @order.bill_address.same_as?(@order.ship_address)
         @order.bill_address.destroy
-        @order.update_attribute(:bill_address_id, @order.ship_address.id)
+        @order.update_column(:bill_address_id, @order.ship_address.id)
       else
-        @order.bill_address.update_attribute(:user_id, current_user.try(:id))
+        @order.bill_address.update_column(:user_id, current_user.try(:id))
       end
-      @order.ship_address.update_attribute(:user_id, current_user.try(:id))
+      @order.ship_address.update_column(:user_id, current_user.try(:id))
     end
 end
