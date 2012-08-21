@@ -1,10 +1,7 @@
 module Spree::AddressesHelper
   def address_field(form, method, id_prefix = "b", &handler)
-    # stay in line with the default spree method of p#id naming
-    # this ensures that JS state selection, and other future checkout.js things, will keep working
-    id_prefix = id_prefix[0] if id_prefix.length > 1
-
-    content_tag :p, :id => [id_prefix, method].join(''), :class => "field" do
+    id_prefix = id_prefix == 'bill_address' ? 'b' : 's'
+    content_tag :p, :id => [id_prefix, method].join, :class => "field" do
       if handler
         handler.call
       else

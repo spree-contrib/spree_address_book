@@ -1,9 +1,9 @@
+<% country_id = address_type == 'billing' ? 'bcountry' : 'scountry' %>
 <% ADDRESS_FIELDS.each do |field| %>
   <% if field == "country" %>
-	<%= address_field(address_form, :country, address_name) do %>
-		<%= address_form.label :country_id, t(field, :scope => [:activerecord, :attributes, "spree/address"]) %><span class="req">*</span><br />
-		<span id="<%= address_name[0] %>country"><%= address_form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required'} %></span>
-	<% end %>
+    <p class="field" id="<%= country_id %>">
+    <%= address_form.label :country_id, t(field, :scope => [:activerecord, :attributes, :address]) %><span class="req">*</span><br />
+    <span id="<%= country_id %>"><%= address_form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required'} %></span>
   <% elsif field == "state" && Spree::Config[:address_requires_state] %>
     <%= address_field(address_form, :state, address_name) { address_state(address_form, address.country) } %>
   <% else %>
