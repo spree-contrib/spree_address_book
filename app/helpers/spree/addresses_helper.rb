@@ -5,7 +5,7 @@ module Spree::AddressesHelper
         handler.call
       else
         is_required = Spree::Address.required_fields.include?(method)
-        separator = is_required ? '<span class="req">*</span><br />' : '<br />' 
+        separator = is_required ? '<span class="required">*</span><br />' : '<br />' 
         form.label(method) + separator.html_safe + 
         form.text_field(method, :class => is_required ? 'required' : nil)
       end
@@ -26,7 +26,7 @@ module Spree::AddressesHelper
                       :disabled => have_states)
       ].join.gsub('"', "'").gsub("\n", "")
            
-    form.label(:state, t(:state)) + '<span class="req">*</span><br />'.html_safe +
+    form.label(:state, t(:state)) + '<span class="required">*</span><br />'.html_safe +
       content_tag(:noscript, form.text_field(:state_name, :class => 'required')) +
       javascript_tag("document.write(\"#{state_elements.html_safe}\");")
   end
