@@ -59,7 +59,6 @@ Spree::Order.class_eval do
     
     if !attributes[:id]
       address = Spree::Address.new(attributes)
-      address.save
     end
     
     address
