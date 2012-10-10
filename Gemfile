@@ -1,6 +1,12 @@
 source "http://rubygems.org"
-
 gemspec
 
-gem 'spree', '~> 1.0.0'
-gem 'sqlite3'
+group :test do
+  if RUBY_PLATFORM.downcase.include? "darwin"
+    gem 'rb-fsevent'
+    gem 'growl'
+    gem 'guard-rspec'
+  end
+end
+
+gem 'spree', '~> 1.1.3'
