@@ -1,0 +1,14 @@
+div.inner input[type=text], div.inner select {
+  width: 80%;
+}
+
+div#checkout #checkout_form_address #billing .select_address label, div#checkout #checkout_form_address #shipping .select_address label {
+  float: none;
+}
+div#checkout #checkout_form_address #billing input[type=radio], div#checkout #checkout_form_address #shipping input[type=radio] {
+  width: auto;
+}
+
+.hidden {
+  display: none;
+}
