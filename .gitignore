@@ -9,3 +9,4 @@ nbproject
 *.swp
 *.bak
 spec/dummy
+Gemfile.lock
