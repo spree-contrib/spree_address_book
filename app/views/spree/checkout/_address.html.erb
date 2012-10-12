@@ -7,23 +7,22 @@
 <fieldset id="<%= address_type %>">
   <legend><%= t(address_type + "_address")%></legend>
   <% if address_type == 'shipping' && !Spree::AddressBook::Config[:disable_bill_address] %>
-    <p class="field checkbox">
-      <label for="order_use_billing" id="use_billing">
-        <%= check_box_tag 'order[use_billing]', '1', (!(@order.bill_address.empty? && @order.ship_address.empty?) && @order.bill_address.eql?(@order.ship_address)) %> <%= t("use_billing_address") %>
-      </label>
+    <p class="field checkbox"  data-hook="use_billing">
+      <%= check_box_tag 'order[use_billing]', '1', (!(@order.bill_address.empty? && @order.ship_address.empty?) && @order.bill_address.same_as?(@order.ship_address)) %> 
+      <%= label_tag :order_use_billing, t(:use_billing_address), :id => 'use_billing' %>
     </p>
   <% end %>
   <% if @addresses.present? %>
-    <div class="select_address">
-      <p class="field">
-        <% @addresses.each_with_index do |address, idx| %>
-        <span id="<%= [address_type, dom_id(address)].join('_') %>">
-          <label><%= form.radio_button "#{address_name}_id", address.id, :checked => (idx == 0) %> <%= address %></label> <%= link_to t(:edit), edit_address_path(address) %><br />
-        </span>
-        <% end %>
-        <label><%= form.radio_button "#{address_name}_id", 0 %> <%= t('other_address') %></label>
-      </p>
-    </div>
+  <div class="select_address">
+    <p class="field">
+      <% @addresses.each_with_index do |address, idx| %>
+      <span id="<%= [address_type, dom_id(address)].join('_') %>">
+        <label><%= form.radio_button "#{address_name}_id", address.id, :checked => (idx == 0) %> <%= address %></label> <%= link_to t(:edit), edit_address_path(address) %><br />
+      </span>
+      <% end %>
+      <label><%= form.radio_button "#{address_name}_id", 0 %> <%= t('other_address') %></label>
+    </p>
+  </div>
   <% end %>
   <%= form.fields_for address_name do |address_form| %>
     <div class="inner">
