@@ -1,5 +1,5 @@
 Spree::Core::Engine.routes.prepend do
-  namespace :account do
-    resources :addresses, :only => [:new, :edit, :update, :destroy]
+  resources :users do
+    resources :addresses
   end
 end
