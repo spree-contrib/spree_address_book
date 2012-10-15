@@ -25,7 +25,7 @@ Spree::Address.class_eval do
   end
 
   def to_s
-    "#{firstname} #{lastname}: #{zipcode}, #{country}, #{state || state_name}, #{city}, #{address1} #{address2}"
+    "#{firstname} #{lastname}, #{address1} #{address2}, #{city}, #{state || state_name} #{zipcode}, #{country}"
   end
 
   # UPGRADE_CHECK if future versions of spree have a custom destroy function, this will break

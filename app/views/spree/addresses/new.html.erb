@@ -1,6 +1,7 @@
+<%= content_tag(:h1, ) %>
 <%= form_for @address do |f| %>
 <fieldset>
-  <%= content_tag(:legend, t(:edit_shipping_address)) %>
+  <%= content_tag(:legend, t(:new_shipping_address)) %>  
   <div class="inner">
     <%= render :partial => 'spree/addresses/form', :locals => {
       :address_name => 'address',

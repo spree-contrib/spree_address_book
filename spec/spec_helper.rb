@@ -43,6 +43,9 @@ RSpec.configure do |config|
   config.before(:each) do
     DatabaseCleaner.start
     reset_spree_preferences
+
+    # the demo data doesn't include all the countries for some reason...
+    Spree::Config[:default_country_id] = Spree::Country.find_by_iso3('USA').id
   end
 
   config.after(:each) do

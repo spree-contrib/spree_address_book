@@ -1,7 +1,7 @@
 Spree::CheckoutController.class_eval do
   after_filter :normalize_addresses, :only => :update
   before_filter :set_addresses, :only => :update
-  
+  helper Spree::AddressesHelper
   protected
   
   def set_addresses
