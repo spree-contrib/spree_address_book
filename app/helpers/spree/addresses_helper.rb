@@ -1,4 +1,4 @@
-module Spree::AddressBookHelper
+module Spree::AddressesHelper
   def address_field(form, method, id_prefix = "b", &handler)
     # stay in line with the default spree method of p#id naming
     # this ensures that JS state selection, and other future checkout.js things, will keep working
