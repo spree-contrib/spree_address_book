@@ -1,18 +1,18 @@
 require 'spec_helper'
 
 describe 'spree/addresses/new' do
+  let(:address) { FactoryGirl.build(:address) }
 
   it 'renders new.html.erb for new address' do
-    assign(:address, FactoryGirl.build(:address))
-    render
-    view.should render_template(:template => 'new')
+    assign(:address, address)
+    render :template => 'spree/addresses/new', :address => address
 
     rendered.should have_content('New Shipping Address')
 
     rendered.should have_field('First Name', :type => 'text')
     rendered.should have_field('Last Name', :type => 'text')
-    rendered.should have_field('Street Address', :type => 'text')
-    rendered.should have_field("Street Address (cont'd)", :type => 'text')
+    rendered.should have_field(I18n.t('activerecord.attributes.spree/address.address1'), :type => 'text')
+    rendered.should have_field(I18n.t('activerecord.attributes.spree/address.address2'), :type => 'text')
     # Javascript can't be tested in views spec
     rendered.should have_selector('select#address_country_id', :type => 'text')
     # Javascript can't be tested in views spec
@@ -46,8 +46,7 @@ describe 'spree/addresses/edit' do
 end
 
 
-# Define a few methods to deal with problems in the views, due to the usage of
-# form_for @address.
+# a few methods to deal with problems in the views, due to the usage of form_for @address.
 def address_path(address, format)
   return spree.address_path(address, format)
 end

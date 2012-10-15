@@ -1,5 +1,5 @@
 Spree::CheckoutController.class_eval do
-  helper Spree::AddressBookHelper
+  helper Spree::AddressesHelper
   
   after_filter :normalize_addresses, :only => :update
   before_filter :set_addresses, :only => :update
