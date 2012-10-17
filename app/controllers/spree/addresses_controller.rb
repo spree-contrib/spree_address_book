@@ -9,6 +9,10 @@ module Spree
 
     def edit
       session["user_return_to"] = request.env['HTTP_REFERER']
+
+      respond_to do |format|
+        format.html { render :layout => ! request.xhr? }
+      end
     end
     
     def update
