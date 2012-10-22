@@ -1,8 +1,8 @@
 <h3><%= t(:shipping_addresses) %></h3>
-<% if current_user.addresses.present? %>
+<% if spree_current_user.addresses.present? %>
 <table id="user_addresses">
   <tbody>
-    <% current_user.addresses.each do |address| %>
+    <% spree_current_user.addresses.each do |address| %>
     <tr class="<%= cycle('even', 'odd') %>">
       <td><%= address %></td>
       <td>
@@ -15,7 +15,7 @@
 </table>
 <% else %>
 <div id="users-address-list-empty">
-<%= t(:no_shipping_addresses_on_file) %>
+  <%= t(:no_shipping_addresses_on_file) %>
 </div>
 <% end %>
 <div id="new_address_link">

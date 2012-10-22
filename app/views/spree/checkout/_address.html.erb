@@ -1,4 +1,4 @@
-<% @addresses = current_user ? current_user.addresses : [] %>
+<% @addresses = spree_current_user ? spree_current_user.addresses : [] %>
 
 <% ['billing', 'shipping'].each do |address_type|
   next if address_type == 'billing' && Spree::AddressBook::Config[:disable_bill_address]
