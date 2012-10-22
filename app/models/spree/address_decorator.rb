@@ -1,5 +1,5 @@
 Spree::Address.class_eval do
-  belongs_to :user
+  belongs_to :user, :class_name => Spree.user_class.to_s
 
   attr_accessible :user_id, :deleted_at
 
