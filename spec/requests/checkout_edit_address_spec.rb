@@ -15,7 +15,7 @@ describe "User editing saved address during checkout", :js => true do
     new_street = Faker::Address.street_address
     fill_in I18n.t('activerecord.attributes.spree/address.address1'), :with => new_street
     click_button "Update"
-    current_path.should == spree.checkout_path
+    current_path.should == spree.checkout_state_path('address')
     within("h1") { page.should have_content("Checkout") }
     within("#billing") do
       page.should have_content(new_street)
@@ -30,7 +30,7 @@ describe "User editing saved address during checkout", :js => true do
     new_street = Faker::Address.street_address
     fill_in I18n.t('activerecord.attributes.spree/address.address1'), :with => new_street
     click_button "Update"
-    current_path.should == spree.checkout_path
+    current_path.should == spree.checkout_state_path('address')
     within("h1") { page.should have_content("Checkout") }
     within("#shipping") do
       page.should have_content(new_street)
