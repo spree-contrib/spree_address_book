@@ -25,7 +25,13 @@ Spree::Address.class_eval do
   end
 
   def to_s
-    "#{firstname} #{lastname}, #{address1} #{address2}, #{city}, #{state || state_name} #{zipcode}, #{country}"
+    [
+      "#{firstname} #{lastname}",
+      "#{address1}",
+      "#{address2}",
+      "#{city}, #{state || state_name} #{zipcode}",
+      "#{country}"
+    ].join("<br/>").html_safe
   end
 
   # UPGRADE_CHECK if future versions of spree have a custom destroy function, this will break
