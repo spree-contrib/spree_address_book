@@ -18,7 +18,14 @@ Spree::Address.class_eval do
   end
   
   def to_s
-    "#{firstname} #{lastname}: #{zipcode}, #{country}, #{state || state_name}, #{city}, #{address1} #{address2}"
+    country_name ||= Spree::Country.find_by_id(country_id).name
+    state_name ||= Spree::State.find_by_id(state_id).name
+
+    if address2.empty?
+      "#{firstname} #{lastname}: #{address1}, #{city}, #{state_name}, #{country_name}, #{zipcode}"
+    else
+      "#{firstname} #{lastname}: #{address1} #{address2}, #{city}, #{state_name}, #{country_name}, #{zipcode}"
+    end
   end
   
   def destroy_with_saving_used
