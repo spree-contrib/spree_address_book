@@ -2,6 +2,8 @@ source "http://rubygems.org"
 gemspec
 
 group :test do
+  gem 'sass'
+  
   if RUBY_PLATFORM.downcase.include? "darwin"
     gem 'rb-fsevent'
     gem 'growl'
