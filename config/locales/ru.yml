@@ -1,2 +1,12 @@
 ru:
   other_address: "Другой адрес"
+  add_new_shipping_address: "Добавить новый адрес"
+  new_shipping_address: "Новый адрес"
+  edit_shipping_address: "Редактирование адреса"
+  no_shipping_addresses_on_file: "Вы пока не указали ни одного адреса"
+  shipping_addresses: "Адреса"
+  successfully_saved: "Успешно сохранен"
+  unsuccessfully_saved: "Возникла ошибка при попытке сохранить ваш адрес."
+  successfully_updated: "Успешно обновлён"
+  unsuccessfully_updated: "Возникла ошибка при попытке обновить ваш адрес."
+  save: "Сохранить"
