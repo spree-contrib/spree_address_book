@@ -8,13 +8,13 @@ describe 'Addresses' do
       visit spree.root_path
 
       click_link I18n.t(:login)
-      sign_in!(user);
+      sign_in!(user)
       click_link I18n.t(:my_account)
 
-      page.should have_content("Shipping Addresses")
+      page.should have_content(I18n.t(:shipping_addresses))
 
-      click_link "Add new shipping address"
-      page.should have_content("New Shipping Address")
+      click_link I18n.t(:add_new_shipping_address)
+      page.should have_content(I18n.t(:new_shipping_address))
     end
   end
 
