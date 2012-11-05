@@ -47,18 +47,20 @@ Spree::Order.class_eval do
   private
   
   def update_or_create_address(attributes)
-    address = nil
     if attributes[:id]
       address = Spree::Address.find(attributes[:id])
+      attributes.delete(:id)
+
       if address && address.editable?
         address.update_attributes(attributes)
       else
         attributes.delete(:id)
       end
     end
-    
+
     if !attributes[:id]
       address = Spree::Address.new(attributes)
+      address.save
     end
     
     address

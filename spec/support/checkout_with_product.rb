@@ -47,9 +47,7 @@ shared_context "checkout with product" do
     fill_in I18n.t(:city), :with => address.city
     fill_in I18n.t(:zip), :with => address.zipcode
     fill_in I18n.t(:phone), :with => address.phone
-
-    # TODO we are currently missing the alternative phone field, once this exists, this should be added back in 
-    # fill_in 'Alternative phone', :with => address.alternative_phone if Spree::Config[:alternative_billing_phone]
+    fill_in 'Alternative phone', :with => address.alternative_phone if Spree::Config[:alternative_billing_phone]
   end
 
   def expected_address_format(address)
