@@ -1,4 +1,4 @@
-<% country_id = address_type == 'billing' ? 'bcountry' : 'scountry' %>
+<% country_id = defined?(address_type) ? (address_type == 'billing' ? 'bcountry' : 'scountry') : 'country' %>
 <% ADDRESS_FIELDS.each do |field| %>
   <% if field == "country" %>
     <p class="field" id="<%= country_id %>">
