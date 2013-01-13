@@ -3,7 +3,7 @@
   <% if field == "country" %>
     <p class="field" id="<%= country_id %>">
     <%= address_form.label :country_id, t(field, :scope => [:activerecord, :attributes, :address]) %><span class="req">*</span><br />
-    <span id="<%= country_id %>"><%= address_form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required'} %></span>
+    <span id="<%= country_id %>-selection"><%= address_form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required'} %></span>
   <% elsif field == "state" && Spree::Config[:address_requires_state] %>
     <%= address_field(address_form, :state, address_name) { address_state(address_form, address.country) } %>
   <% else %>
