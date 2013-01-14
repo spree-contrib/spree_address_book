@@ -20,7 +20,7 @@
         <label><%= form.radio_button "#{address_name}_id", address.id, :checked => (idx == 0) %> <%= address %></label> <%= link_to t(:edit), edit_address_path(address) %><br />
       </span>
       <% end %>
-      <label><%= form.radio_button "#{address_name}_id", 0 %> <%= t('other_address') %></label>
+      <label><%= form.radio_button "#{address_name}_id", 0 %> <%= t('other_address', :scope => :address_book) %></label>
     </p>
   </div>
   <% end %>
