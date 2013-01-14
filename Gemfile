@@ -12,5 +12,7 @@ group :test do
   end
 end
 
+gem 'devise'
+gem 'devise-encryptable'
 gem 'spree_auth_devise', :git => 'git://github.com/spree/spree_auth_devise'
-gem 'spree', '~> 1.2'
+gem 'spree', '~> 1.2.1'
