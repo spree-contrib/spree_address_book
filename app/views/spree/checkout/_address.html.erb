@@ -25,7 +25,7 @@
   </div>
   <% end %>
   <%= form.fields_for address_name do |address_form| %>
-    <div class="inner">
+    <div class="inner" data-hook=<%="#{address_type}_inner" %>>
       <%= render :partial => 'spree/addresses/form', :locals => {
         :address_name => address_name,
         :address_form => address_form,
@@ -38,7 +38,7 @@
 </div>
 <% end %>
 
-<hr class="space" />
+<hr class="clear" />
 <div class="form-buttons" data-hook="buttons">
   <%= submit_tag t(:save_and_continue), :class => 'continue button primary' %>
 </div>
