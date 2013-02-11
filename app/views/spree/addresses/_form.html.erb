@@ -1,11 +1,40 @@
+<% address_id = address_type.chars.first %>
 <% country_id = address_type == 'billing' ? 'bcountry' : 'scountry' %>
 <% ADDRESS_FIELDS.each do |field| %>
   <% if field == "country" %>
-    <p class="field" id="<%= country_id %>">
-    <%= address_form.label :country_id, t(field, :scope => [:activerecord, :attributes, :address]) %><span class="req">*</span><br />
-    <span id="<%= country_id %>"><%= address_form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required'} %></span>
+
+  <p class="field" id=<%="#{address_id}country" %>>
+    <%= address_form.label :country_id, t(:country) %><span class="required">*</span><br />
+    <span id=<%="#{address_id}country-selection" %>>
+      <%= address_form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required'} %>
+    </span>
+
+  </p>
   <% elsif field == "state" && Spree::Config[:address_requires_state] %>
-    <%= address_field(address_form, :state, address_name) { address_state(address_form, address.country) } %>
+
+    <p class="field" id=<%="#{address_id}state" %>>
+      <% have_states = !address.country.states.empty? %>
+      <%= address_form.label :state, t(:state) %><span class='required' id=<%="#{address_id}state-required"%>>*</span><br/>
+
+      <% state_elements = [
+         address_form.collection_select(:state_id, address.country.states,
+                            :id, :name,
+                            {:include_blank => true},
+                            {:class => have_states ? 'required' : 'hidden',
+                            :disabled => !have_states}) +
+         address_form.text_field(:state_name,
+                            :class => !have_states ? 'required' : 'hidden',
+                            :disabled => have_states)
+         ].join.gsub('"', "'").gsub("\n", "")
+      %>
+      <%= javascript_tag do -%>
+        $('#<%="#{address_id}state" %>').append("<%== state_elements %>");
+      <% end %>
+    </p>
+      <noscript>
+        <%= address_form.text_field :state_name, :class => 'required' %>
+      </noscript>
+
   <% else %>
     <% next if field == "company" && !Spree::Config[:company] %>
     <%= address_field(address_form, field.to_sym, address_name) %>
