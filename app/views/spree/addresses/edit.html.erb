@@ -1,4 +1,9 @@
-<%= form_for @address do |f| %>
+<% content_for :head do %>
+  <%= javascript_include_tag states_url(:format => :js) %>
+  <%= javascript_include_tag countries_url(:format => :js) %>
+<% end %>
+
+<%= form_for @address, :html => { :id => "checkout_form_address"} do |f| %>
 <fieldset>
   <%= content_tag(:legend, t(:edit_shipping_address, :scope => :address_book)) %>
   <div class="inner">
