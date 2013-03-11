@@ -5,7 +5,7 @@
 
   <p class="field" id=<%="#{address_id}country" %>>
     <%= address_form.label :country_id, t(:country) %><span class="required">*</span><br />
-    <span id=<%="#{address_id}country-selection" %>>
+    <span id=<%="#{address_id}country" %>>
       <%= address_form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required'} %>
     </span>
 
@@ -14,25 +14,26 @@
 
     <p class="field" id=<%="#{address_id}state" %>>
       <% have_states = !address.country.states.empty? %>
-      <%= address_form.label :state, t(:state) %><span class='required' id=<%="#{address_id}state-required"%>>*</span><br/>
+
+      <%= address_form.label :state, t(:state) %><%= state_required_label %><br />
 
       <% state_elements = [
          address_form.collection_select(:state_id, address.country.states,
                             :id, :name,
                             {:include_blank => true},
-                            {:class => have_states ? 'required' : 'hidden',
-                            :disabled => !have_states}) +
+                            {:class => have_states ? state_required_class : 'hidden',
+                              :disabled => !have_states}) +
          address_form.text_field(:state_name,
-                            :class => !have_states ? 'required' : 'hidden',
+                            :class => !have_states ? state_required_class : 'hidden',
                             :disabled => have_states)
          ].join.gsub('"', "'").gsub("\n", "")
       %>
       <%= javascript_tag do -%>
-        $('#<%="#{address_id}state" %>').append("<%== state_elements %>");
+        document.write("<%== state_elements %>");
       <% end %>
     </p>
       <noscript>
-        <%= address_form.text_field :state_name, :class => 'required' %>
+        <%= address_form.text_field :state_name, :class => state_required_class %>
       </noscript>
 
   <% else %>
