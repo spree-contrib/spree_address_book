@@ -11,10 +11,10 @@ describe 'Addresses' do
       sign_in!(user)
       click_link I18n.t(:my_account)
 
-      page.should have_content(I18n.t(:shipping_addresses))
-
-      click_link I18n.t(:add_new_shipping_address)
-      page.should have_content(I18n.t(:new_shipping_address))
+      page.should have_content(I18n.t('address_book.shipping_addresses'))
+      sleep(70)
+      click_link I18n.t('address_book.add_new_shipping_address')
+      page.should have_content(I18n.t('address_book.new_shipping_address'))
     end
   end
 
