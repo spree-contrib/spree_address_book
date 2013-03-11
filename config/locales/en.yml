@@ -14,3 +14,9 @@ en:
     successfully_updated: "Updated successfully"
     unsuccessfully_updated: "There was an update while trying to update your address."
     save: "Save"
+  activerecord:
+    attributes:
+      spree/order/bill_address:
+        base: "Billing address:"
+      spree/order/ship_address:
+        base: "Shipping address:"

@@ -1,6 +1,6 @@
 Spree::Address.class_eval do
   belongs_to :user, :class_name => Spree.user_class.to_s
-
+  validates_with UspsAddressValidator
   attr_accessible :user_id, :deleted_at
 
   def self.required_fields
