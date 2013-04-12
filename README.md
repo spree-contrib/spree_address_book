@@ -9,7 +9,7 @@ Installation
 
       Add
       `gem "spree_address_book", :git => "git://github.com/romul/spree_address_book.git"`
-      `gem "usps_standardizer",  :git => "git://github.com/romul/usps_standardizer.git"`
+      `gem "usps_standardizer",  :git => "git://github.com/jumph4x/usps_standardizer.git"`
       Run `bundle install`
       Run `rails g spree_address_book:install`
 

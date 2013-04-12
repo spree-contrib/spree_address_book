@@ -3,7 +3,7 @@ class UspsAddressValidator < ActiveModel::Validator
     begin
       return if record.country.iso != 'US'
       state = record.state ? record.state.abbr : record.state_name
-      USPSStandardizer.lookup_for(:address => record.address1, :state => state, :city => record.city, :zipcode => record.zipcode)
+      USPSStandardizer.lookup_for(:address => record.address1, :address2 => record.address2, :state => state, :city => record.city, :zipcode => record.zipcode)
     rescue USPSStandardizer::Error => ex
       record.errors.add(:base, ex.message)
     rescue Exception # ex. USPS isn't available
