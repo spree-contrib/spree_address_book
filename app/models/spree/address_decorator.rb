@@ -1,5 +1,7 @@
 Spree::Address.class_eval do
   belongs_to :user, :class_name => Spree.user_class.to_s
+  belongs_to :country, :class_name => 'Spree::Country'
+  belongs_to :state, :class_name => 'Spree::State'
 
   attr_accessible :user_id, :deleted_at
 
@@ -41,5 +43,10 @@ Spree::Address.class_eval do
     else
       update_column :deleted_at, Time.now
     end
+  end
+
+  # set state_name column if provided state is String
+  def state=(state)
+    state.is_a?(Spree::State) ? super : self.state_name = state
   end
 end
