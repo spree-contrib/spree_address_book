@@ -41,7 +41,7 @@ shared_context "checkout with product" do
     fill_in I18n.t(:first_name), :with => address.firstname
     fill_in "Last Name", :with => address.lastname
     fill_in "Company", :with => address.company if Spree::Config[:company]
-    fill_in I18n.t('activerecord.attributes.spree/address.address1'), :with => address.address1
+    first(:fillable_field, I18n.t('activerecord.attributes.spree/address.address1')).set(address.address1)
     fill_in I18n.t('activerecord.attributes.spree/address.address2'), :with => address.address2
     select address.state.name, :from => "order_#{type}_address_attributes_state_id"
     fill_in I18n.t(:city), :with => address.city
@@ -51,6 +51,6 @@ shared_context "checkout with product" do
   end
 
   def expected_address_format(address)
-    Nokogiri::HTML(address.to_s).text
+    address.to_s.gsub('<br/>', ' ')
   end
 end

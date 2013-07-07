@@ -1,10 +1,12 @@
 require 'spec_helper'
 
-describe 'spree/addresses/new' do
+describe 'spree/addresses/new.html.erb' do
   let(:address) { FactoryGirl.build(:address) }
 
   it 'renders new.html.erb for new address' do
     assign(:address, address)
+    log = Logger.new STDOUT
+    # log.info controller.states_url
     render :template => 'spree/addresses/new', :address => address
 
     rendered.should have_content('New Shipping Address')
