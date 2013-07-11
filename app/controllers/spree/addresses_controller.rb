@@ -12,7 +12,7 @@ class Spree::AddressesController < Spree::StoreController
   end
 
   def edit
-    session["user_return_to"] = request.env['HTTP_REFERER']
+    session["spree_user_return_to"] = request.env['HTTP_REFERER']
   end
 
   def new
