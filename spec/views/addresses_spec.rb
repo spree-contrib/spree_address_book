@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'spree/addresses/new' do
+describe 'spree/addresses/new.html.erb' do
   let(:address) { FactoryGirl.build(:address) }
 
   it 'renders new.html.erb for new address' do
@@ -9,17 +9,17 @@ describe 'spree/addresses/new' do
 
     rendered.should have_content('New Shipping Address')
 
-    rendered.should have_field('First Name', :type => 'text')
-    rendered.should have_field('Last Name', :type => 'text')
-    rendered.should have_field(I18n.t('activerecord.attributes.spree/address.address1'), :type => 'text')
-    rendered.should have_field(I18n.t('activerecord.attributes.spree/address.address2'), :type => 'text')
+    rendered.should have_field('First Name')
+    rendered.should have_field('Last Name')
+    rendered.should have_field(I18n.t('activerecord.attributes.spree/address.address1'))
+    rendered.should have_field(I18n.t('activerecord.attributes.spree/address.address2'))
     # Javascript can't be tested in views spec
-    rendered.should have_selector('select#address_country_id', :type => 'text')
+    rendered.should have_selector('select#address_country_id')
     # Javascript can't be tested in views spec
-    rendered.should have_selector('#address_state_name', :type => 'text')
-    rendered.should have_field('City', :type => 'text')
-    rendered.should have_field('Zip', :type => 'text')
-    rendered.should have_field('Phone', :type => 'text')
+    rendered.should have_selector('#address_state_name')
+    rendered.should have_field('City')
+    rendered.should have_field('Zip')
+    rendered.should have_field('Phone')
   end
 
 end
@@ -31,17 +31,17 @@ describe 'spree/addresses/edit' do
     assign(:address, address)
     render :template => 'spree/addresses/edit', :address => address
 
-    rendered.should have_field('First Name', :with => address.firstname, :type => 'text')
-    rendered.should have_field('Last Name', :with => address.lastname, :type => 'text')
-    rendered.should have_field(I18n.t('activerecord.attributes.spree/address.address1'), :with => address.address1, :type => 'text')
-    rendered.should have_field(I18n.t('activerecord.attributes.spree/address.address2'), :with => address.address2, :type => 'text')
+    rendered.should have_field('First Name', :with => address.firstname)
+    rendered.should have_field('Last Name', :with => address.lastname)
+    rendered.should have_field(I18n.t('activerecord.attributes.spree/address.address1'), :with => address.address1)
+    rendered.should have_field(I18n.t('activerecord.attributes.spree/address.address2'), :with => address.address2)
     # Javascript can't be tested in views spec
-    rendered.should have_selector('select#address_country_id', :type => 'text')
+    rendered.should have_selector('select#address_country_id')
     # Javascript can't be tested in views spec
-    rendered.should have_selector('#address_state_name', :type => 'text')
-    rendered.should have_field('City', :with => address.city, :type => 'text')
-    rendered.should have_field('Zip', :with => address.zipcode, :type => 'text')
-    rendered.should have_field('Phone', :with => address.phone, :type => 'text')
+    rendered.should have_selector('#address_state_name')
+    rendered.should have_field('City', :with => address.city)
+    rendered.should have_field('Zip', :with => address.zipcode)
+    rendered.should have_field('Phone', :with => address.phone)
   end
 end
 
@@ -53,6 +53,14 @@ end
 
 def addresses_path(format)
   return spree.addresses_path(format)
+end
+
+def countries_url(*args)
+  spree.countries_url(*args)
+end
+
+def states_url(*args)
+  spree.states_url(*args)
 end
 
 # I'm not sure why this method isn't available, or how to make it available, so

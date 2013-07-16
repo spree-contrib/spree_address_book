@@ -4,8 +4,10 @@ Spree::Address.class_eval do
   attr_accessible :user_id, :deleted_at
 
   def self.required_fields
-    validator = Spree::Address.validators.find{|v| v.kind_of?(ActiveModel::Validations::PresenceValidator)}
-    validator ? validator.attributes : []
+    presence_validators = Spree::Address.validators.select do |v|
+      v.kind_of?(ActiveModel::Validations::PresenceValidator)
+    end
+    presence_validators ? presence_validators.map(&:attributes).flatten : []
   end
   
   # TODO: look into if this is actually needed. I don't want to override methods unless it is really needed
@@ -42,4 +44,10 @@ Spree::Address.class_eval do
       update_column :deleted_at, Time.now
     end
   end
+
+  # set state_name column if provided state is String
+  def state=(state)
+    state.is_a?(Spree::State) ? super : self.state_name = state
+  end
+
 end

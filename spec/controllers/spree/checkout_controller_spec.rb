@@ -14,7 +14,7 @@ describe Spree::CheckoutController do
     @order.save
     
     controller.stub :current_order => @order
-    controller.stub :current_user => @order.user
+    controller.stub :spree_current_user => @order.user
   end
   
   describe "on address step" do

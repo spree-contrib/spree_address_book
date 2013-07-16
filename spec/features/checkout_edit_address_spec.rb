@@ -5,7 +5,7 @@ describe "User editing saved address during checkout", :js => true do
   include_context "checkout with product"
   include_context "user with address"
 
-  before(:each) { click_link "Checkout"; sign_in!(user) }
+  before(:each) { click_button "Checkout"; sign_in!(user) }
 
   it "can update billing address" do
     within("#billing #billing_address_#{address.id}") do
@@ -13,7 +13,7 @@ describe "User editing saved address during checkout", :js => true do
     end
     current_path.should == spree.edit_address_path(address)
     new_street = Faker::Address.street_address
-    fill_in I18n.t('activerecord.attributes.spree/address.address1'), :with => new_street
+    fill_in :address_address1, :with => new_street
     click_button "Update"
     current_path.should == spree.checkout_state_path('address')
     within("h1") { page.should have_content("Checkout") }
@@ -28,7 +28,7 @@ describe "User editing saved address during checkout", :js => true do
     end
     current_path.should == spree.edit_address_path(address)
     new_street = Faker::Address.street_address
-    fill_in I18n.t('activerecord.attributes.spree/address.address1'), :with => new_street
+    fill_in :address_address1, :with => new_street
     click_button "Update"
     current_path.should == spree.checkout_state_path('address')
     within("h1") { page.should have_content("Checkout") }
