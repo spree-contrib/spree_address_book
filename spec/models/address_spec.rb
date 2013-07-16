@@ -6,7 +6,7 @@ describe Spree::Address do
   describe 'spree_address_book address_decorator' do
     let(:address) { FactoryGirl.create(:address) }
     let(:address2) { FactoryGirl.create(:address) }
-    let(:order) { FactoryGirl.create(:order) }
+    let(:order) { FactoryGirl.create(:completed_order_with_totals) }
     let(:user) { FactoryGirl.create(:user) }
 
     before {
