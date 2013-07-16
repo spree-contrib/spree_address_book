@@ -48,6 +48,11 @@ describe Spree::Address do
       address2.destroy
       Spree::Address.where(["id = (?)", address2.id]).should_not be_empty
     end
+
+    it 'sets state_name when string is passed to state' do
+      address = Spree::Address.new(state: 'state')
+      address.state_name.should eq('state')
+    end
   end
 
 end

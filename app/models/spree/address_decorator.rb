@@ -1,7 +1,5 @@
 Spree::Address.class_eval do
   belongs_to :user, :class_name => Spree.user_class.to_s
-  belongs_to :country, :class_name => 'Spree::Country'
-  belongs_to :state, :class_name => 'Spree::State'
 
   attr_accessible :user_id, :deleted_at
 
