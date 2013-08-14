@@ -1,5 +1,5 @@
 module Spree::AddressesHelper
-  def address_field(form, method, id_prefix = "b", &handler)
+  def address_field(form, method, id_prefix = "b", label=nil, &handler)
     id_prefix = id_prefix == 'bill_address' ? 'b' : 's'
     content_tag :p, :id => [id_prefix, method].join, :class => "field" do
       if handler
@@ -7,7 +7,7 @@ module Spree::AddressesHelper
       else
         is_required = Spree::Address.required_fields.include?(method)
         separator = is_required ? '<span class="required">*</span><br />' : '<br />'
-        form.label(method, I18n.t("activerecord.attributes.spree/address.#{method.to_s}")) + separator.html_safe +
+        form.label(method, I18n.t("activerecord.attributes.spree/address.#{ (label.present? ? label : method.to_s) }")) + separator.html_safe +
         form.text_field(method, :class => is_required ? 'required' : nil)
       end
     end
