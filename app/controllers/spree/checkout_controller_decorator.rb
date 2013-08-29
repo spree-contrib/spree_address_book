@@ -29,20 +29,20 @@ Spree::CheckoutController.class_eval do
 
   def normalize_addresses
     return unless params[:state] == "address" && @order.bill_address_id && @order.ship_address_id
-    return if (@order.bill_address.id.nil? || @order.ship_address.nil?)
 
-    @order.bill_address.reload
-    @order.ship_address.reload
+    # ensure that there is no validation errors and addresses were saved
+    return unless @order.bill_address and @order.ship_address
     
-    # ensure that there is no validation errors and addresses was saved
-    return unless @order.bill_address && @order.ship_address
-    
-    if @order.bill_address_id != @order.ship_address_id && @order.bill_address.same_as?(@order.ship_address)
-      @order.bill_address.destroy
-      @order.update_attribute(:bill_address_id, @order.ship_address.id)
+    bill_address = @order.bill_address
+    ship_address = @order.ship_address
+    if @order.bill_address_id != @order.ship_address_id && bill_address.same_as?(ship_address)
+      @order.update_column(:bill_address_id, ship_address.id)
+      bill_address.destroy
     else
-      @order.bill_address.update_attribute(:user_id, current_user.try(:id))
+      bill_address.update_attribute(:user_id, current_user.try(:id))
     end
+
+    @order.reload
     @order.ship_address.update_attribute(:user_id, current_user.try(:id))
   end
 end
