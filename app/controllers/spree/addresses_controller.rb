@@ -5,7 +5,17 @@ class Spree::AddressesController < Spree::StoreController
   load_and_authorize_resource :class => Spree::Address
 
   def index
-    redirect_to account_path
+    @addresses = spree_current_user.addresses
+  end
+
+  def create
+    @address = spree_current_user.addresses.build(params[:address])
+    if @address.save
+      flash[:notice] = Spree.t(:successfully_created)
+      redirect_to addresses_path
+    else
+      render :action => "new"
+    end
   end
   
   def show
@@ -38,17 +48,6 @@ class Spree::AddressesController < Spree::StoreController
       else
         render :action => "edit"
       end
-    end
-  end
-
-  def create
-    @address = Spree::Address.new(params[:address])
-    @address.user = spree_current_user
-    if @address.save
-      flash[:notice] = I18n.t(:successfully_created, :resource => I18n.t(:address))
-      redirect_to account_path
-    else
-      render :action => "new"
     end
   end
 
