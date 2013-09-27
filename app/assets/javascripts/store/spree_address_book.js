@@ -1,4 +1,3 @@
-//= require store/spree_core
 
 (function($) {
   $(document).ready(function(){
