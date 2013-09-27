@@ -10,7 +10,7 @@ class Spree::AddressesController < Spree::StoreController
   def create
     @address = spree_current_user.addresses.build(params[:address])
     if @address.save
-      flash[:notice] = Spree.t(:successfully_created, :resource => I18n.t(:address))
+      flash[:notice] = Spree.t(:successfully_created)
       redirect_to addresses_path
     else
       render :action => "new"
