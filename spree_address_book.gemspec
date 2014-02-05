@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   
   s.add_development_dependency('rspec-rails',  '~> 2.7')
   s.add_development_dependency('sqlite3')
-  s.add_development_dependency('capybara')
+  s.add_development_dependency('capybara', '~> 1.0')
   s.add_development_dependency('factory_girl', '~> 2.6')
   s.add_development_dependency('database_cleaner')
   s.add_development_dependency('ffaker')

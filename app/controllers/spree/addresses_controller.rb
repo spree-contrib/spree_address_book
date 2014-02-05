@@ -1,5 +1,7 @@
 class Spree::AddressesController < Spree::BaseController
-  helper Spree::AddressesHelper
+  # we need checkout helper for state field helpers
+  helper Spree::AddressesHelper, Spree::CheckoutHelper
+
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
   load_and_authorize_resource
 
