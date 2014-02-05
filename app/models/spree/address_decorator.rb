@@ -4,8 +4,8 @@ Spree::Address.class_eval do
   attr_accessible :user_id, :deleted_at
 
   def self.required_fields
-    validator = Spree::Address.validators.find{|v| v.kind_of?(ActiveModel::Validations::PresenceValidator)}
-    validator ? validator.attributes : []
+    validator = Spree::Address.validators.select{|v| v.kind_of?(ActiveModel::Validations::PresenceValidator)}
+    validator ? validator.map{|val| val.attributes}.flatten(1).uniq : []
   end
   
   # TODO: look into if this is actually needed. I don't want to override methods unless it is really needed
