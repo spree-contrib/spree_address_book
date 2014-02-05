@@ -1,7 +1,6 @@
 module Spree::AddressesHelper
-  def address_field(form, method, id_prefix = "b", &handler)
-    id_prefix = id_prefix == 'bill_address' ? 'b' : 's'
-    content_tag :p, :id => [id_prefix, method].join, :class => "field" do
+  def address_field(form, method, address_id = "b", &handler)
+    content_tag :p, :id => [address_id, method].join, :class => "field" do
       if handler
         handler.call
       else
@@ -13,3 +12,4 @@ module Spree::AddressesHelper
     end
   end
 end
+

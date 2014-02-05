@@ -32,7 +32,7 @@ class Spree::AddressesController < Spree::StoreController
 
   def update
     if @address.editable?
-      if @address.update_attributes(params[:address])
+      if @address.update_attributes(address_params)
         flash[:notice] = I18n.t(:successfully_updated, :resource => Spree::Address.model_name.human)
         redirect_back_or_default(account_path)
       else
