@@ -40,7 +40,7 @@ class Spree::AddressesController < Spree::StoreController
       end
     else
       new_address = @address.clone
-      new_address.attributes = params[:address]
+      new_address.attributes = address_params
       @address.update_attribute(:deleted_at, Time.now)
       if new_address.save
         flash[:notice] = I18n.t(:successfully_updated, :resource => Spree::Address.model_name.human)
