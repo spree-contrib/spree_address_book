@@ -73,3 +73,4 @@ class Spree::AddressesController < Spree::StoreController
                              )
     end
 end
+
