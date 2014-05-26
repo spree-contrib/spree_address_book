@@ -1,8 +1,3 @@
-<% content_for :head do %>
-  <%= javascript_include_tag states_url(:format => :js) %>
-  <%= javascript_include_tag countries_url(:format => :js) %>
-<% end %>
-
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @address } %>
 <%= form_for @address, :html => {:id => "checkout_form_address"} do |f| %>
 <fieldset>
