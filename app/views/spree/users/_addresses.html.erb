@@ -1,23 +1,23 @@
-<h3><%= t(:shipping_addresses, :scope => :address_book) %></h3>
+<h3><%= t(:shipping_addresses, scope: :address_book) %></h3>
 <% if spree_current_user.addresses.present? %>
-<table id="user_addresses">
+<table id='user_addresses'>
   <tbody>
     <% spree_current_user.addresses.each do |address| %>
     <tr class="<%= cycle('even', 'odd') %>">
       <td><%= address %></td>
       <td>
         <%= link_to Spree.t(:edit), edit_address_path(address) %>&nbsp;
-        <%= link_to Spree.t(:remove), address_path(address), :method => :delete, :confirm => Spree.t(:are_you_sure) %>
+        <%= link_to Spree.t(:remove), address_path(address), method: :delete, confirm: Spree.t(:are_you_sure) %>
       </td>
     </tr>
     <% end %>
   </tbody>
 </table>
 <% else %>
-<div id="users-address-list-empty">
-  <%= t(:no_shipping_addresses_on_file, :scope => :address_book) %>
+<div id='users-address-list-empty'>
+  <%= t(:no_shipping_addresses_on_file, scope: :address_book) %>
 </div>
 <% end %>
-<div id="new_address_link">
-  <%= link_to t(:add_new_shipping_address, :scope => :address_book), :controller => :addresses, :action => :new %>
+<div id='new_address_link'>
+  <%= link_to t(:add_new_shipping_address, scope: :address_book), controller: :addresses, action: :new %>
 </div>
