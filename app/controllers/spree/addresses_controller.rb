@@ -9,20 +9,25 @@ class Spree::AddressesController < Spree::StoreController
 
   def create
     @address = spree_current_user.addresses.build(params[:address])
+    # From master:
+    # @address = Spree::Address.new(params[:address])
+    # @address.user = spree_current_user
     if @address.save
       flash[:notice] = Spree.t(:successfully_created, :resource => Spree::Address.model_name.human)
+      # From master:
+      # flash[:notice] = I18n.t(:successfully_created, :resource => I18n.t(:address))
       redirect_to account_path
     else
       render :action => "new"
     end
   end
-  
+
   def show
     redirect_to account_path
   end
 
   def edit
-    session["user_return_to"] = request.env['HTTP_REFERER']
+    session["spree_user_return_to"] = request.env['HTTP_REFERER']
   end
 
   def new
