@@ -15,7 +15,7 @@ describe Spree::Address do
     }
 
     it 'has required attributes' do
-      Spree::Address.required_fields.should eq([:firstname, :lastname, :address1, :city, :zipcode, :country, :phone])
+      Spree::Address.required_fields.should eq([:firstname, :lastname, :address1, :city, :country, :zipcode, :phone])
     end
 
     it 'is editable' do
