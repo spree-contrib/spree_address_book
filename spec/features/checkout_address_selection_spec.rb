@@ -4,8 +4,6 @@ describe "Address selection during checkout" do
   include_context "support helper"
   include_context "store products"
 
-  let(:state) {  Spree::State.all.first || FactoryGirl.create(:state) }
-
   describe "as guest user" do
     include_context "checkout with product"
     before(:each) do

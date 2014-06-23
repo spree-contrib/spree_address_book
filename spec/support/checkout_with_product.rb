@@ -1,10 +1,34 @@
 shared_context "checkout with product" do
-  before :each do
-    @state = Spree::State.all.first || FactoryGirl.create(:state)
-    @zone = Spree::Zone.find_by_name('GlobalZone') || FactoryGirl.create(:global_zone)
-    @shipping = Spree::ShippingMethod.find_by_name('UPS Ground') || FactoryGirl.create(:shipping_method)
 
-    FactoryGirl.create(:payment_method)
+  let!(:mug) { FactoryGirl.create(:product, :name => "RoR Mug") }
+  let!(:order) { FactoryGirl.create(:order_with_totals, :state => 'cart') }
+  let!(:shipping_method) {
+    # A shipping method must exist for rates to be displayed on checkout page
+    FactoryGirl.create(:shipping_method).tap do |sm|
+      sm.calculator.preferred_amount = 10
+      sm.calculator.preferred_currency = Spree::Config[:currency]
+      sm.calculator.save
+      sm
+    end
+  }
+
+  before :each do
+
+    # A payment method must exist for an order to proceed through the Address state
+    unless Spree::PaymentMethod.exists?
+      FactoryGirl.create(:check_payment_method)
+    end
+
+    # Need to create a valid zone too...
+    zone = FactoryGirl.create(:zone)
+    country = FactoryGirl.create(:country)
+    zone.members << Spree::ZoneMember.create(:zoneable => country)
+    country.states << FactoryGirl.create(:state, :country => country)
+
+    mug.shipping_category = shipping_method.shipping_categories.first
+    mug.save!
+
+
     reset_spree_preferences do |config|
       config.company = true
       config.alternative_billing_phone = true
