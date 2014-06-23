@@ -11,6 +11,7 @@ group :test do
     gem 'guard-rspec'
   end
 end
+spree_branch = '2-2-stable'
+gem 'spree', github: 'spree/spree', :branch => spree_branch
+gem 'spree_auth_devise', :git => 'git://github.com/spree/spree_auth_devise', :branch => spree_branch
 
-gem 'spree_auth_devise', :git => 'git://github.com/spree/spree_auth_devise', :branch => '1-3-stable'
-gem 'spree', '~> 1.3.5'
