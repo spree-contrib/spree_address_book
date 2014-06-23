@@ -1,4 +1,4 @@
-<h3><%= t(:shipping_addresses, :scope => :address_book) %></h3>
+<h3><%= I18n.t(:shipping_addresses, :scope => :address_book) %></h3>
 <% if spree_current_user.addresses.present? %>
 <table id="user_addresses">
   <tbody>
@@ -15,9 +15,9 @@
 </table>
 <% else %>
 <div id="users-address-list-empty">
-  <%= t(:no_shipping_addresses_on_file, :scope => :address_book) %>
+  <%= I18n.t(:no_shipping_addresses_on_file, :scope => :address_book) %>
 </div>
 <% end %>
 <div id="new_address_link">
-  <%= link_to t(:add_new_shipping_address, :scope => :address_book), :controller => :addresses, :action => :new %>
+  <%= link_to I18n.t(:add_new_shipping_address, :scope => :address_book), :controller => :addresses, :action => :new %>
 </div>
