@@ -12,7 +12,12 @@
     <%= address_field(address_form, :state, address_id) { address_state(address_form, address.country, address_id) } %>
   <% else %>
     <% next if field == "company" && !Spree::Config[:company] %>
-    <% next if field == "alternative_#{address_id}_phone" && !Spree::Config["alternative_#{address_id}_phone"] %>
     <%= address_field(address_form, field.to_sym, address_id) %>
   <% end %>
+<% end %>
+<% if Spree::Config[:alternative_shipping_phone] && address_type == 'shipping' %>
+  <p class="field" id=<%="#{address_id}altphone" %>>
+    <%= address_form.label :alternative_phone, Spree.t(:alternative_phone) %><br />
+    <%= address_form.phone_field :alternative_phone %>
+  </p>
 <% end %>
