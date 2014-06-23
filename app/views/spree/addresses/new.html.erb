@@ -1,5 +1,5 @@
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @address } %>
-<%= form_for @address, :html => {:id => "checkout_form_address"} do |f| %>
+<%= form_for @address, :html => { :id => "checkout_form_address"} do |f| %>
 <fieldset>
   <%= content_tag(:legend, t(:new_shipping_address, :scope => :address_book)) %>
   <div class="inner">
