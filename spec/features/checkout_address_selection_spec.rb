@@ -13,7 +13,7 @@ describe "Address selection during checkout" do
       click_button "Continue"
     end
 
-    it "should only see billing address form", :js => true do
+    it "should only see billing address form" do
       within("#billing") do
         should_have_address_fields
         page.should_not have_selector(".select_address")
@@ -61,8 +61,8 @@ describe "Address selection during checkout" do
         end
       end
     end
-      
-    it "should save 2 addresses for user if they are different", :js => true do
+
+    it "should save 2 addresses for user if they are different" do
       expect do
         within("#billing") do
           choose I18n.t(:other_address, :scope => :address_book)
@@ -115,8 +115,8 @@ describe "Address selection during checkout" do
         end
       end
     end
-  
-    describe "entering 2 new addresses", :js => true do
+
+    describe "entering 2 new addresses" do
       it "should assign 2 new addresses to order" do
         within("#billing") do
           choose I18n.t(:other_address, :scope => :address_book)
@@ -138,8 +138,8 @@ describe "Address selection during checkout" do
         end
       end
     end
-  
-    describe "using saved address for bill and new ship address", :js => true do
+
+    describe "using saved address for bill and new ship address" do
       let(:shipping) do
         FactoryGirl.build(:address, :address1 => Faker::Address.street_address,
           :state => state)
@@ -193,8 +193,8 @@ describe "Address selection during checkout" do
         end
       end
     end
-  
-    describe "using saved address for billing and shipping", :js => true do
+
+    describe "using saved address for billing and shipping" do
       it "should addresses to order" do
         address = user.addresses.first
         choose "order_bill_address_id_#{address.id}"
@@ -219,8 +219,8 @@ describe "Address selection during checkout" do
         end.to_not change{ user.addresses.count }
       end
     end
-  
-    describe "using saved address for ship and new bill address", :js => true do
+
+    describe "using saved address for ship and new bill address" do
       let(:billing) do
         FactoryGirl.build(:address, :address1 => Faker::Address.street_address, :state => state)
       end
@@ -275,8 +275,8 @@ describe "Address selection during checkout" do
         end
       end
     end
-  
-    describe "entering address that is already saved", :js => true do
+
+    describe "entering address that is already saved" do
       it "should not save address for user" do
         expect do
           address = user.addresses.first
