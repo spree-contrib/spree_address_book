@@ -7,7 +7,7 @@
       <td><%= address %></td>
       <td>
         <%= link_to Spree.t(:edit), edit_address_path(address) %>&nbsp;
-        <%= link_to Spree.t(:remove), address_path(address), :method => :delete, :confirm => Spree.t(:are_you_sure) %>
+        <%= link_to Spree.t(:remove), address_path(address), { :method => :delete, data: {:confirm => Spree.t(:are_you_sure)} } %>
       </td>
     </tr>
     <% end %>
