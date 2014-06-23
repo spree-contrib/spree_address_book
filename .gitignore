@@ -9,4 +9,6 @@ nbproject
 *.swp
 *.bak
 spec/dummy
+.bundle
 Gemfile.lock
+.ruby-version
