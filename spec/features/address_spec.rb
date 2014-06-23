@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'Addresses' do
   context 'editing' do
+    include_context "support helper"
     include_context "user with address"
 
     it 'should be able to edit an address', :js => true do

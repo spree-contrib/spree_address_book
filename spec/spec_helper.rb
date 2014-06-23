@@ -47,6 +47,8 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do
+    # Ensure js requests finish processing before advancing to the next test
+    wait_longer_for_ajax if RSpec.current_example.metadata[:js]
     DatabaseCleaner.clean
   end
 end

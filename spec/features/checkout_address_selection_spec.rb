@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "Address selection during checkout" do
+  include_context "support helper"
   include_context "store products"
 
   let(:state) {  Spree::State.all.first || FactoryGirl.create(:state) }

@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "User editing addresses for his account" do
+  include_context "support helper"
   include_context "user with address"
 
   before(:each) do
