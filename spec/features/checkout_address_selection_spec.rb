@@ -66,11 +66,11 @@ describe "Address selection during checkout" do
     it "should save 2 addresses for user if they are different", :js => true do
       expect do
         within("#billing") do
-          choose I18n.t('address_book.other_address')
+          choose I18n.t(:other_address, :scope => :address_book)
           fill_in_address(billing)
         end
         within("#shipping") do
-          choose I18n.t('address_book.other_address')
+          choose I18n.t(:other_address, :scope => :address_book)
           fill_in_address(shipping, :ship)
         end
         complete_checkout
@@ -80,11 +80,11 @@ describe "Address selection during checkout" do
     it "should save 1 address for user if they are the same" do
       expect do
         within("#billing") do
-          choose I18n.t('address_book.other_address')
+          choose I18n.t(:other_address, :scope => :address_book)
           fill_in_address(billing)
         end
         within("#shipping") do
-          choose I18n.t('address_book.other_address')
+          choose I18n.t(:other_address, :scope => :address_book)
           fill_in_address(billing, :ship)
         end
         complete_checkout
@@ -100,11 +100,11 @@ describe "Address selection during checkout" do
       # this is what this piece of code ('field is required') tests
       it "should show address form with error" do
         within("#billing") do
-          choose I18n.t('address_book.other_address')
+          choose I18n.t(:other_address, :scope => :address_book)
           fill_in_address(address)
         end
         within("#shipping") do
-          choose I18n.t('address_book.other_address')
+          choose I18n.t(:other_address, :scope => :address_book)
           fill_in_address(address, :ship)
         end
         click_button "Save and Continue"
@@ -120,11 +120,11 @@ describe "Address selection during checkout" do
     describe "entering 2 new addresses", :js => true do
       it "should assign 2 new addresses to order" do
         within("#billing") do
-          choose I18n.t('address_book.other_address')
+          choose I18n.t(:other_address, :scope => :address_book)
           fill_in_address(billing)
         end
         within("#shipping") do
-          choose I18n.t('address_book.other_address')
+          choose I18n.t(:other_address, :scope => :address_book)
           fill_in_address(shipping, :ship)
         end
         complete_checkout
@@ -151,7 +151,7 @@ describe "Address selection during checkout" do
           address = user.addresses.first
           choose "order_bill_address_id_#{address.id}"
           within("#shipping") do
-            choose I18n.t('address_book.other_address')
+            choose I18n.t(:other_address, :scope => :address_book)
             fill_in_address(shipping, :ship)
           end
           complete_checkout
@@ -162,7 +162,7 @@ describe "Address selection during checkout" do
         address = user.addresses.first
         choose "order_bill_address_id_#{address.id}"
         within("#shipping") do
-          choose I18n.t('address_book.other_address')
+          choose I18n.t(:other_address, :scope => :address_book)
           fill_in_address(shipping, :ship)
         end
         complete_checkout
@@ -182,7 +182,7 @@ describe "Address selection during checkout" do
         shipping = FactoryGirl.build(:address, :address1 => nil, :state => state)
         choose "order_bill_address_id_#{address.id}"
         within("#shipping") do
-          choose I18n.t('address_book.other_address')
+          choose I18n.t(:other_address, :scope => :address_book)
           fill_in_address(shipping, :ship)
         end
         click_button "Save and Continue"
@@ -231,7 +231,7 @@ describe "Address selection during checkout" do
           address = user.addresses.first
           choose "order_ship_address_id_#{address.id}"
           within("#billing") do
-            choose I18n.t('address_book.other_address')
+            choose I18n.t(:other_address, :scope => :address_book)
             fill_in_address(billing)
           end
           complete_checkout
@@ -242,7 +242,7 @@ describe "Address selection during checkout" do
         address = user.addresses.first
         choose "order_ship_address_id_#{address.id}"
         within("#billing") do
-          choose I18n.t('address_book.other_address')
+          choose I18n.t(:other_address, :scope => :address_book)
           fill_in_address(billing)
         end
         complete_checkout
@@ -263,7 +263,7 @@ describe "Address selection during checkout" do
         billing = FactoryGirl.build(:address, :address1 => nil, :state => state)
         choose "order_ship_address_id_#{address.id}"
         within("#billing") do
-          choose I18n.t('address_book.other_address')
+          choose I18n.t(:other_address, :scope => :address_book)
           fill_in_address(billing)
         end
 
@@ -283,7 +283,7 @@ describe "Address selection during checkout" do
           address = user.addresses.first
           choose "order_ship_address_id_#{address.id}"
           within("#billing") do
-            choose I18n.t('address_book.other_address')
+            choose I18n.t(:other_address, :scope => :address_book)
             fill_in_address(address)
           end
           complete_checkout
