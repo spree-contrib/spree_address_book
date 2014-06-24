@@ -8,11 +8,9 @@ shared_context "store products" do
     mugs_taxon = FactoryGirl.create(:taxon, :name => 'Mugs', :parent_id => root.id)
 
     FactoryGirl.create(:custom_product, :name => 'Ruby on Rails Ringer T-Shirt',
-      :price => '17.99', :taxons => [clothing_taxon],
-      :on_hand => 1)
+      :price => '17.99', :taxons => [clothing_taxon])
     FactoryGirl.create(:custom_product, :name => 'Ruby on Rails Mug', :price => '13.99',
-      :taxons => [mugs_taxon],
-      :on_hand => 10)
+      :taxons => [mugs_taxon])
   end
 end
 
