@@ -57,24 +57,24 @@ shared_context "checkout with product" do
   end
 
   def complete_checkout
-    click_button I18n.t(:save_and_continue)
+    click_button Spree.t(:save_and_continue)
     choose "UPS Ground"
-    click_button I18n.t(:save_and_continue)
+    click_button Spree.t(:save_and_continue)
     choose "Check"
-    click_button I18n.t(:save_and_continue)
+    click_button Spree.t(:save_and_continue)
   end
 
   def fill_in_address(address, type = :bill)
-    fill_in I18n.t(:first_name), :with => address.firstname
+    fill_in Spree.t(:first_name), :with => address.firstname
     fill_in "Last Name", :with => address.lastname
     fill_in "Company", :with => address.company if Spree::Config[:company]
-    fill_in I18n.t('activerecord.attributes.spree/address.address1'), :with => address.address1
-    fill_in I18n.t('activerecord.attributes.spree/address.address2'), :with => address.address2
+    fill_in Spree.t(:address1), :with => address.address1
+    fill_in Spree.t(:address2), :with => address.address2
     select address.state.name, :from => "order_#{type}_address_attributes_state_id"
-    fill_in I18n.t(:city), :with => address.city
-    fill_in I18n.t(:zip), :with => address.zipcode
-    fill_in I18n.t(:phone), :with => address.phone
-    fill_in 'Alternative phone', :with => address.alternative_phone if Spree::Config[:alternative_billing_phone]
+    fill_in Spree.t(:city), :with => address.city
+    fill_in Spree.t(:zip), :with => address.zipcode
+    fill_in Spree.t(:phone), :with => address.phone
+    fill_in Spree.t(:alternative_phone), :with => address.alternative_phone if (Spree::Config[:alternative_shipping_phone] && type == :ship)
   end
 
   def expected_address_format(address)
