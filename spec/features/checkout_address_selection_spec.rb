@@ -90,12 +90,14 @@ describe "Address selection during checkout" do
         complete_checkout
       end.to change { user.addresses.count }.by(1)
     end
-      
-    describe "when invalid address is entered", :js => true do
+
+    describe "when invalid address is entered" do
       let(:address) do
-        FactoryGirl.build(:address, :firstname => nil, :state => state)
+        # TODO: Currently this fails with the following error:
+        # ActiveRecord::RecordInvalid: Validation failed: First Name can't be blank
+        FactoryGirl.create(:address, :firstname => nil, :state => state)
       end
-      
+
       # TODO the JS error reporting isn't working with our current iteration
       # this is what this piece of code ('field is required') tests
       it "should show address form with error" do
@@ -128,24 +130,24 @@ describe "Address selection during checkout" do
           fill_in_address(shipping, :ship)
         end
         complete_checkout
-        page.should have_content("processed successfully")
-        within("#order > div.row.steps-data > div:nth-child(2)") do
-          page.should have_content("Billing Address")
-          page.should have_content(expected_address_format(billing))
-        end
+        expect(page).to have_content("processed successfully")
         within("#order > div.row.steps-data > div:nth-child(1)") do
-          page.should have_content("Shipping Address")
-          page.should have_content(expected_address_format(shipping))
+          expect(page).to have_content("Billing Address")
+          expect(page).to have_content(expected_address_format(billing))
+        end
+        within("#order > div.row.steps-data > div:nth-child(2)") do
+          expect(page).to have_content("Shipping Address")
+          expect(page).to have_content(expected_address_format(shipping))
         end
       end
     end
 
     describe "using saved address for bill and new ship address" do
       let(:shipping) do
-        FactoryGirl.build(:address, :address1 => Faker::Address.street_address,
+        FactoryGirl.create(:address, :address1 => Faker::Address.street_address,
           :state => state)
       end
-  
+
       it "should save 1 new address for user" do
         expect do
           address = user.addresses.first
@@ -223,9 +225,9 @@ describe "Address selection during checkout" do
 
     describe "using saved address for ship and new bill address" do
       let(:billing) do
-        FactoryGirl.build(:address, :address1 => Faker::Address.street_address, :state => state)
+        FactoryGirl.create(:address, :address1 => Faker::Address.street_address, :state => state)
       end
-  
+
       it "should save 1 new address for user" do
         expect do
           address = user.addresses.first
