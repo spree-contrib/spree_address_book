@@ -37,8 +37,17 @@ describe "Address selection during checkout" do
 
 
     it "should not see billing or shipping address form" do
-      find("#billing .inner").should_not be_visible
-      find("#shipping .inner").should_not be_visible
+      expect(page.find(:xpath, '//fieldset[@id="billing"]/div[@class="inner" and contains(@style,"display: none")]'))
+
+      # This next test fails because #shipping .inner does not get its inline style changed to "display: none" before this spec runs
+      # This is only a problem when running the specs in the test app.
+      # The element displays with display: none when run in nibley
+      expect(page.find(:xpath, '//fieldset[@id="shipping"]/div[@class="inner" and contains(@style,"display: block")]')) #passes
+      expect(page.find(:xpath, '//fieldset[@id="shipping"]/div[@class="inner" and contains(@style,"display: none")]')) #fails
+
+      # old test:
+      # find("#billing .inner").should_not be_visible
+      # find("#shipping .inner").should_not be_visible
     end
   
     it "should list saved addresses for billing and shipping" do
