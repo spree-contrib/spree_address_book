@@ -29,19 +29,10 @@ describe "Address selection during checkout" do
   end
 
   describe "as authenticated user with saved addresses", :js => true do
+    include_context "user with address"
     include_context "checkout with product"
-    # include_context "user with address"
 
-    let(:billing) { FactoryGirl.build(:address, :state => state) }
-    let(:shipping) do
-      FactoryGirl.build(:address, :address1 => Faker::Address.street_address, :state => state)
-    end
-    let(:user) do
-      u = FactoryGirl.create(:user)
-      u.addresses << FactoryGirl.create(:address, :address1 => Faker::Address.street_address, :state => state)
-      u.save
-      u
-    end
+
     before(:each) { click_button "Checkout"; sign_in!(user); }
   
     it "should not see billing or shipping address form" do
