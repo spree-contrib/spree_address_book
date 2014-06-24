@@ -30,9 +30,9 @@ shared_context "checkout with product" do
 
 
     reset_spree_preferences do |config|
-      config.company = true
-      config.alternative_billing_phone = true
+      config.address_requires_state = true
       config.alternative_shipping_phone = true
+      config.company = true
     end
 
     visit spree.root_path
