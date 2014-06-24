@@ -33,8 +33,9 @@ describe "Address selection during checkout" do
     include_context "checkout with product"
 
 
-    before(:each) { click_button "Checkout"; sign_in!(user); }
-  
+    before(:each) { sign_in_to_cart!(user) }
+
+
     it "should not see billing or shipping address form" do
       find("#billing .inner").should_not be_visible
       find("#shipping .inner").should_not be_visible
