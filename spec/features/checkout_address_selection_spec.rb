@@ -16,14 +16,14 @@ describe "Address selection during checkout" do
     it "should only see billing address form" do
       within("#billing") do
         should_have_address_fields
-        page.should_not have_selector(".select_address")
+        expect(page).to_not have_selector(".select_address")
       end
     end
 
     it "should only see shipping address form" do
       within("#shipping") do
         should_have_address_fields
-        page.should_not have_selector(".select_address")
+        expect(page).to_not have_selector(".select_address")
       end
     end
   end
@@ -49,16 +49,16 @@ describe "Address selection during checkout" do
       # find("#billing .inner").should_not be_visible
       # find("#shipping .inner").should_not be_visible
     end
-  
+
     it "should list saved addresses for billing and shipping" do
       within("#billing .select_address") do
         user.addresses.each do |a|
-          page.should have_field("order_bill_address_id_#{a.id}")
+          expect(page).to have_field("order_bill_address_id_#{a.id}")
         end
       end
       within("#shipping .select_address") do
         user.addresses.each do |a|
-          page.should have_field("order_ship_address_id_#{a.id}")
+          expect(page).to have_field("order_ship_address_id_#{a.id}")
         end
       end
     end
@@ -76,7 +76,7 @@ describe "Address selection during checkout" do
         complete_checkout
       end.to change { user.addresses.count }.by(2)
     end
-  
+
     it "should save 1 address for user if they are the same" do
       expect do
         within("#billing") do
@@ -111,10 +111,10 @@ describe "Address selection during checkout" do
         end
         click_button "Save and Continue"
         within("#bfirstname") do
-          page.should have_content("field is required")
+          expect(page).to have_content("field is required")
         end
         within("#sfirstname") do
-          page.should have_content("field is required")
+          expect(page).to have_content("field is required")
         end
       end
     end
@@ -159,7 +159,7 @@ describe "Address selection during checkout" do
           complete_checkout
         end.to change{ user.addresses.count }.by(1)
       end
-  
+
       it "should assign addresses to orders" do
         address = user.addresses.first
         choose "order_bill_address_id_#{address.id}"
@@ -168,17 +168,17 @@ describe "Address selection during checkout" do
           fill_in_address(shipping, :ship)
         end
         complete_checkout
-        page.should have_content("processed successfully")
-        within("#order > div.row.steps-data > div:nth-child(2)") do
-          page.should have_content("Billing Address")
-          page.should have_content(expected_address_format(address))
-        end
+        expect(page).to have_content("processed successfully")
         within("#order > div.row.steps-data > div:nth-child(1)") do
-          page.should have_content("Shipping Address")
-          page.should have_content(expected_address_format(shipping))
+          expect(page).to have_content("Billing Address")
+          expect(page).to have_content(expected_address_format(address))
+        end
+        within("#order > div.row.steps-data > div:nth-child(2)") do
+          expect(page).to have_content("Shipping Address")
+          expect(page).to have_content(expected_address_format(shipping))
         end
       end
-  
+
       it "should see form when new shipping address invalid" do
         address = user.addresses.first
         shipping = FactoryGirl.build(:address, :address1 => nil, :state => state)
@@ -189,7 +189,7 @@ describe "Address selection during checkout" do
         end
         click_button "Save and Continue"
         within("#saddress1") do
-          page.should have_content("field is required")
+          expect(page).to have_content("field is required")
         end
         within("#billing") do
           find("#order_bill_address_id_#{address.id}").should be_checked
@@ -203,16 +203,16 @@ describe "Address selection during checkout" do
         choose "order_bill_address_id_#{address.id}"
         check "Use Billing Address"
         complete_checkout
-        within("#order > div.row.steps-data > div:nth-child(2)") do
-          page.should have_content("Billing Address")
-          page.should have_content(expected_address_format(address))
-        end
         within("#order > div.row.steps-data > div:nth-child(1)") do
-          page.should have_content("Shipping Address")
-          page.should have_content(expected_address_format(address))
+          expect(page).to have_content("Billing Address")
+          expect(page).to have_content(expected_address_format(address))
+        end
+        within("#order > div.row.steps-data > div:nth-child(2)") do
+          expect(page).to have_content("Shipping Address")
+          expect(page).to have_content(expected_address_format(address))
         end
       end
-  
+
       it "should not add addresses to user" do
         expect do
           address = user.addresses.first
@@ -239,7 +239,7 @@ describe "Address selection during checkout" do
           complete_checkout
         end.to change{ user.addresses.count }.by(1)
       end
-  
+
       it "should assign addresses to orders" do
         address = user.addresses.first
         choose "order_ship_address_id_#{address.id}"
@@ -248,17 +248,17 @@ describe "Address selection during checkout" do
           fill_in_address(billing)
         end
         complete_checkout
-        page.should have_content("processed successfully")
-        within("#order > div.row.steps-data > div:nth-child(2)") do
-          page.should have_content("Billing Address")
-          page.should have_content(expected_address_format(billing))
-        end
+        expect(page).to have_content("processed successfully")
         within("#order > div.row.steps-data > div:nth-child(1)") do
-          page.should have_content("Shipping Address")
-          page.should have_content(expected_address_format(address))
+          expect(page).to have_content("Billing Address")
+          expect(page).to have_content(expected_address_format(billing))
+        end
+        within("#order > div.row.steps-data > div:nth-child(2)") do
+          expect(page).to have_content("Shipping Address")
+          expect(page).to have_content(expected_address_format(address))
         end
       end
-    
+
       # TODO not passing because inline JS validation not working
       it "should see form when new billing address invalid" do
         address = user.addresses.first
@@ -271,7 +271,7 @@ describe "Address selection during checkout" do
 
         click_button "Save and Continue"
         within("#baddress1") do
-          page.should have_content("field is required")
+          expect(page).to have_content("field is required")
         end
         within("#shipping") do
           find("#order_ship_address_id_#{address.id}").should be_checked
