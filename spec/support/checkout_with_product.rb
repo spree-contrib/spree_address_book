@@ -35,12 +35,15 @@ shared_context "checkout with product" do
       config.company = true
     end
 
-    visit spree.root_path
-    click_link 'Ruby on Rails Mug'
-    click_button 'add-to-cart-button'
+    Capybara.ignore_hidden_elements = false
+
+    add_mug_to_cart
+
   end
 
-  let(:state) { @state }
+  after :each do
+    Capybara.ignore_hidden_elements = true
+  end
 
   private
   def should_have_address_fields
@@ -77,4 +80,11 @@ shared_context "checkout with product" do
   def expected_address_format(address)
     Nokogiri::HTML(address.to_s).text
   end
+
+  def add_mug_to_cart
+    visit spree.root_path
+    click_link mug.name
+    click_button "add-to-cart-button"
+  end
+
 end
