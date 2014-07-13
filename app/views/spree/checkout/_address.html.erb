@@ -17,7 +17,7 @@
     <p class="field">
       <% @addresses.each_with_index do |address, idx| %>
       <span id="<%= [address_type, dom_id(address)].join('_') %>">
-        <label><%= form.radio_button "#{address_name}_id", address.id, :checked => (idx == 0) %> <%= address %></label> <%= link_to t(:edit), edit_address_path(address), :'data-hook' => 'edit_address' %><br />
+        <label><%= form.radio_button "#{address_name}_id", address.id, :checked => (idx == 0) %> <%= address %></label> <a href="<%= edit_address_path(address) %>" data-hook="edit_address"><%= t(:edit) %></a><br />
       </span>
       <% end %>
       <label><%= form.radio_button "#{address_name}_id", 0 %> <%= t('other_address', :scope => :address_book) %></label>
