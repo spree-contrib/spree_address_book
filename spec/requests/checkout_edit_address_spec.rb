@@ -23,6 +23,7 @@ describe "User editing saved address during checkout", :js => true do
   end
 
   it "can update shipping address", :js => true do
+    uncheck 'order_use_billing'
     within("#shipping #shipping_address_#{address.id}") do
       click_link "Edit"
     end

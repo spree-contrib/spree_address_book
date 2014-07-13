@@ -69,6 +69,7 @@ describe "Address selection during checkout" do
           fill_in_address(billing)
         end
         within("#shipping") do
+          uncheck 'order_use_billing'
           choose I18n.t('address_book.other_address')
           fill_in_address(shipping, :ship)
         end
@@ -83,6 +84,7 @@ describe "Address selection during checkout" do
           fill_in_address(billing)
         end
         within("#shipping") do
+          uncheck 'order_use_billing'
           choose I18n.t('address_book.other_address')
           fill_in_address(billing, :ship)
         end
@@ -103,6 +105,7 @@ describe "Address selection during checkout" do
           fill_in_address(address)
         end
         within("#shipping") do
+          uncheck 'order_use_billing'
           choose I18n.t('address_book.other_address')
           fill_in_address(address, :ship)
         end
@@ -123,6 +126,7 @@ describe "Address selection during checkout" do
           fill_in_address(billing)
         end
         within("#shipping") do
+          uncheck 'order_use_billing'
           choose I18n.t('address_book.other_address')
           fill_in_address(shipping, :ship)
         end
@@ -150,6 +154,7 @@ describe "Address selection during checkout" do
           address = user.addresses.first
           choose "order_bill_address_id_#{address.id}"
           within("#shipping") do
+            uncheck 'order_use_billing'
             choose I18n.t('address_book.other_address')
             fill_in_address(shipping, :ship)
           end
@@ -161,6 +166,7 @@ describe "Address selection during checkout" do
         address = user.addresses.first
         choose "order_bill_address_id_#{address.id}"
         within("#shipping") do
+          uncheck 'order_use_billing'
           choose I18n.t('address_book.other_address')
           fill_in_address(shipping, :ship)
         end
@@ -181,6 +187,7 @@ describe "Address selection during checkout" do
         shipping = FactoryGirl.build(:address, :address1 => nil, :state => state)
         choose "order_bill_address_id_#{address.id}"
         within("#shipping") do
+          uncheck 'order_use_billing'
           choose I18n.t('address_book.other_address')
           fill_in_address(shipping, :ship)
         end
@@ -228,6 +235,7 @@ describe "Address selection during checkout" do
       it "should save 1 new address for user" do
         expect do
           address = user.addresses.first
+          uncheck 'order_use_billing'
           choose "order_ship_address_id_#{address.id}"
           within("#billing") do
             choose I18n.t('address_book.other_address')
@@ -239,6 +247,7 @@ describe "Address selection during checkout" do
   
       it "should assign addresses to orders" do
         address = user.addresses.first
+        uncheck 'order_use_billing'
         choose "order_ship_address_id_#{address.id}"
         within("#billing") do
           choose I18n.t('address_book.other_address')
@@ -260,6 +269,7 @@ describe "Address selection during checkout" do
       it "should see form when new billing address invalid" do
         address = user.addresses.first
         billing = FactoryGirl.build(:address, :address1 => nil, :state => state)
+        uncheck 'order_use_billing'
         choose "order_ship_address_id_#{address.id}"
         within("#billing") do
           choose I18n.t('address_book.other_address')
@@ -280,6 +290,7 @@ describe "Address selection during checkout" do
       it "should not save address for user" do
         expect do
           address = user.addresses.first
+          uncheck 'order_use_billing'
           choose "order_ship_address_id_#{address.id}"
           within("#billing") do
             choose I18n.t('address_book.other_address')
