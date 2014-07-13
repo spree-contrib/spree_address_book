@@ -3,7 +3,7 @@
 <% ['billing', 'shipping'].each do |address_type|
   next if address_type == 'billing' && Spree::AddressBook::Config[:disable_bill_address]
   address_name = "#{address_type[0...4]}_address" %>
-<div class="columns alpha six" data-hook="<%= address_type %>_fieldset_wrapper">
+<div class="columns <%= cycle 'alpha', 'omega' %> six" data-hook="<%= address_type %>_fieldset_wrapper">
 <fieldset id="<%= address_type %>">
   <legend><%= t(address_type + "_address")%></legend>
   <% if address_type == 'shipping' && !Spree::AddressBook::Config[:disable_bill_address] %>
