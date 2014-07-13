@@ -27,10 +27,10 @@ describe "User editing addresses for his account" do
     current_path.should == spree.edit_address_path(address)
 
     new_street = Faker::Address.street_address
-    fill_in I18n.t('activerecord.attributes.spree/address.address1'), :with => new_street
+    fill_in :address_address1, :with => new_street
     click_button "Update"
     current_path.should == spree.account_path
-    page.should have_content(I18n.t('successfully_updated'))
+    page.should have_content('updated')
 
     within("#user_addresses > tbody > tr:first") do
       page.should have_content(new_street)

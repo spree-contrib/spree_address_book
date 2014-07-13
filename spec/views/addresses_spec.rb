@@ -55,6 +55,14 @@ def addresses_path(format)
   return spree.addresses_path(format)
 end
 
+def countries_url(*args)
+  spree.countries_url(*args)
+end
+
+def states_url(*args)
+  spree.states_url(*args)
+end
+
 # I'm not sure why this method isn't available, or how to make it available, so
 # I've cloned it from Spree::BaseHelper.
 def available_countries
