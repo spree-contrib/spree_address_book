@@ -1,7 +1,3 @@
-(Spree::PermittedAttributes.class_variable_get("@@address_attributes") << [
-  :user_id, :deleted_at
-]).flatten!
-
 Spree::Address.class_eval do
   belongs_to :user, :class_name => Spree.user_class.to_s
 
