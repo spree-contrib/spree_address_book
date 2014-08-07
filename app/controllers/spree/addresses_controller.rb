@@ -8,6 +8,8 @@ class Spree::AddressesController < Spree::StoreController
   end
 
   def create
+    byebug
+    binding.remote_pry
     @address = spree_current_user.addresses.build(address_params)
     @address.user = spree_current_user
     if @address.save
@@ -31,6 +33,8 @@ class Spree::AddressesController < Spree::StoreController
   end
 
   def update
+    byebug
+    binding.remote_pry
     if @address.editable?
       if @address.update_attributes(address_params)
         flash[:notice] = Spree.t(:successfully_updated, :resource => Spree.t(:address1))
