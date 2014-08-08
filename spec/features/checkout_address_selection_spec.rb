@@ -93,20 +93,14 @@ describe "Address selection during checkout" do
 
     describe "when invalid address is entered" do
       let(:address) do
-        # TODO: Currently this fails with the following error:
-        # ActiveRecord::RecordInvalid: Validation failed: First Name can't be blank
-        FactoryGirl.create(:address, :firstname => nil, :state => state)
+        Spree::Address.new(:firstname => nil, :state => state)
       end
 
-      # TODO the JS error reporting isn't working with our current iteration
-      # this is what this piece of code ('field is required') tests
       it "should show address form with error" do
         within("#billing") do
-          choose I18n.t(:other_address, :scope => :address_book)
           fill_in_address(address)
         end
         within("#shipping") do
-          choose I18n.t(:other_address, :scope => :address_book)
           fill_in_address(address, :ship)
         end
         click_button "Save and Continue"
@@ -236,17 +230,18 @@ describe "Address selection during checkout" do
             choose I18n.t(:other_address, :scope => :address_book)
             fill_in_address(billing)
           end
+          check "Use Billing Address"
           complete_checkout
         end.to change{ user.addresses.count }.by(1)
       end
 
       it "should assign addresses to orders" do
-        address = user.addresses.first
         choose "order_ship_address_id_#{address.id}"
         within("#billing") do
           choose I18n.t(:other_address, :scope => :address_book)
           fill_in_address(billing)
         end
+        check "Use Billing Address"
         complete_checkout
         expect(page).to have_content("processed successfully")
         within("#order > div.row.steps-data > div:nth-child(1)") do
@@ -255,7 +250,7 @@ describe "Address selection during checkout" do
         end
         within("#order > div.row.steps-data > div:nth-child(2)") do
           expect(page).to have_content("Shipping Address")
-          expect(page).to have_content(expected_address_format(address))
+          expect(page).to have_content(expected_address_format(billing))
         end
       end
 
@@ -279,6 +274,7 @@ describe "Address selection during checkout" do
       end
     end
 
+    #TODO: This spec is failing because the same address can be saved multiple times
     describe "entering address that is already saved" do
       it "should not save address for user" do
         expect do
@@ -288,6 +284,7 @@ describe "Address selection during checkout" do
             choose I18n.t(:other_address, :scope => :address_book)
             fill_in_address(address)
           end
+          check "Use Billing Address"
           complete_checkout
         end.to_not change { user.addresses.count }
       end
