@@ -16,4 +16,6 @@ en:
     unsuccessfully_saved: "There was an error while trying to save your address."
     successfully_updated: "Updated successfully"
     unsuccessfully_updated: "There was an update while trying to update your address."
+    no_internal_customer_id: "No internal customer id on file."
+    internal_customer_id: "Internal Customer Id"
     save: "Save"
