@@ -12,6 +12,8 @@ en:
     no_shipping_addresses_on_file: "No shipping addresses on file"
     shipping_addresses: "Shipping Addresses"
     addresses: "Addresses"
+    address: "Address"
+    back_to_addresses: "Back to Address List"
     successfully_saved: "Saved successfully"
     unsuccessfully_saved: "There was an error while trying to save your address."
     successfully_updated: "Updated successfully"
