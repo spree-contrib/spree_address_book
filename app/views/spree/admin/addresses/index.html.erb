@@ -11,7 +11,7 @@
 
 <fieldset class="no-border-bottom">
   <legend><%= I18n.t(:default_user_addresses, scope: :address_book) %></legend>
-  <% if @user.ship_address.present? || @user.bill_address.present? %>
+  <% if @default_user_addresses_hash %>
     <table id="user_addresses">
       <thead>
         <tr class="<%= cycle('even', 'odd') %>">
@@ -27,7 +27,6 @@
           <td class="align-center"><%= type %></td>
           <td class="actions">
             <%= link_to_edit_url edit_admin_order_address_url(@order, address), :no_text => true %>
-            <%= link_to '', admin_order_address_url(@order, address), { :method => :delete,  data: {:confirm => Spree.t(:are_you_sure)}, no_text: true, class: 'delete-resource fa fa-trash icon_link with-tip no-text'} %>
           </td>
         </tr>
         <% end %>
@@ -37,8 +36,8 @@
 </fieldset>
 
 <fieldset class="no-border-bottom">
-  <legend><%= I18n.t(:previous_order_addresses, scope: :address_book) %></legend>
-  <% if @previous_order_addresses_hash %>
+  <legend><%= I18n.t(:current_order_addresses, scope: :address_book) %></legend>
+  <% if @current_order_addresses_hash %>
     <table id="user_addresses">
       <thead>
         <tr class="<%= cycle('even', 'odd') %>">
@@ -48,13 +47,12 @@
         </tr>
       </thead>
       <tbody>
-      <% @previous_order_addresses_hash.each do |type, address| %>
+      <% @current_order_addresses_hash.each do |type, address| %>
         <tr class="<%= cycle('even', 'odd') %>">
           <td><%= address %></td>
           <td class="align-center"><%= type %></td>
           <td class="actions">
             <%= link_to_edit_url edit_admin_order_address_url(@order, address), :no_text => true %>
-            <%= link_to '', admin_order_address_url(@order, address), { :method => :delete,  data: {:confirm => Spree.t(:are_you_sure)}, no_text: true, class: 'delete-resource fa fa-trash icon_link with-tip no-text'} %>
           </td>
         </tr>
         <% end %>
@@ -63,9 +61,35 @@
   <% end %>
 </fieldset>
 
+<% if @previous_order_addresses_hash %>
+  <fieldset class="no-border-bottom">
+    <legend><%= I18n.t(:previous_order_addresses, scope: :address_book) %></legend>
+      <table id="user_addresses">
+        <thead>
+          <tr class="<%= cycle('even', 'odd') %>">
+            <th><%= I18n.t(:addresses, scope: :address_book) %></th>
+            <th class="align-center"><%= I18n.t(:type, scope: :address_book) %></th>
+            <th class="actions"></th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @previous_order_addresses_hash.each do |type, address| %>
+          <tr class="<%= cycle('even', 'odd') %>">
+            <td><%= address %></td>
+            <td class="align-center"><%= type %></td>
+            <td class="actions">
+              <%= link_to_edit_url edit_admin_order_address_url(@order, address), :no_text => true %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+  </fieldset>
+<% end %>
+
 <fieldset class="no-border-bottom">
   <legend><%= I18n.t(:all_user_addresses, scope: :address_book) %></legend>
-  <% if @user.addresses.present? %>
+  <% if @user && @user.addresses.present? %>
   <table id="user_addresses">
     <thead>
       <tr class="<%= cycle('even', 'odd') %>">
