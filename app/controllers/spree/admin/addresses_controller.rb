@@ -13,7 +13,7 @@ module Spree
           end
 
           if @user.ship_address
-            @default_user_addresses_hash[I18n.t(:shipping_address, scope: :address_book)] =@user.ship_address
+            @default_user_addresses_hash[I18n.t(:shipping_address, scope: :address_book)] = @user.ship_address
           end
 
           @current_order_addresses_hash = {}
