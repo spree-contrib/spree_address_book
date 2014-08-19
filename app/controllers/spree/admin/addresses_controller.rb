@@ -4,6 +4,20 @@ module Spree
       def index
         @order = Spree::Order.find_by_number(params[:order_id])
         @user = @order.user
+
+        @default_user_addresses_hash = {
+          I18n.t(:billing_address, scope: :address_book) => @user.bill_address,
+          I18n.t(:shipping_address, scope: :address_book) => @user.ship_address
+        }
+
+        previous_order = Spree::Order.where(user_id: @user.id).order(:created_at).last
+
+        if previous_order
+          @previous_order_addresses_hash = {
+            I18n.t(:billing_address, scope: :address_book) => previous_order.bill_address,
+            I18n.t(:shipping_address, scope: :address_book) => previous_order.ship_address
+          }
+        end
       end
 
       def new
