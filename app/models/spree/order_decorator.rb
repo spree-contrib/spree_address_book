@@ -48,8 +48,8 @@ Spree::Order.class_eval do
   end
 
   def save_current_order_addresses(billing, shipping, address)
-    self.update_attributes(ship_address_id: address.id) if billing.present?
-    self.update_attributes(bill_address_id: address.id) if shipping.present?
+    self.update_attributes(bill_address_id: address.id) if billing.present?
+    self.update_attributes(ship_address_id: address.id) if shipping.present?
   end
 
   private
