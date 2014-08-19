@@ -21,6 +21,7 @@ module Spree
           @user.save_default_addresses(params[:address_billing],
                                        params[:address_shipping],
                                        @address)
+          @order.set_current
           flash.now[:success] = Spree.t(:account_updated)
         end
 
@@ -40,8 +41,16 @@ module Spree
           params[:address_shipping],
           @address
         )
+
+        @order = Spree::Order.find_by_number(params[:order_id])
+        @order.save_current_order_addresses(
+          params[:address_current_order_bill],
+          params[:address_current_order_ship],
+          @address
+        )
+
         flash[:success] = "Address updated successfully"
-        redirect_to admin_order_addresses_url params[:order_id]
+        redirect_to admin_order_addresses_url @order
       end
 
       private

@@ -15,23 +15,7 @@
 
 <div data-hook="admin_user_address_edit_form">
   <%= form_for @address, url: admin_order_addresses_path(@order), method: :post do |f| %>
-
-    <div class="row">
-      <div class="alpha twelve columns">
-        <fieldset class="no-border-bottom">
-          <legend align="center"><%= 'Use as Default Addresses' %></legend>
-          <div class="field">
-            <%= check_box_tag('address_billing') %>
-            <%= label_tag 'Default Billing Address' %>
-          </div>
-          <div class="field">
-            <%= check_box_tag('address_shipping') %>
-            <%= label_tag 'Default Shipping Address' %>
-          </div>
-        </fieldset>
-      </div>
-    </div>
-
+    <%= render partial: 'address_options' %>
     <div class="row">
       <div class="alpha twelve columns">
         <fieldset data-hook="admin_user_addresses" id="admin_user_edit_addresses" class="alpha twelve columns">
