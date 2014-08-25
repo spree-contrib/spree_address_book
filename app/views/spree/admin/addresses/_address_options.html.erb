@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="alpha six columns">
+    <fieldset class="no-border-bottom">
+      <legend align="center"><%= I18n.t(:default_addresses, scope: :address_book) %></legend>
+      <div class="field">
+        <%= check_box_tag('address_default_bill', 1, @address == @user.bill_address) %>
+        <%= label_tag I18n.t(:default_billing_address, scope: :address_book) %>
+      </div>
+      <div class="field">
+        <%= check_box_tag('address_default_ship', 1, @address == @user.ship_address) %>
+        <%= label_tag I18n.t(:default_shipping_address, scope: :address_book) %>
+      </div>
+    </fieldset>
+  </div>
+  <div class="alpha six columns">
+    <fieldset class="no-border-bottom">
+      <legend align="center"><%= I18n.t(:use_current_order, scope: :address_book) %></legend>
+      <div class="field">
+        <%= check_box_tag('address_current_order_bill', 1, @address == @order.bill_address) %>
+        <%= label_tag I18n.t(:use_billing_address, scope: :address_book) %>
+      </div>
+      <div class="field">
+        <%= check_box_tag('address_current_order_ship', 1, @address == @order.ship_address) %>
+        <%= label_tag I18n.t(:use_shipping_address, scope: :address_book) %>
+      </div>
+      </div>
+    </fieldset>
+  </div>
+</div>
