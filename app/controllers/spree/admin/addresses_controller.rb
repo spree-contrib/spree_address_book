@@ -82,8 +82,8 @@ module Spree
 
         if @address.update_attributes(address_params)
           @address.user.save_default_addresses(
-            params[:address_billing],
-            params[:address_shipping],
+            params[:address_default_bill],
+            params[:address_default_ship],
             @address
           )
 
