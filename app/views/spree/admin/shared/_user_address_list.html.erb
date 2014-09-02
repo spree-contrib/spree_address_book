@@ -1,0 +1,28 @@
+<fieldset class="no-border-bottom">
+  <legend><%= I18n.t(:all_user_addresses, scope: :address_book) %></legend>
+  <% if @user && @user.addresses.present? %>
+  <table id="user_addresses">
+    <thead>
+      <tr class="<%= cycle('even', 'odd') %>">
+        <th><%= I18n.t(:addresses, scope: :address_book) %></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @user.addresses.each do |address| %>
+      <tr class="<%= cycle('even', 'odd') %>">
+        <td><%= address %></td>
+        <td class="actions">
+          <%= link_to_edit_url edit_admin_user_address_url(@user, address), :no_text => true %>
+          <%= link_to '', admin_user_address_url(@user, address), { :method => :delete,  data: {:confirm => Spree.t(:are_you_sure)}, no_text: true, class: 'delete-resource fa fa-trash icon_link with-tip no-text'} %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% else %>
+  <div id="users-address-list-empty">
+    <%= I18n.t(:no_addresses_on_file, :scope => :address_book) %>
+  </div>
+  <% end %>
+</fieldset>

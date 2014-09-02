@@ -1,0 +1,25 @@
+<fieldset class="no-border-bottom">
+  <legend><%= I18n.t(:default_user_addresses, scope: :address_book) %></legend>
+  <% if @default_user_addresses_hash %>
+    <table id="user_addresses">
+      <thead>
+        <tr>
+          <th><%= I18n.t(:addresses, scope: :address_book) %></th>
+          <th class="align-center"><%= I18n.t(:type, scope: :address_book) %></th>
+          <th class="actions"></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @default_user_addresses_hash.each do |type, address| %>
+        <tr class="<%= cycle('even', 'odd') %>">
+          <td><%= address %></td>
+          <td class="align-center"><%= type %></td>
+          <td class="actions">
+            <%= link_to_edit_url edit_admin_user_address_url(@user, address), :no_text => true %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</fieldset>

@@ -3,6 +3,10 @@ Spree::Core::Engine.add_routes do
     resources :orders do
       resources :addresses
     end
+
+    resources :users do
+      resources :addresses
+    end
   end
 
   resources :addresses
