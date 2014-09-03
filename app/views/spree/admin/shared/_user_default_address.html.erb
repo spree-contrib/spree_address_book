@@ -15,7 +15,11 @@
           <td><%= address %></td>
           <td class="align-center"><%= type %></td>
           <td class="actions">
-            <%= link_to_edit_url edit_admin_user_address_url(@user, address), :no_text => true %>
+            <% if @order %>
+              <%= link_to_edit_url edit_admin_user_address_url(@user, address, order_id: @order.number), :no_text => true %>
+            <% else %>
+              <%= link_to_edit_url edit_admin_user_address_url(@user, address), :no_text => true %>
+            <% end %>
           </td>
         </tr>
         <% end %>

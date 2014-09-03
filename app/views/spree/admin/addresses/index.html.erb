@@ -4,11 +4,9 @@
 <% end %>
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:new_address), new_admin_order_address_url(@order), :icon => 'plus' %></li>
+  <li><%= button_link_to Spree.t(:new_address), new_admin_user_address_url(@user, order: @order.number), :icon => 'plus' %></li>
   <li><%= button_link_to Spree.t(:back_to_orders_list), admin_orders_path, :icon => 'arrow-left' %></li>
 <% end %>
-
-<%= render :partial => 'spree/admin/shared/user_default_address' %>
 
 <fieldset class="no-border-bottom">
   <legend><%= I18n.t(:current_order_addresses, scope: :address_book) %></legend>
@@ -27,7 +25,7 @@
           <td><%= address %></td>
           <td class="align-center"><%= type %></td>
           <td class="actions">
-            <%= link_to_edit_url edit_admin_order_address_url(@order, address), :no_text => true %>
+            <%= link_to_edit_url edit_admin_order_address_url(@order, address, order: @order.number), :no_text => true %>
           </td>
         </tr>
         <% end %>
@@ -53,7 +51,7 @@
             <td><%= address %></td>
             <td class="align-center"><%= type %></td>
             <td class="actions">
-              <%= link_to_edit_url edit_admin_order_address_url(@order, address), :no_text => true %>
+              <%= link_to_edit_url edit_admin_order_address_url(@order, address, order: @order.number), :no_text => true %>
             </td>
           </tr>
           <% end %>

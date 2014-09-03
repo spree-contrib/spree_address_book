@@ -13,8 +13,13 @@
       <tr class="<%= cycle('even', 'odd') %>">
         <td><%= address %></td>
         <td class="actions">
-          <%= link_to_edit_url edit_admin_user_address_url(@user, address), :no_text => true %>
-          <%= link_to '', admin_user_address_url(@user, address), { :method => :delete,  data: {:confirm => Spree.t(:are_you_sure)}, no_text: true, class: 'delete-resource fa fa-trash icon_link with-tip no-text'} %>
+          <% if @order %>
+            <%= link_to_edit_url edit_admin_user_address_url(@user, address, order: @order.number), :no_text => true %>
+            <%= link_to '', admin_user_address_url(@user, address, order: @order.number), { :method => :delete,  data: {:confirm => Spree.t(:are_you_sure)}, no_text: true, class: 'delete-resource fa fa-trash icon_link with-tip no-text'} %>
+          <% else %>
+            <%= link_to_edit_url edit_admin_user_address_url(@user, address), :no_text => true %>
+            <%= link_to '', admin_user_address_url(@user, address), { :method => :delete,  data: {:confirm => Spree.t(:are_you_sure)}, no_text: true, class: 'delete-resource fa fa-trash icon_link with-tip no-text'} %>
+          <% end %>
         </td>
       </tr>
       <% end %>

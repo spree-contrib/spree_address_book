@@ -1,4 +1,8 @@
-<%= render :partial => 'spree/admin/users/sidebar', :locals => { :current => :address } %>
+<% if @order %>
+  <%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Addresses' } %>
+<% else %>
+  <%= render :partial => 'spree/admin/users/sidebar', :locals => { :current => :address } %>
+<% end %>
 
 <% content_for :page_title do %>
   <%= link_to "#{Spree.t(:editing_user)} #{@user.email}", edit_admin_user_url(@user) %>
@@ -6,7 +10,7 @@
 
 <% content_for :page_actions do %>
   <li><%= button_link_to Spree.t(:new_address), new_admin_user_address_url(@user), :icon => 'plus' %></li>
-  <li><%= button_link_to Spree.t(:back_to_orders_list), admin_user_addresses_path, :icon => 'arrow-left' %></li>
+  <li><%= button_link_to Spree.t(:back_to_orders_list), admin_user_addresses_path(@user), :icon => 'arrow-left' %></li>
 <% end %>
 
 <div data-hook="admin_user_edit_form_header">

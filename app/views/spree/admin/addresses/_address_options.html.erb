@@ -12,7 +12,7 @@
       </div>
     </fieldset>
   </div>
-  <% if @order.present? %>
+  <% if @order %>
     <div class="alpha six columns">
       <fieldset class="no-border-bottom">
         <legend align="center"><%= I18n.t(:use_current_order, scope: :address_book) %></legend>
