@@ -9,9 +9,6 @@ Spree::CheckoutController.class_eval do
   def set_addresses
     return unless params[:order] && params[:state] == "address"
     
-    if params[:order][:ship_address_id].to_i == 0 && params[:order][:ship_address_attributes]
-      params[:order][:ship_address_id] = params[:order][:ship_address_attributes][:id]
-    end
     if params[:order][:ship_address_id].to_i > 0
       params[:order].delete(:ship_address_attributes)
 
@@ -20,9 +17,6 @@ Spree::CheckoutController.class_eval do
       params[:order].delete(:ship_address_id)
     end
     
-    if params[:order][:bill_address_id].to_i == 0 && params[:order][:bill_address_attributes]
-      params[:order][:bill_address_id] = params[:order][:bill_address_attributes][:id]
-    end
     if params[:order][:bill_address_id].to_i > 0
       params[:order].delete(:bill_address_attributes)
 
