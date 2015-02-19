@@ -12,7 +12,7 @@ describe 'Addresses' do
       click_link Spree.t(:my_account)
 
       page.should have_content(I18n.t('address_book.shipping_addresses'))
-      sleep(5)
+      #sleep(1)
       click_link I18n.t('address_book.add_new_shipping_address')
       page.should have_content(I18n.t('address_book.new_shipping_address'))
     end

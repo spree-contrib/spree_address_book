@@ -46,6 +46,7 @@ describe Spree::CheckoutController do
   
   def put_address_to_order(params)
     spree_put :update, {:state => "address", :order => params}
+    @order.reload
   end
   
   

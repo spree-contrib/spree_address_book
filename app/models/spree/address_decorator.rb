@@ -48,7 +48,8 @@ Spree::Address.class_eval do
   end
 
   def check
-    the_same_address = user.addresses.where(attributes.except('id', 'updated_at', 'created_at')).first
+    attrs = attributes.except('id', 'updated_at', 'created_at')
+    the_same_address = user.addresses.where(attrs).first
     the_same_address ? the_same_address : self
   end
 end
