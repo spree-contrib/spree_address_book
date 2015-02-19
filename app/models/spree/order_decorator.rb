@@ -31,7 +31,8 @@ Spree::Order.class_eval do
   end
   
   def bill_address_attributes=(attributes)
-    self.user.bill_address = self.bill_address = update_or_create_address(attributes)
+    self.bill_address = update_or_create_address(attributes)
+    self.user.bill_address = self.bill_address if self.user
   end
 
   def ship_address_id=(id)
@@ -46,7 +47,8 @@ Spree::Order.class_eval do
   end
   
   def ship_address_attributes=(attributes)
-    self.user.ship_address = self.ship_address = update_or_create_address(attributes)
+    self.ship_address = update_or_create_address(attributes)
+    self.user.ship_address = self.ship_address if self.user
   end
 
   def assign_default_addresses!
@@ -58,23 +60,29 @@ Spree::Order.class_eval do
     end
   end
   
-  set_callback :updating_from_params, :before, :update_addresses_params
+  #set_callback :updating_from_params, :before, :update_addresses_params
 
   private
 
   def update_addresses_params
-    #raise @updating_params.inspect
+    self.bill_address_attributes = @updating_params["order"].delete("bill_address_attributes")
+    self.bill_address_id = @updating_params["order"].delete("bill_address_id")
+    self.ship_address_attributes = @updating_params["order"].delete("ship_address_attributes")
+    self.ship_address_id = @updating_params["order"].delete("ship_address_id")
   end
   
-  def update_or_create_address(attributes)
+  def update_or_create_address(attributes = {})
+    return if attributes.blank?
+    attributes = attributes.select{|k,v| v.present?}.permit(permitted_address_attributes)
+    
     if self.user
       address = self.user.addresses.build(attributes).check
-      return address if address.persisted?
+      return address if address.id
     end
 
     if attributes[:id]
       address = Spree::Address.find(attributes[:id])
-      attributes.delete(:id)
+      #attributes.delete(:id)
 
       if address && address.editable?
         address.update_attributes(attributes)
@@ -90,5 +98,8 @@ Spree::Order.class_eval do
     
     address
   end
-    
+  
+  def permitted_address_attributes
+    Spree::PermittedAttributes.class_variable_get("@@address_attributes")
+  end
 end

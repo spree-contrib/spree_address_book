@@ -8,7 +8,6 @@ describe "Address selection during checkout" do
   describe "as guest user" do
     include_context "checkout with product"
     before(:each) do
-      sleep 10
       click_button "Checkout"
       fill_in "order_email", :with => "guest@example.com"
       click_button "Continue"
@@ -34,7 +33,7 @@ describe "Address selection during checkout" do
     # include_context "user with address"
     before(:each) do
       @user = FactoryGirl.create(:user)
-      @user.addresses << FactoryGirl.create(:address, :address1 => Faker::Address.street_address, :state => state)
+      @user.addresses << FactoryGirl.create(:address, :address1 => Faker::Address.street_address, :state => state, :alternative_phone => nil)
       @user.save
     end
 
@@ -46,7 +45,6 @@ describe "Address selection during checkout" do
     before(:each) { click_button "Checkout"; sign_in!(user); }
   
     it "should not see billing or shipping address form" do
-      sleep 5
       find("#billing .inner").should_not be_visible
       find("#shipping .inner").should_not be_visible
     end
