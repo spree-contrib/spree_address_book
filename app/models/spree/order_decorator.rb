@@ -74,18 +74,19 @@ Spree::Order.class_eval do
   def update_or_create_address(attributes = {})
     return if attributes.blank?
     attributes = attributes.select{|k,v| v.present?}.permit(permitted_address_attributes)
-    
+
     if self.user
-      address = self.user.addresses.build(attributes).check
+      address = self.user.addresses.build(attributes.except(:id)).check
       return address if address.id
     end
 
     if attributes[:id]
       address = Spree::Address.find(attributes[:id])
-      #attributes.delete(:id)
+      attributes.delete(:id)
 
       if address && address.editable?
         address.update_attributes(attributes)
+        return address
       else
         attributes.delete(:id)
       end
