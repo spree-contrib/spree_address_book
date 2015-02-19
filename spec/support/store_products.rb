@@ -2,17 +2,15 @@ shared_context "store products" do
   before :each do
     taxonomy = FactoryGirl.create(:taxonomy, :name => 'Categories')
     root = taxonomy.root
-
+    FactoryGirl.create(:shipping_method)
     clothing_taxon = FactoryGirl.create(:taxon, :name => 'Clothing', :parent_id => root.id)
     bags_taxon = FactoryGirl.create(:taxon, :name => 'Bags', :parent_id => root.id)
     mugs_taxon = FactoryGirl.create(:taxon, :name => 'Mugs', :parent_id => root.id)
 
     FactoryGirl.create(:custom_product, :name => 'Ruby on Rails Ringer T-Shirt',
-      :price => '17.99', :taxons => [clothing_taxon],
-      :on_hand => 1)
+      :price => '17.99', :taxons => [clothing_taxon])
     FactoryGirl.create(:custom_product, :name => 'Ruby on Rails Mug', :price => '13.99',
-      :taxons => [mugs_taxon],
-      :on_hand => 10)
+      :taxons => [mugs_taxon])
   end
 end
 

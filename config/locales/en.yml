@@ -4,11 +4,11 @@
 en:
   address_book:
     other_address: "Other address"
-    add_new_shipping_address: "Add new shipping address"
-    new_shipping_address: "New Shipping Address"
-    edit_shipping_address: "Edit Shipping Address"
-    no_shipping_addresses_on_file: "No shipping addresses on file"
-    shipping_addresses: "Shipping Addresses"
+    add_new_shipping_address: "Add new address"
+    new_shipping_address: "New Address"
+    edit_shipping_address: "Edit Address"
+    no_shipping_addresses_on_file: "No addresses on file"
+    shipping_addresses: "Addresses"
     successfully_created: "Address has been successfully created."
     successfully_removed: "Address has been successfully removed."
     successfully_saved: "Saved successfully"

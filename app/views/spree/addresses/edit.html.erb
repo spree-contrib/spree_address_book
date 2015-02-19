@@ -1,6 +1,6 @@
 <%= render partial: 'spree/shared/error_messages', locals: { target: @address } %>
 <%= form_for @address, html: { id: 'checkout_form_address' } do |f| %>
-<fieldset>
+<div class="col-sm-6">
   <%= content_tag(:legend, t(:edit_shipping_address, scope: :address_book)) %>
   <div class='inner'>
     <%= render partial: 'spree/addresses/form', locals: {
@@ -10,6 +10,6 @@
       address: @address
     } %>
   </div>
-  <%= f.submit Spree.t(:update) %>
-</fieldset>
+  <%= f.submit Spree.t(:update), :class => 'btn btn-lg btn-success' %>
+</div>
 <% end %>

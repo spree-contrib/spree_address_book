@@ -1,20 +1,16 @@
 require 'spec_helper'
 
 describe Spree::CheckoutController do
-  
   before(:each) do
     user = FactoryGirl.create(:user)
     @address = FactoryGirl.create(:address, :user => user)
     
     @order = FactoryGirl.create(:order, :bill_address_id => nil, :ship_address_id => nil)
-    @order.add_variant(FactoryGirl.create(:product).master, 1)
+    @order.contents.add(FactoryGirl.create(:product, :sku => "Demo-SKU").master, 1)
     @order.user = user
-    @order.shipping_method = FactoryGirl.create(:shipping_method)
     @address.user = @order.user
     @order.save
-    
-    controller.stub :current_order => @order
-    controller.stub :spree_current_user => @order.user
+    allow(controller).to receive(:spree_current_user).and_return(@order.user)
   end
   
   describe "on address step" do
@@ -49,7 +45,7 @@ describe Spree::CheckoutController do
   private
   
   def put_address_to_order(params)
-    put :update, {:use_route => :spree, :state => "address", :order => params}
+    spree_put :update, {:state => "address", :order => params}
   end
   
   

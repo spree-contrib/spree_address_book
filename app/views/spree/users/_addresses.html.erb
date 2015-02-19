@@ -1,10 +1,10 @@
 <h3><%= t(:shipping_addresses, scope: :address_book) %></h3>
 <% if spree_current_user.addresses.present? %>
-<table id='user_addresses'>
+<table id='user_addresses' class="table table-striped">
   <tbody>
     <% spree_current_user.addresses.each do |address| %>
-    <tr class="<%= cycle('even', 'odd') %>">
-      <td><%= address %></td>
+    <tr>
+      <td><%= address.to_s.gsub("<br/>", ", ") %></td>
       <td>
         <%= link_to Spree.t(:edit), edit_address_path(address) %>&nbsp;
         <%= link_to Spree.t(:remove), address_path(address), method: :delete, confirm: Spree.t(:are_you_sure) %>

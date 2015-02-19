@@ -30,7 +30,7 @@ describe Spree::Address do
 
   it 'is displayed as string' do
     a = address
-    address.to_s.should eq("#{a.firstname} #{a.lastname}<br/>#{a.address1}<br/>#{a.address2}<br/>#{a.city}, #{a.state || a.state_name} #{a.zipcode}<br/>#{a.country}".html_safe)
+    address.to_s.should eq("#{a.firstname} #{a.lastname}<br/>#{a.company}<br/>#{a.address1}<br/>#{a.address2}<br/>#{a.city}, #{a.state ? a.state.abbr : a.state_name} #{a.zipcode}<br/>#{a.country}".html_safe)
   end
 
   it 'is destroyed without saving used' do
