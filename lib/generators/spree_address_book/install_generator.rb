@@ -2,11 +2,11 @@ module SpreeAddressBook
   module Generators
     class InstallGenerator < Rails::Generators::Base
       def add_javascripts
-        append_file "vendor/assets/javascripts/spree/frontend/all.js", "//= require store/spree_address_book\n"
+        append_file "vendor/assets/javascripts/spree/frontend/all.js", "//= require spree/frontend/spree_address_book\n"
       end
 
       def add_stylesheets
-        inject_into_file "vendor/assets/stylesheets/spree/frontend/all.css", " *= require store/spree_address_book\n", :before => /\*\//, :verbose => true
+        inject_into_file "vendor/assets/stylesheets/spree/frontend/all.css", " *= require spree/frontend/spree_address_book\n", :before => /\*\//, :verbose => true
       end
 
       def add_migrations

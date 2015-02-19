@@ -23,6 +23,7 @@ Spree::Order.class_eval do
     address = Spree::Address.where(:id => id).first
     if address && address.user_id == self.user_id
       self["bill_address_id"] = address.id
+      self.user.update_attribute(:bill_address_id, address.id)
       self.bill_address.reload
     else
       self["bill_address_id"] = nil
@@ -30,13 +31,14 @@ Spree::Order.class_eval do
   end
   
   def bill_address_attributes=(attributes)
-    self.bill_address = update_or_create_address(attributes)
+    self.user.bill_address = self.bill_address = update_or_create_address(attributes)
   end
 
   def ship_address_id=(id)
     address = Spree::Address.where(:id => id).first
     if address && address.user_id == self.user_id
       self["ship_address_id"] = address.id
+      self.user.update_attribute(:ship_address_id, address.id)
       self.ship_address.reload
     else
       self["ship_address_id"] = nil
@@ -44,12 +46,32 @@ Spree::Order.class_eval do
   end
   
   def ship_address_attributes=(attributes)
-    self.ship_address = update_or_create_address(attributes)
+    self.user.ship_address = self.ship_address = update_or_create_address(attributes)
+  end
+
+  def assign_default_addresses!
+    if self.user
+      self.bill_address = user.bill_address if !self.bill_address_id && user.bill_address.try(:valid?)
+      # Skip setting ship address if order doesn't have a delivery checkout step
+      # to avoid triggering validations on shipping address
+      self.ship_address = user.ship_address if !self.ship_address_id && user.ship_address.try(:valid?) && self.checkout_steps.include?("delivery")
+    end
   end
   
+  set_callback :updating_from_params, :before, :update_addresses_params
+
   private
+
+  def update_addresses_params
+    #raise @updating_params.inspect
+  end
   
   def update_or_create_address(attributes)
+    if self.user
+      address = self.user.addresses.build(attributes).check
+      return address if address.persisted?
+    end
+
     if attributes[:id]
       address = Spree::Address.find(attributes[:id])
       attributes.delete(:id)

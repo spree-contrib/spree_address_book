@@ -8,6 +8,7 @@ describe "Address selection during checkout" do
   describe "as guest user" do
     include_context "checkout with product"
     before(:each) do
+      sleep 10
       click_button "Checkout"
       fill_in "order_email", :with => "guest@example.com"
       click_button "Continue"
@@ -31,20 +32,21 @@ describe "Address selection during checkout" do
   describe "as authenticated user with saved addresses", :js => true do
     include_context "checkout with product"
     # include_context "user with address"
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+      @user.addresses << FactoryGirl.create(:address, :address1 => Faker::Address.street_address, :state => state)
+      @user.save
+    end
 
     let(:billing) { FactoryGirl.build(:address, :state => state) }
     let(:shipping) do
       FactoryGirl.build(:address, :address1 => Faker::Address.street_address, :state => state)
     end
-    let(:user) do
-      u = FactoryGirl.create(:user)
-      u.addresses << FactoryGirl.create(:address, :address1 => Faker::Address.street_address, :state => state)
-      u.save
-      u
-    end
+    let(:user) { @user }
     before(:each) { click_button "Checkout"; sign_in!(user); }
   
     it "should not see billing or shipping address form" do
+      sleep 5
       find("#billing .inner").should_not be_visible
       find("#shipping .inner").should_not be_visible
     end
@@ -132,11 +134,11 @@ describe "Address selection during checkout" do
         end
         complete_checkout
         page.should have_content("processed successfully")
-        within("#order > div.row.steps-data > div:nth-child(2)") do
+        within("#order > div.row.steps-data > div:nth-child(1)") do
           page.should have_content("Billing Address")
           page.should have_content(expected_address_format(billing))
         end
-        within("#order > div.row.steps-data > div:nth-child(1)") do
+        within("#order > div.row.steps-data > div:nth-child(2)") do
           page.should have_content("Shipping Address")
           page.should have_content(expected_address_format(shipping))
         end
@@ -172,11 +174,11 @@ describe "Address selection during checkout" do
         end
         complete_checkout
         page.should have_content("processed successfully")
-        within("#order > div.row.steps-data > div:nth-child(2)") do
+        within("#order > div.row.steps-data > div:nth-child(1)") do
           page.should have_content("Billing Address")
           page.should have_content(expected_address_format(address))
         end
-        within("#order > div.row.steps-data > div:nth-child(1)") do
+        within("#order > div.row.steps-data > div:nth-child(2)") do
           page.should have_content("Shipping Address")
           page.should have_content(expected_address_format(shipping))
         end
@@ -207,11 +209,11 @@ describe "Address selection during checkout" do
         choose "order_bill_address_id_#{address.id}"
         check "Use Billing Address"
         complete_checkout
-        within("#order > div.row.steps-data > div:nth-child(2)") do
+        within("#order > div.row.steps-data > div:nth-child(1)") do
           page.should have_content("Billing Address")
           page.should have_content(expected_address_format(address))
         end
-        within("#order > div.row.steps-data > div:nth-child(1)") do
+        within("#order > div.row.steps-data > div:nth-child(2)") do
           page.should have_content("Shipping Address")
           page.should have_content(expected_address_format(address))
         end
@@ -229,7 +231,7 @@ describe "Address selection during checkout" do
   
     describe "using saved address for ship and new bill address", :js => true do
       let(:billing) do
-        FactoryGirl.build(:address, :address1 => Faker::Address.street_address, :state => state)
+        FactoryGirl.build(:address, :address1 => Faker::Address.street_address, :state => state, :zipcode => '90210')
       end
   
       it "should save 1 new address for user" do
@@ -255,11 +257,11 @@ describe "Address selection during checkout" do
         end
         complete_checkout
         page.should have_content("processed successfully")
-        within("#order > div.row.steps-data > div:nth-child(2)") do
+        within("#order > div.row.steps-data > div:nth-child(1)") do
           page.should have_content("Billing Address")
           page.should have_content(expected_address_format(billing))
         end
-        within("#order > div.row.steps-data > div:nth-child(1)") do
+        within("#order > div.row.steps-data > div:nth-child(2)") do
           page.should have_content("Shipping Address")
           page.should have_content(expected_address_format(address))
         end

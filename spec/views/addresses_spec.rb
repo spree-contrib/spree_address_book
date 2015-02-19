@@ -7,16 +7,16 @@ describe 'spree/addresses/new' do
     assign(:address, address)
     render :template => 'spree/addresses/new', :address => address
 
-    rendered.should have_content('New Shipping Address')
+    rendered.should have_content(I18n.t('address_book.new_shipping_address'))
 
     rendered.should have_field('First Name', :type => 'text')
     rendered.should have_field('Last Name', :type => 'text')
     rendered.should have_field(I18n.t('activerecord.attributes.spree/address.address1'), :type => 'text')
     rendered.should have_field(I18n.t('activerecord.attributes.spree/address.address2'), :type => 'text')
     # Javascript can't be tested in views spec
-    rendered.should have_selector('select#address_country_id', :type => 'text')
+    rendered.should have_selector('select#address_country_id')
     # Javascript can't be tested in views spec
-    rendered.should have_selector('#address_state_name', :type => 'text')
+    rendered.should have_selector('#address_state_name')
     rendered.should have_field('City', :type => 'text')
     rendered.should have_field('Zip', :type => 'text')
     rendered.should have_field('Phone', :type => 'text')
@@ -36,9 +36,9 @@ describe 'spree/addresses/edit' do
     rendered.should have_field(I18n.t('activerecord.attributes.spree/address.address1'), :with => address.address1, :type => 'text')
     rendered.should have_field(I18n.t('activerecord.attributes.spree/address.address2'), :with => address.address2, :type => 'text')
     # Javascript can't be tested in views spec
-    rendered.should have_selector('select#address_country_id', :type => 'text')
+    rendered.should have_selector('select#address_country_id')
     # Javascript can't be tested in views spec
-    rendered.should have_selector('#address_state_name', :type => 'text')
+    rendered.should have_selector('#address_state_name')
     rendered.should have_field('City', :with => address.city, :type => 'text')
     rendered.should have_field('Zip', :with => address.zipcode, :type => 'text')
     rendered.should have_field('Phone', :with => address.phone, :type => 'text')
@@ -47,11 +47,11 @@ end
 
 
 # a few methods to deal with problems in the views, due to the usage of form_for @address.
-def address_path(address, format)
+def address_path(address, format = nil)
   return spree.address_path(address, format)
 end
 
-def addresses_path(format)
+def addresses_path(format = nil)
   return spree.addresses_path(format)
 end
 

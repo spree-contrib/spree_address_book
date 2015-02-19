@@ -5,7 +5,7 @@ describe "User editing saved address during checkout", :js => true do
   include_context "checkout with product"
   include_context "user with address"
 
-  before(:each) { click_button "Checkout"; sign_in!(user) }
+  before(:each) { click_button "Checkout"; sign_in!(user); }
 
   it "can update billing address" do
     within("#billing #billing_address_#{address.id}") do
