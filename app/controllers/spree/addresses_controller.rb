@@ -63,13 +63,16 @@ class Spree::AddressesController < Spree::StoreController
       params[:address].permit(:address,
                               :firstname,
                               :lastname,
+                              :company,
                               :address1,
                               :address2,
                               :city,
                               :state_id,
                               :zipcode,
                               :country_id,
-                              :phone
+                              :state_name,
+                              :phone,
+                              :alternative_phone
                              )
     end
 end

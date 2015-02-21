@@ -16,13 +16,16 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency('spree_core', '~> 2.4.0')
-  s.add_dependency('spree_auth_devise')
-  
   s.add_development_dependency('rspec-rails',  '2.14.0')
   s.add_development_dependency('sqlite3')
   s.add_development_dependency('capybara', '~> 2.1')
   s.add_development_dependency('factory_girl_rails', '4.4.0')
   s.add_development_dependency('database_cleaner')
   s.add_development_dependency('ffaker')
+  spree_version = '~> 2.4.0'
+
+  s.add_dependency 'spree_core', spree_version
+  s.add_dependency 'spree_frontend', spree_version
+  s.add_dependency 'spree_auth_devise'
+
 end
