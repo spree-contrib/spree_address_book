@@ -9,14 +9,14 @@ RSpec.describe "User editing saved address during checkout", type: :feature, :js
     within("#billing #billing_address_#{address.id}") do
       click_link "Edit"
     end
-    current_path.should == spree.edit_address_path(address)
+    expect(current_path).to eq(spree.edit_address_path(address))
     new_street = Faker::Address.street_address
     fill_in Spree.t(:street_address), :with => new_street
     click_button "Update"
-    current_path.should == spree.checkout_state_path('address')
-    within("h1") { page.should have_content("Checkout") }
+    expect(current_path).to eq(spree.checkout_state_path('address'))
+    within("h1") { expect(page).to have_content("Checkout") }
     within("#billing") do
-      page.should have_content(new_street)
+      expect(page).to have_content(new_street)
     end
   end
 
@@ -25,15 +25,15 @@ RSpec.describe "User editing saved address during checkout", type: :feature, :js
     within("#shipping #shipping_address_#{address.id}") do
       click_link "Edit"
     end
-    current_path.should == spree.edit_address_path(address)
+    expect(current_path).to eq(spree.edit_address_path(address))
     new_street = Faker::Address.street_address
     fill_in Spree.t(:street_address), :with => new_street
     click_button "Update"
-    current_path.should == spree.checkout_state_path('address')
-    within("h1") { page.should have_content("Checkout") }
+    expect(current_path).to eq(spree.checkout_state_path('address'))
+    within("h1") { expect(page).to have_content("Checkout") }
     uncheck 'order_use_billing'
     within("#shipping") do
-      page.should have_content(new_street)
+      expect(page).to have_content(new_street)
     end
   end
 end

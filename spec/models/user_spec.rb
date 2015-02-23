@@ -11,8 +11,8 @@ RSpec.describe Spree::User, type: :model do
 
   context 'user has_many addresses' do
     it 'should have many addresses' do
-      user.should respond_to(:addresses)
-      user.addresses.should eq([address2, address])
+      expect(user).to respond_to(:addresses)
+      expect(user.addresses).to eq([address2, address])
     end
   end
 

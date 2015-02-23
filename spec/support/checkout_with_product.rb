@@ -20,13 +20,13 @@ shared_context "checkout with product" do
 
   private
   def should_have_address_fields
-    page.should have_field("First Name")
-    page.should have_field("Last Name")
-    page.should have_field(Spree.t(:street_address))
-    page.should have_field("City")
-    page.should have_field("Country")
-    page.should have_field(Spree.t(:zip))
-    page.should have_field(Spree.t(:phone))
+    expect(page).to have_field("First Name")
+    expect(page).to have_field("Last Name")
+    expect(page).to have_field(Spree.t(:street_address))
+    expect(page).to have_field("City")
+    expect(page).to have_field("Country")
+    expect(page).to have_field(Spree.t(:zip))
+    expect(page).to have_field(Spree.t(:phone))
   end
 
   def complete_checkout

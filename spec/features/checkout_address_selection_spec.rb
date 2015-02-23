@@ -14,14 +14,14 @@ RSpec.describe "Address selection during checkout", type: :feature do
     it "should only see billing address form", :js => true do
       within("#billing") do
         should_have_address_fields
-        page.should_not have_selector(".select_address")
+        expect(page).not_to have_selector(".select_address")
       end
     end
 
     it "should only see shipping address form" do
       within("#shipping") do
         should_have_address_fields
-        page.should_not have_selector(".select_address")
+        expect(page).not_to have_selector(".select_address")
       end
     end
   end
@@ -44,20 +44,20 @@ RSpec.describe "Address selection during checkout", type: :feature do
     before(:each) { click_button "Checkout"; sign_in!(user); }
   
     it "should not see billing or shipping address form" do
-      page.find('#billing .inner', :visible => false).should_not be_visible
-      page.find('#shipping .inner', :visible => false).should_not be_visible
+      expect(page.find('#billing .inner', :visible => false)).not_to be_visible
+      expect(page.find('#shipping .inner', :visible => false)).not_to be_visible
     end
   
     it "should list saved addresses for billing and shipping" do
       uncheck 'order_use_billing'
       within("#billing .select_address") do
         user.addresses.each do |a|
-          page.should have_field("order_bill_address_id_#{a.id}")
+          expect(page).to have_field("order_bill_address_id_#{a.id}")
         end
       end
       within("#shipping .select_address") do
         user.addresses.each do |a|
-          page.should have_field("order_ship_address_id_#{a.id}")
+          expect(page).to have_field("order_ship_address_id_#{a.id}")
         end
       end
     end
@@ -111,10 +111,10 @@ RSpec.describe "Address selection during checkout", type: :feature do
         end
         click_button "Save and Continue"
         within("#bfirstname") do
-          page.should have_content("field is required")
+          expect(page).to have_content("field is required")
         end
         within("#sfirstname") do
-          page.should have_content("field is required")
+          expect(page).to have_content("field is required")
         end
       end
     end
@@ -131,14 +131,14 @@ RSpec.describe "Address selection during checkout", type: :feature do
           fill_in_address(shipping, :ship)
         end
         complete_checkout
-        page.should have_content("processed successfully")
+        expect(page).to have_content("processed successfully")
         within("#order > div.row.steps-data > div:nth-child(1)") do
-          page.should have_content("Billing Address")
-          page.should have_content(expected_address_format(billing))
+          expect(page).to have_content("Billing Address")
+          expect(page).to have_content(expected_address_format(billing))
         end
         within("#order > div.row.steps-data > div:nth-child(2)") do
-          page.should have_content("Shipping Address")
-          page.should have_content(expected_address_format(shipping))
+          expect(page).to have_content("Shipping Address")
+          expect(page).to have_content(expected_address_format(shipping))
         end
       end
     end
@@ -171,14 +171,14 @@ RSpec.describe "Address selection during checkout", type: :feature do
           fill_in_address(shipping, :ship)
         end
         complete_checkout
-        page.should have_content("processed successfully")
+        expect(page).to have_content("processed successfully")
         within("#order > div.row.steps-data > div:nth-child(1)") do
-          page.should have_content("Billing Address")
-          page.should have_content(expected_address_format(address))
+          expect(page).to have_content("Billing Address")
+          expect(page).to have_content(expected_address_format(address))
         end
         within("#order > div.row.steps-data > div:nth-child(2)") do
-          page.should have_content("Shipping Address")
-          page.should have_content(expected_address_format(shipping))
+          expect(page).to have_content("Shipping Address")
+          expect(page).to have_content(expected_address_format(shipping))
         end
       end
   
@@ -193,10 +193,10 @@ RSpec.describe "Address selection during checkout", type: :feature do
         end
         click_button "Save and Continue"
         within("#saddress1") do
-          page.should have_content("field is required")
+          expect(page).to have_content("field is required")
         end
         within("#billing") do
-          find("#order_bill_address_id_#{address.id}").should be_checked
+          expect(find("#order_bill_address_id_#{address.id}")).to be_checked
         end
       end
     end
@@ -208,12 +208,12 @@ RSpec.describe "Address selection during checkout", type: :feature do
         check "Use Billing Address"
         complete_checkout
         within("#order > div.row.steps-data > div:nth-child(1)") do
-          page.should have_content("Billing Address")
-          page.should have_content(expected_address_format(address))
+          expect(page).to have_content("Billing Address")
+          expect(page).to have_content(expected_address_format(address))
         end
         within("#order > div.row.steps-data > div:nth-child(2)") do
-          page.should have_content("Shipping Address")
-          page.should have_content(expected_address_format(address))
+          expect(page).to have_content("Shipping Address")
+          expect(page).to have_content(expected_address_format(address))
         end
       end
   
@@ -254,14 +254,14 @@ RSpec.describe "Address selection during checkout", type: :feature do
           fill_in_address(billing)
         end
         complete_checkout
-        page.should have_content("processed successfully")
+        expect(page).to have_content("processed successfully")
         within("#order > div.row.steps-data > div:nth-child(1)") do
-          page.should have_content("Billing Address")
-          page.should have_content(expected_address_format(billing))
+          expect(page).to have_content("Billing Address")
+          expect(page).to have_content(expected_address_format(billing))
         end
         within("#order > div.row.steps-data > div:nth-child(2)") do
-          page.should have_content("Shipping Address")
-          page.should have_content(expected_address_format(address))
+          expect(page).to have_content("Shipping Address")
+          expect(page).to have_content(expected_address_format(address))
         end
       end
 
@@ -277,10 +277,10 @@ RSpec.describe "Address selection during checkout", type: :feature do
 
         click_button "Save and Continue"
         within("#baddress1") do
-          page.should have_content("field is required")
+          expect(page).to have_content("field is required")
         end
         within("#shipping") do
-          find("#order_ship_address_id_#{address.id}").should be_checked
+          expect(find("#order_ship_address_id_#{address.id}")).to be_checked
         end
       end
     end

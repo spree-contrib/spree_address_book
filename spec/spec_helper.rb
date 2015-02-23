@@ -7,14 +7,14 @@ require 'ffaker'
 
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
-  # config.raise_errors_for_deprecations!
+  config.raise_errors_for_deprecations!
 
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
   config.use_transactional_fixtures = false
 
   config.mock_with :rspec do |mock|
-    mock.syntax = [:should, :expect]
+    mock.syntax = :expect
   end
 
 end
