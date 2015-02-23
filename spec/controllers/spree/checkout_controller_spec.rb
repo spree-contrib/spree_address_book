@@ -1,15 +1,13 @@
-require 'spec_helper'
-
-describe Spree::CheckoutController do
+RSpec.describe Spree::CheckoutController, type: :controller do
   
   before(:each) do
     user = FactoryGirl.create(:user)
     @address = FactoryGirl.create(:address, :user => user)
-    
-    @order = FactoryGirl.create(:order, :bill_address_id => nil, :ship_address_id => nil)
-    @order.add_variant(FactoryGirl.create(:product).master, 1)
+
+    @order = FactoryGirl.create(:order_with_line_items, :bill_address_id => nil, :ship_address_id => nil)
+    # @order.contents.add(FactoryGirl.create(:product).master, 1)
     @order.user = user
-    @order.shipping_method = FactoryGirl.create(:shipping_method)
+    # @order.shipping_method = FactoryGirl.create(:shipment)
     @address.user = @order.user
     @order.save
     
@@ -17,7 +15,7 @@ describe Spree::CheckoutController do
     controller.stub :spree_current_user => @order.user
   end
   
-  describe "on address step" do
+  context "on address step" do
     it "set equal address ids" do
       put_address_to_order('bill_address_id' => @address.id, 'ship_address_id' => @address.id)
       @order.bill_address.should be_present
@@ -49,7 +47,10 @@ describe Spree::CheckoutController do
   private
   
   def put_address_to_order(params)
-    put :update, {:use_route => :spree, :state => "address", :order => params}
+    spree_post :update, {
+      :state => 'address',
+      :order => params
+    }
   end
   
   

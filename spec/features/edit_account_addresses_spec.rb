@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe "User editing addresses for his account" do
+RSpec.describe "User editing addresses for his account", type: :feature do
   include_context "user with address"
 
   before(:each) do
@@ -21,8 +19,8 @@ describe "User editing addresses for his account" do
 
   it "should be able to edit address", :js => true do
     page.evaluate_script('window.confirm = function() { return true; }')
-    within("#user_addresses > tbody > tr:first") do
-      click_link I18n.t(:edit)
+    within('table#user_addresses > tbody > tr:nth-of-type(1)') do
+      click_link Spree.t(:edit)
     end
     current_path.should == spree.edit_address_path(address)
 
@@ -30,9 +28,9 @@ describe "User editing addresses for his account" do
     fill_in :address_address1, :with => new_street
     click_button "Update"
     current_path.should == spree.account_path
-    page.should have_content('updated')
+    page.should have_content('Updated')
 
-    within("#user_addresses > tbody > tr:first") do
+    within('table#user_addresses > tbody > tr:nth-of-type(1)') do
       page.should have_content(new_street)
     end
   end
@@ -40,8 +38,8 @@ describe "User editing addresses for his account" do
   it "should be able to remove address", :js => true do
     # bypass confirm dialog
     page.evaluate_script('window.confirm = function() { return true; }')
-    within("#user_addresses > tbody > tr:first") do
-      click_link I18n.t(:remove)
+    within('table#user_addresses > tbody > tr:nth-of-type(1)') do
+      click_link Spree.t(:remove)
     end
     current_path.should == spree.account_path
 

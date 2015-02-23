@@ -4,6 +4,7 @@ group :test do
   gem 'sass-rails'
   gem 'coffee-rails'
   gem 'pry-nav'
+  gem 'pry-rails'
 end
 
 gem 'spree', github: 'spree/spree', branch: '2-4-stable'

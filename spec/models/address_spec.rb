@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::Address do
+RSpec.describe Spree::Address, type: :model do
   let(:address) { FactoryGirl.create(:address) }
   let(:address2) { FactoryGirl.create(:address) }
   let(:order) { FactoryGirl.create(:completed_order_with_totals) }
@@ -9,7 +7,7 @@ describe Spree::Address do
   before { order.update_attribute(:bill_address, address2) }
 
   it 'has required attributes' do
-    Spree::Address.required_fields.should eq([:firstname, :lastname, :address1, :city, :zipcode, :country, :phone])
+    Spree::Address.required_fields.should eq([:firstname, :lastname, :address1, :city, :country, :zipcode, :phone])
   end
 
   it 'is editable' do
