@@ -1,11 +1,13 @@
-source "http://rubygems.org"
-gemspec
+source 'https://rubygems.org'
 
 group :test do
   gem 'sass-rails'
   gem 'coffee-rails'
   gem 'pry-nav'
+  gem 'pry-rails'
 end
 
-gem 'spree_auth_devise', :git => 'git://github.com/spree/spree_auth_devise', :branch => '2-2-stable'
-gem 'spree', '~> 2.2.4'
+gem 'spree', github: 'spree/spree', branch: '2-4-stable'
+gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-4-stable'
+
+gemspec

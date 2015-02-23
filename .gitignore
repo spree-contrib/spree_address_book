@@ -10,3 +10,7 @@ nbproject
 *.bak
 spec/dummy
 Gemfile.lock
+
+# Bundle
+.bundle/
+/vendor/bundle/

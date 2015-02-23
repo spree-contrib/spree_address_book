@@ -1,3 +1,4 @@
 --color
---format
-progress
+--require pry
+--require spec_helper
+--format progress

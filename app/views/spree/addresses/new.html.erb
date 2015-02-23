@@ -3,9 +3,9 @@
 <fieldset>
   <%= content_tag(:legend, t(:new_shipping_address, :scope => :address_book)) %>
   <div class="inner">
-    <%= render :partial => 'spree/addresses/form', :locals => {
+    <%= render :partial => 'spree/address/form', :locals => {
       :address_name => 'address',
-      :address_form => f,
+      :form => f,
       :address_type => 'shipping',
       :address => @address
     } %>
