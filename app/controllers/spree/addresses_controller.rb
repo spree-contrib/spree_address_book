@@ -58,18 +58,8 @@ class Spree::AddressesController < Spree::StoreController
   end
 
   private
-    def address_params
-      params[:address].permit(:address,
-                              :firstname,
-                              :lastname,
-                              :address1,
-                              :address2,
-                              :city,
-                              :state_id,
-                              :zipcode,
-                              :country_id,
-                              :phone
-                             )
-    end
-end
 
+  def address_params
+    params[:address].permit(Spree::PermittedAttributes.address_attributes)
+  end
+end

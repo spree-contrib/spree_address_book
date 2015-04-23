@@ -1,7 +1,3 @@
-(Spree::PermittedAttributes.class_variable_get("@@address_attributes") << [
-  :user_id, :deleted_at
-]).flatten!
-
 Spree::Address.class_eval do
   belongs_to :user, :class_name => Spree.user_class.to_s
 
@@ -10,14 +6,14 @@ Spree::Address.class_eval do
       v.kind_of?(ActiveModel::Validations::PresenceValidator) ? v.attributes : []
     end.flatten
   end
-  
+
   # TODO: look into if this is actually needed. I don't want to override methods unless it is really needed
   # can modify an address if it's not been used in an order
   def same_as?(other)
     return false if other.nil?
     attributes.except('id', 'updated_at', 'created_at', 'user_id') == other.attributes.except('id', 'updated_at', 'created_at', 'user_id')
   end
-  
+
   # can modify an address if it's not been used in an completed order
   def editable?
     new_record? || (shipments.empty? && Spree::Order.complete.where("bill_address_id = ? OR ship_address_id = ?", self.id, self.id).count == 0)
