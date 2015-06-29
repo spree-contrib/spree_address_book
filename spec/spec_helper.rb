@@ -20,11 +20,11 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.include Spree::TestingSupport::UrlHelpers
   config.include Spree::TestingSupport::Preferences
-  config.include Spree::TestingSupport::ControllerRequests
+  config.include Spree::TestingSupport::ControllerRequests, type: :controller
   config.include Capybara::DSL
   config.include Capybara::RSpecMatchers
 
-  config.before(:each) do
+  config.before(:each) do |example|
     if example.metadata[:js]
       DatabaseCleaner.strategy = :truncation, {
         :except => [

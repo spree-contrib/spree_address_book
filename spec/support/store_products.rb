@@ -18,12 +18,12 @@ shared_context "user with address" do
   let(:state) {  Spree::State.all.first || FactoryGirl.create(:state) }
 
   let(:address) do
-    FactoryGirl.create(:address, :address1 => Faker::Address.street_address, :state => state)
+    FactoryGirl.create(:address, :address1 => FFaker::Address.street_address, :state => state)
   end
 
   let(:billing) { FactoryGirl.build(:address, :state => state) }
   let(:shipping) do
-    FactoryGirl.build(:address, :address1 => Faker::Address.street_address, :state => state)
+    FactoryGirl.build(:address, :address1 => FFaker::Address.street_address, :state => state)
   end
 
   let(:user) do
