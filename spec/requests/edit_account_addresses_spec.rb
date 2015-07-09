@@ -11,12 +11,12 @@ describe "User editing addresses for his account" do
   end
 
   it "should see list of addresses saved for account" do
-    page.should have_content("Addresses")
-    page.should have_selector("#user_addresses > tbody > tr", :count => user.addresses.count)
+    expect(page).to have_content("Addresses")
+    expect(page).to have_selector("#user_addresses > tbody > tr", :count => user.addresses.count)
   end
 
   it "should be able to add address" do
-    
+
   end
 
   it "should be able to edit address", :js => true do
@@ -24,16 +24,16 @@ describe "User editing addresses for his account" do
     within("table#user_addresses tr:nth-child(1)") do
       click_link Spree.t(:edit)
     end
-    current_path.should == spree.edit_address_path(address)
+    expect(current_path).to eq(spree.edit_address_path(address))
 
-    new_street = Faker::Address.street_address
+    new_street = FFaker::Address.street_address
     fill_in :address_address1, :with => new_street
     click_button "Update"
-    current_path.should == spree.account_path
-    page.should have_content('Updated successfully')
+    expect(current_path).to eq(spree.account_path)
+    expect(page).to have_content('Updated successfully')
 
     within("table#user_addresses tr:nth-child(1)") do
-      page.should have_content(new_street)
+      expect(page).to have_content(new_street)
     end
   end
 
@@ -43,15 +43,15 @@ describe "User editing addresses for his account" do
     within("table#user_addresses tr:nth-child(1)") do
       click_link Spree.t(:remove)
     end
-    current_path.should == spree.account_path
+    expect(current_path).to eq(spree.account_path)
 
     # flash message
-    page.should have_content("removed")
+    expect(page).to have_content("removed")
 
     # header still exists for the area - even if it is blank
-    page.should have_content("Addresses")
+    expect(page).to have_content("Addresses")
 
     # table is not displayed unless addresses are available
-    page.should_not have_selector("#user_addresses")
+    expect(page).not_to have_selector("#user_addresses")
   end
 end

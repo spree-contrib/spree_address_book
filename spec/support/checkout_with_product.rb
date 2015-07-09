@@ -1,7 +1,9 @@
 shared_context "checkout with product" do
   before :each do
+    FactoryGirl.create :store
     @state = Spree::State.all.first || FactoryGirl.create(:state)
     @zone = Spree::Zone.find_by_name('GlobalZone') || FactoryGirl.create(:global_zone)
+    @zone.states << @state
     @shipping = Spree::ShippingMethod.find_by_name('UPS Ground') || FactoryGirl.create(:shipping_method)
 
     FactoryGirl.create(:check_payment_method)
@@ -19,14 +21,15 @@ shared_context "checkout with product" do
   let(:state) { @state }
 
   private
+
   def should_have_address_fields
-    page.should have_field("First Name")
-    page.should have_field("Last Name")
-    page.should have_field(I18n.t('activerecord.attributes.spree/address.address1'))
-    page.should have_field("City")
-    page.should have_field("Country")
-    page.should have_field(I18n.t('activerecord.attributes.spree/address.zipcode'))
-    page.should have_field(I18n.t('activerecord.attributes.spree/address.phone'))
+    expect(page).to have_field("First Name")
+    expect(page).to have_field("Last Name")
+    expect(page).to have_field(I18n.t('activerecord.attributes.spree/address.address1'))
+    expect(page).to have_field("City")
+    expect(page).to have_field("Country")
+    expect(page).to have_field("Zip")
+    expect(page).to have_field(I18n.t('activerecord.attributes.spree/address.phone'))
   end
 
   def complete_checkout

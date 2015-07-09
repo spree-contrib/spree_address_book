@@ -11,4 +11,3 @@
 #  config.reset
 #  yield(config) if block_given?
 #end
-
