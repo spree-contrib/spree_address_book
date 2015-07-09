@@ -17,8 +17,7 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
 
   s.add_dependency('spree_core', '~> 3.0.0.rc')
-  s.add_dependency('spree_auth_devise')
-  
+
   s.add_development_dependency('rspec-rails', '2.14.0')
   s.add_development_dependency('sqlite3')
   s.add_development_dependency('capybara', '~> 2.1')
