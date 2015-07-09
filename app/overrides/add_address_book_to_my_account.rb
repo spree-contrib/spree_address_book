@@ -1,4 +1,4 @@
-if Object.const_defined?("Spree::User")
+if (Object.const_get("Spree::User") rescue false)
   Deface::Override.new(
     :virtual_path => "spree/users/show",
     :name => "address_book_account_my_orders",
