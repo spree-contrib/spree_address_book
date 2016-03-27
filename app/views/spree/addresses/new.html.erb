@@ -1,15 +1,23 @@
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @address } %>
-<%= form_for @address, :html => {:id => "checkout_form_address"} do |f| %>
-<fieldset>
-  <%= content_tag(:legend, t(:new_shipping_address, :scope => :address_book)) %>
-  <div class="inner">
-    <%= render :partial => 'spree/addresses/form', :locals => {
-      :address_name => 'address',
-      :address_form => f,
-      :address_type => 'shipping',
-      :address => @address
-    } %>
+<div class="col-md-6 col-md-offset-3">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= t(:new_shipping_address, scope: :address_book) %></h3>
+    </div>
+    <div class="panel-body">
+      <%= render 'spree/shared/error_messages', target: @address %>
+      <%= form_for @address, html: { id: 'checkout_form_address' } do |f| %>
+        <fieldset>
+          <div class="inner">
+            <%= render 'spree/addresses/form',
+              address_name: 'address',
+              address_form: f,
+              address_type: 'shipping',
+              address: @address
+            %>
+          </div>
+          <%= f.submit t(:save, scope: :address_book), class: 'btn btn-primary' %>
+        </fieldset>
+      <% end %>
+    </div>
   </div>
-  <%= f.submit t(:save, :scope => :address_book) %>
-</fieldset>
-<% end %>
+</div>
