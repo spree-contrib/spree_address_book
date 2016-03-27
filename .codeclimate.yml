@@ -1,0 +1,15 @@
+---
+engines:
+  rubocop:
+    enabled: true
+ratings:
+  paths:
+  - "**.rb"
+exclude_paths:
+- config/**/*
+- db/**/*
+- spec/**/*
+- vendor/**/*
+- bin/*
+- Gemfile
+- Rakefile

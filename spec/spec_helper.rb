@@ -1,28 +1,20 @@
-ENV["RAILS_ENV"] ||= "test"
-require File.expand_path("../dummy/config/environment.rb",  __FILE__)
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../dummy/config/environment.rb', __FILE__)
 
 require 'rspec/rails'
 require 'database_cleaner'
 require 'ffaker'
 
-Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each {|f| require f }
-
-# Requires factories defined in spree_core
-require 'spree/testing_support/factories'
-require 'spree/testing_support/controller_requests'
-require 'spree/testing_support/authorization_helpers'
-require 'spree/testing_support/preferences'
-require 'spree/testing_support/url_helpers'
+Dir[File.join(File.dirname(__FILE__), 'support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.mock_with :rspec
   config.use_transactional_fixtures = false
-  config.include Spree::TestingSupport::UrlHelpers
 
   config.before(:each) do
-    if example.metadata[:js]
+    if RSpec.current_example.metadata[:js]
       DatabaseCleaner.strategy = :truncation, {
-        :except => [
+        except: [
           'spree_countries',
           'spree_zones',
           'spree_zone_members',
@@ -39,8 +31,12 @@ RSpec.configure do |config|
     DatabaseCleaner.start
     reset_spree_preferences
 
-    # not sure exactly what is happening here, but i think it takes an iteration for the country data to load
-    Spree::Config[:default_country_id] = Spree::Country.find_by_iso3('USA').id if Spree::Country.count > 0
+    # not sure exactly what is happening here, but i think it takes
+    # an iteration for the country data to load
+    if Spree::Country.count > 0
+      Spree::Config[:default_country_id] = Spree::Country.find_by_iso3('USA').id
+    end
+    Spree::Config[:address_requires_state]
   end
 
   config.after(:each) do

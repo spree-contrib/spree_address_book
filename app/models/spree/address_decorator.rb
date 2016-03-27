@@ -30,10 +30,11 @@ Spree::Address.class_eval do
   def to_s
     [
       "#{firstname} #{lastname}",
-      "#{address1}",
-      "#{address2}",
-      "#{city}, #{state || state_name} #{zipcode}",
-      "#{country}"
+      company.to_s,
+      address1.to_s,
+      address2.to_s,
+      "#{city}, #{state ? state.abbr : state_name} #{zipcode}",
+      country.to_s
     ].reject(&:empty?).join("<br/>").html_safe
   end
 
@@ -44,5 +45,11 @@ Spree::Address.class_eval do
     else
       update_column :deleted_at, Time.now
     end
+  end
+
+  def check
+    attrs = attributes.except('id', 'updated_at', 'created_at')
+    the_same_address = user.addresses.where(attrs).first
+    the_same_address ? the_same_address : self
   end
 end

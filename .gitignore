@@ -7,6 +7,10 @@
 tmp
 nbproject
 *.swp
-*.bak
 spec/dummy
+.rvmrc
+.bundle
 Gemfile.lock
+coverage
+.ruby-version
+.ruby-gemset
