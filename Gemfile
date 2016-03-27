@@ -9,6 +9,4 @@ group :test do
   gem 'sass-rails'
   gem 'coffee-rails'
   gem 'pry-nav'
-  gem 'selenium-webdriver'
 end
-

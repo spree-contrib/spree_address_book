@@ -1,21 +1,22 @@
 require 'spec_helper'
 
 describe Spree::User do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:address) { FactoryGirl.create(:address) }
-  let(:address2) { FactoryGirl.create(:address) }
-  before {
+  let(:user) { create(:user) }
+  let(:address) { create(:address) }
+  let(:address2) { create(:address) }
+
+  before do
     address.user = user
     address.save
+    sleep(1)
     address2.user = user
     address2.save
-  }
+  end
 
   describe 'user has_many addresses' do
     it 'should have many addresses' do
-      user.should respond_to(:addresses)
-      user.addresses.should eq([address2, address])
+      expect(user).to respond_to(:addresses)
+      expect(user.addresses).to eq [address2, address]
     end
   end
-
 end
