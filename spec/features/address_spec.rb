@@ -1,13 +1,12 @@
 require 'spec_helper'
 
-describe 'Addresses', type: :feature do
+describe 'Addresses', type: :feature, js: true do
   context 'editing' do
     include_context 'user with address'
 
     it 'should be able to edit an address' do
       visit spree.root_path
 
-      click_link Spree.t(:login)
       sign_in!(user)
       click_link Spree.t(:my_account)
 

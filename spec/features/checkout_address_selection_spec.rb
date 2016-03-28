@@ -34,13 +34,13 @@ describe 'Address selection during checkout', type: :feature do
     before(:each) do
       create(:store)
       @user = create(:user)
-      @user.addresses << create(:address, :address1 => Faker::Address.street_address, :state => state, :alternative_phone => nil)
+      @user.addresses << create(:address, :address1 => FFaker::Address.street_address, :state => state, :alternative_phone => nil)
       @user.save
     end
 
     let(:billing) { build(:address, :state => state) }
     let(:shipping) do
-      build(:address, :address1 => Faker::Address.street_address, :state => state)
+      build(:address, :address1 => FFaker::Address.street_address, :state => state)
     end
     let(:user) { @user }
     before(:each) do
@@ -151,7 +151,7 @@ describe 'Address selection during checkout', type: :feature do
 
     describe 'using saved address for bill and new ship address', js: true do
       let(:shipping) do
-        build(:address, :address1 => Faker::Address.street_address,
+        build(:address, :address1 => FFaker::Address.street_address,
           :state => state)
       end
 
@@ -235,7 +235,7 @@ describe 'Address selection during checkout', type: :feature do
 
     describe 'using saved address for ship and new bill address', js: true do
       let(:billing) do
-        build(:address, :address1 => Faker::Address.street_address, :state => state, :zipcode => '90210')
+        build(:address, :address1 => FFaker::Address.street_address, :state => state, :zipcode => '90210')
       end
 
       it 'should save 1 new address for user' do
