@@ -18,7 +18,6 @@ RSpec.configure do |config|
           'spree_countries',
           'spree_zones',
           'spree_zone_members',
-          'spree_states',
           'spree_roles'
         ]
       }
