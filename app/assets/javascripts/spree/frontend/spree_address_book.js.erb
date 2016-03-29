@@ -1,5 +1,5 @@
 //= require spree/frontend
-//= require spree/frontend/spree_auth
+<% require_asset('spree/frontend/spree_auth') if (Object.const_get("Spree::User") rescue false) %>
 
 (function($) {
   $(document).ready(function(){
