@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'factory_girl', '~> 4.5'
   s.add_development_dependency 'factory_girl_rails'
   s.add_development_dependency 'database_cleaner'
-  s.add_development_dependency 'ffaker', '~> 2.0.0'
+  s.add_development_dependency 'ffaker', '~> 2.2.0'
   s.add_development_dependency 'poltergeist', '~> 1.5'
   s.add_development_dependency 'capybara-screenshot', '~> 1.0.11'
 end
