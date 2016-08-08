@@ -30,13 +30,14 @@
             </p>
           </div>
           <% end %>
-          <%= form.fields_for address_name do |address_form| %>
+          <% order_address_name = @order.send(address_name) %>
+          <%= form.fields_for address_name, order_address_name.valid? ? @order.send("build_#{address_name}") : order_address_name do |address_form| %>
             <div class="inner" data-hook=<%="#{address_type}_inner" %>>
               <%= render :partial => 'spree/addresses/form', :locals => {
                 :address_name => address_name,
                 :address_form => address_form,
                 :address_type => address_type,
-                :address => Spree::Address.default
+                :address => order_address_name
               } %>
             </div>
           <% end %>
