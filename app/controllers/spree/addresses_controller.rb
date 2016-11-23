@@ -68,8 +68,8 @@ class Spree::AddressesController < Spree::StoreController
                               :state_id,
                               :zipcode,
                               :country_id,
-                              :phone
+                              :phone,
+                              :company
                              )
     end
 end
-
