@@ -64,6 +64,7 @@ class Spree::AddressesController < Spree::StoreController
                               :lastname,
                               :address1,
                               :address2,
+                              :company,
                               :city,
                               :state_id,
                               :zipcode,
