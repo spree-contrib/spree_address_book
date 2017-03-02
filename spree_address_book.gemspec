@@ -14,18 +14,22 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'spree_core', '>= 3.1.0', '< 4.0'
-  s.add_development_dependency 'spree_auth_devise', '>= 3.1.0', '< 4.0'
+  spree_version = '>= 3.1.0', '< 4.0'
+  s.add_runtime_dependency 'spree_core', spree_version
+  s.add_runtime_dependency 'spree_auth_devise', spree_version
 
-  s.add_development_dependency 'rspec-rails', '~> 3.4.1'
+  s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'mysql2'
   s.add_development_dependency 'pg'
-  s.add_development_dependency 'capybara', '~> 2.1'
-  s.add_development_dependency 'factory_girl', '~> 4.5'
+  s.add_development_dependency 'capybara'
+  s.add_development_dependency 'factory_girl'
   s.add_development_dependency 'factory_girl_rails'
   s.add_development_dependency 'database_cleaner'
-  s.add_development_dependency 'ffaker', '~> 2.2.0'
-  s.add_development_dependency 'poltergeist', '~> 1.5'
-  s.add_development_dependency 'capybara-screenshot', '~> 1.0.11'
+  s.add_development_dependency 'ffaker'
+  s.add_development_dependency 'poltergeist'
+  s.add_development_dependency 'capybara-screenshot'
+  s.add_development_dependency 'sass-rails'
+  s.add_development_dependency 'coffee-rails'
+  s.add_development_dependency 'pry-nav'
 end
