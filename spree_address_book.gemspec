@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'ffaker'
   s.add_development_dependency 'poltergeist'
   s.add_development_dependency 'capybara-screenshot'
+  s.add_development_dependency 'appraisal'
   s.add_development_dependency 'sass-rails'
   s.add_development_dependency 'coffee-rails'
   s.add_development_dependency 'pry-nav'
