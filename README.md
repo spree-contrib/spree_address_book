@@ -7,6 +7,15 @@ This extension allows registered users to have multiple shipping & billing addre
 ## Installation
 
 1. Add this extension to your Gemfile with this line:
+
+  #### Spree >= 3.1
+
+  ```ruby
+  gem 'spree_address_book', github: 'spree-contrib/spree_address_book'
+  ```
+
+  #### Spree 3.0 and Spree 2.x
+
   ```ruby
   gem 'spree_address_book', github: 'spree-contrib/spree_address_book', branch: 'X-X-stable'
   ```
