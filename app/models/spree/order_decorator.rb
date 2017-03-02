@@ -73,7 +73,7 @@ Spree::Order.class_eval do
   
   def update_or_create_address(attributes = {})
     return if attributes.blank?
-    attributes = attributes.select{|k,v| v.present?}.permit(permitted_address_attributes)
+    attributes = attributes.select{|k,v| v.present?}
 
     if self.user
       address = self.user.addresses.build(attributes.except(:id)).check
