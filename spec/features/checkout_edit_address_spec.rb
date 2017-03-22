@@ -5,7 +5,11 @@ describe 'User editing saved address during checkout', type: :feature, js: true 
   include_context 'checkout with product'
   include_context 'user with address'
 
-  before(:each) { click_button 'Checkout'; sign_in!(user) }
+  before(:each) do
+    click_button 'Checkout'
+    sign_in!(user)
+    click_button 'Checkout' if page.has_button?('Checkout')
+  end
 
   it 'can update billing address' do
     within("#billing #billing_address_#{address.id}") do
