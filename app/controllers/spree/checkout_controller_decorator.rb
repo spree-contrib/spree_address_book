@@ -1,8 +1,8 @@
 Spree::CheckoutController.class_eval do
   helper Spree::AddressesHelper
 
-  after_filter :normalize_addresses, :only => :update
-  before_filter :set_addresses, :only => :update
+  after_action :normalize_addresses, :only => :update
+  before_action :set_addresses, :only => :update
 
   protected
 
