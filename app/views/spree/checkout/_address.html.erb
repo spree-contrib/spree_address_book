@@ -44,6 +44,13 @@
       </div>
     </div>
   <% end %>
+
+  <p class="field checkbox"  data-hook="save_user_address">
+    <%= label_tag :save_user_address, :id => 'save_user_address' do %>
+      <%= check_box_tag 'save_user_address', '1' %>
+      <%= Spree.t(:save_user_address) %>
+    <% end %>
+  </p>
 </div>
 
 <div class="well text-right form-buttons" data-hook="buttons">

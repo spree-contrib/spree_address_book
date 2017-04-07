@@ -79,6 +79,7 @@ describe 'Address selection during checkout', type: :feature do
           choose I18n.t('address_book.other_address')
           fill_in_address(shipping, :ship)
         end
+        check 'save_user_address'
         complete_checkout
       end.to change { user.addresses.count }.by(2)
     end
@@ -94,6 +95,7 @@ describe 'Address selection during checkout', type: :feature do
           choose I18n.t('address_book.other_address')
           fill_in_address(billing, :ship)
         end
+        check 'save_user_address'
         complete_checkout
       end.to change { user.addresses.count }.by(1)
     end
@@ -164,6 +166,7 @@ describe 'Address selection during checkout', type: :feature do
             choose I18n.t('address_book.other_address')
             fill_in_address(shipping, :ship)
           end
+          check 'save_user_address'
           complete_checkout
         end.to change{ user.addresses.count }.by(1)
       end
@@ -247,6 +250,7 @@ describe 'Address selection during checkout', type: :feature do
             choose I18n.t('address_book.other_address')
             fill_in_address(billing)
           end
+          check 'save_user_address'
           complete_checkout
         end.to change{ user.addresses.count }.by(1)
       end
