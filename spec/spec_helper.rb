@@ -10,6 +10,7 @@ Dir[File.join(File.dirname(__FILE__), 'support/**/*.rb')].each { |f| require f }
 RSpec.configure do |config|
   config.mock_with :rspec
   config.use_transactional_fixtures = false
+  config.infer_spec_type_from_file_location!
 
   config.before(:each) do
     if RSpec.current_example.metadata[:js]

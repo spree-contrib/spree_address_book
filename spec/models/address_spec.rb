@@ -28,11 +28,6 @@ describe Spree::Address do
     expect(address2).to_not be_can_be_deleted
   end
 
-  it 'is displayed as string' do
-    a = address
-    expect(address.to_s).to eq "#{a.firstname} #{a.lastname}<br/>#{a.company}<br/>#{a.address1}<br/>#{a.address2}<br/>#{a.city}, #{a.state ? a.state.abbr : a.state_name} #{a.zipcode}<br/>#{a.country}".html_safe
-  end
-
   it 'is destroyed without saving used' do
     address.destroy
     expect(Spree::Address.where(['id = (?)', address.id])).to be_empty
@@ -41,5 +36,21 @@ describe Spree::Address do
   it 'is destroyed deleted timestamp' do
     address2.destroy
     expect(Spree::Address.where(['id = (?)', address2.id])).to_not be_empty
+  end
+
+  describe '#to_s' do
+    it 'is displayed as string' do
+      a = address
+      expect(address.to_s).to eq("#{a.full_name}<br/>#{a.company}<br/>#{a.address1}<br/>#{a.address2}<br/>#{a.city}, #{a.state_text} #{a.zipcode}<br/>#{a.country}")
+    end
+
+    context 'address contains HTML' do
+      it 'properly escapes HTML' do
+        dangerous_string = '<script>alert("BOOM!")</script>'
+        address = create(:address, first_name: dangerous_string)
+
+        expect(address.to_s).not_to include(dangerous_string)
+      end
+    end
   end
 end
