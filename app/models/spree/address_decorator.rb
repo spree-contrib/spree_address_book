@@ -35,7 +35,7 @@ Spree::Address.class_eval do
       address2,
       "#{city}, #{state_text} #{zipcode}",
       country.to_s
-    ].reject(&:empty?).map{ |attribute| ERB::Util.html_escape(attribute) }.join('<br/>')
+    ].reject(&:blank?).map{ |attribute| ERB::Util.html_escape(attribute) }.join('<br/>')
   end
 
   # UPGRADE_CHECK if future versions of spree have a custom destroy function, this will break
