@@ -23,7 +23,7 @@
             <p class="form-group">
               <% @addresses.each_with_index do |address, idx| %>
               <span id="<%= [address_type, dom_id(address)].join('_') %>">
-                <label><%= form.radio_button "#{address_name}_id", address.id, :checked => (address.id == spree_current_user["#{address_name}_id"] || idx == 0) %> <%= address %></label> <a href="<%= edit_address_path(address) %>" data-hook="edit_address"><%= Spree.t(:edit) %></a><br />
+                <label><%= form.radio_button "#{address_name}_id", address.id, :checked => (address.id == spree_current_user["#{address_name}_id"] || idx == 0) %> <%= address.to_s.html_safe %></label> <a href="<%= edit_address_path(address) %>" data-hook="edit_address"><%= Spree.t(:edit) %></a><br />
               </span>
               <% end %>
               <label><%= form.radio_button "#{address_name}_id", 0 %> <%= t('other_address', :scope => :address_book) %></label>
