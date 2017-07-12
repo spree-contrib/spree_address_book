@@ -1,4 +1,10 @@
-class AddUserIdAndDeletedAtToAddresses < ActiveRecord::Migration
+migration_superclass = if ActiveRecord::VERSION::MAJOR >= 5
+  ActiveRecord::Migration["#{ActiveRecord::VERSION::MAJOR}.#{ActiveRecord::VERSION::MINOR}"]
+else
+  ActiveRecord::Migration
+end
+
+class AddUserIdAndDeletedAtToAddresses < migration_superclass
   def self.up
     change_table addresses_table_name do |t|
       t.integer :user_id
