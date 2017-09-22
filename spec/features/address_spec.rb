@@ -8,7 +8,7 @@ describe 'Addresses', type: :feature, js: true do
       visit spree.root_path
 
       sign_in!(user)
-      click_link Spree.t(:my_account)
+      visit spree.account_path
 
       expect(page).to have_content(I18n.t('address_book.shipping_addresses'))
       #sleep(1)

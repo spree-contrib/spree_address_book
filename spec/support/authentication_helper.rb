@@ -1,9 +1,10 @@
 module Authentication
   def sign_in!(user)
-    wait_for_ajax
-    click_link 'Login'
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: 'secret'
+    visit spree.login_path
+    within '#new_spree_user' do
+      fill_in 'Email', with: user.email
+      fill_in 'Password', with: user.password
+    end
     click_button 'Login'
   end
 end

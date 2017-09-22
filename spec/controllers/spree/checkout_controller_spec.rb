@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe Spree::CheckoutController, type: :controller do
+
   before(:each) do
     user = create(:user)
     @address = create(:address, user: user)
@@ -11,6 +12,7 @@ RSpec.describe Spree::CheckoutController, type: :controller do
     @address.user = @order.user
     @order.save
     allow(controller).to receive(:spree_current_user).and_return(@order.user)
+    allow(controller).to receive(:current_store).and_return(@order.store)
   end
 
   describe 'on address step' do
