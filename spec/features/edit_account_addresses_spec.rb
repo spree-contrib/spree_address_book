@@ -7,7 +7,7 @@ describe 'User editing addresses for his account', type: :feature, js: true do
     visit spree.root_path
     sign_in!(user)
     wait_for_ajax
-    click_link 'My Account'
+    visit spree.account_path
   end
 
   it 'should see list of addresses saved for account' do
@@ -30,7 +30,7 @@ describe 'User editing addresses for his account', type: :feature, js: true do
     # poltergeist + redirects based on referers leads to unexpected results
     expect(page).to have_content('Updated successfully')
     wait_for_ajax
-    click_link 'My Account'
+    visit spree.account_path
 
     within('table#user_addresses tr:nth-child(1)') do
       expect(page).to have_content(new_street)
