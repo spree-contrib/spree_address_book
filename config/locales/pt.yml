@@ -1,0 +1,15 @@
+pt:  
+  address_book:
+    other_address: "Morada alternativa"
+    add_new_shipping_address: "Adicionar Morada de Envio"
+    new_shipping_address: "Nova Morada de Envio"
+    edit_shipping_address: "Editar Morada de Envio"
+    no_shipping_addresses_on_file: "Não existe nenhuma Morada de Envio registada"
+    shipping_addresses: "Moradas de Envio"
+    successfully_created: "Morada criada com sucesso."
+    successfully_removed: "Morada eliminada com sucesso."
+    successfully_saved: "Morada registada com sucesso"
+    unsuccessfully_saved: "Ocorreu um erro ao registar a sua morada."
+    successfully_updated: "Actualizado com sucesso"
+    unsuccessfully_updated: "Ocorreu um erro ao actualizar a sua morada."
+    save: "Guardar Endereço"  
