@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'mysql2'
-  s.add_development_dependency 'pg'
+  s.add_development_dependency 'pg', '~> 0.18'
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'factory_girl'
   s.add_development_dependency 'factory_girl_rails'
