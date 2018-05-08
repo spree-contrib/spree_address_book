@@ -7,7 +7,7 @@ module Spree::AddressesHelper
         is_required = Spree::Address.required_fields.include?(method)
         separator = is_required ? '<span class="required">*</span><br />' : '<br />'
         form.label(method) + separator.html_safe +
-        form.text_field(method, :class => [is_required ? 'required' : nil, 'form-control'].compact)
+        form.text_field(method, :class => [is_required ? 'required' : nil, 'form-control'].compact, :required => is_required)
       end
     end
   end

@@ -108,7 +108,8 @@ describe 'Address selection during checkout', type: :feature do
 
       # TODO the JS error reporting isn't working with our current iteration
       # this is what this piece of code ('field is required') tests
-      xit 'should show address form with error' do
+      it 'should show address form with error' do
+        allow(Capybara).to receive(:ignore_hidden_elements) { false }
         within('#billing') do
           choose I18n.t('address_book.other_address')
           fill_in_address(address)
@@ -119,18 +120,18 @@ describe 'Address selection during checkout', type: :feature do
           fill_in_address(address, :ship)
         end
         click_button 'Save and Continue'
-        within('#bfirstname') do
-          expect(page).to have_content("field is required")
-        end
-        within('#sfirstname') do
-          expect(page).to have_content("field is required")
-        end
-      end
+
+        bfirstname_message = page.find('#order_bill_address_attributes_firstname').native.attribute('validationMessage')
+        sfirstname_message = page.find('#order_ship_address_attributes_firstname').native.attribute('validationMessage')
+
+        expect(bfirstname_message).to eq("Please fill out this field.")
+        expect(sfirstname_message).to eq("Please fill out this field.")
+     end
     end
 
     describe 'entering 2 new addresses', js: true do
       it 'should assign 2 new addresses to order' do
-        skip 'fails somehow when run with puma'
+        allow(Capybara).to receive(:ignore_hidden_elements) { false }
         within('#billing') do
           choose I18n.t('address_book.other_address')
           fill_in_address(billing)
@@ -173,7 +174,7 @@ describe 'Address selection during checkout', type: :feature do
       end
 
       it 'should assign addresses to orders' do
-        skip 'fails somehow when run with puma'
+        allow(Capybara).to receive(:ignore_hidden_elements) { false }
         address = user.addresses.first
         choose "order_bill_address_id_#{address.id}"
         within('#shipping') do
@@ -193,7 +194,7 @@ describe 'Address selection during checkout', type: :feature do
         end
       end
 
-      xit 'should see form when new shipping address invalid' do
+      it 'should see form when new shipping address invalid' do
         address = user.addresses.first
         shipping = build(:address, :address1 => nil, :state => state)
         choose "order_bill_address_id_#{address.id}"
@@ -203,10 +204,11 @@ describe 'Address selection during checkout', type: :feature do
           fill_in_address(shipping, :ship)
         end
         click_button 'Save and Continue'
-        within('#saddress1') do
-          expect(page).to have_content("field is required")
-        end
-        within('#billing') do
+
+        saddress1_message = page.find('#order_ship_address_attributes_address1').native.attribute('validationMessage')
+        expect(saddress1_message).to eq('Please fill out this field.')
+
+       within('#billing') do
           expect(find("#order_bill_address_id_#{address.id}")).to be_checked
         end
       end
@@ -214,7 +216,7 @@ describe 'Address selection during checkout', type: :feature do
 
     describe 'using saved address for billing and shipping', js: true do
       it 'should addresses to order' do
-        skip 'fails somehow when run with puma'
+        allow(Capybara).to receive(:ignore_hidden_elements) { false }
         address = user.addresses.first
         choose "order_bill_address_id_#{address.id}"
         check "Use Billing Address"
@@ -258,7 +260,7 @@ describe 'Address selection during checkout', type: :feature do
       end
 
       it 'should assign addresses to orders' do
-        skip 'fails somehow when run with puma'
+        allow(Capybara).to receive(:ignore_hidden_elements) { false }
         address = user.addresses.first
         uncheck 'order_use_billing'
         choose "order_ship_address_id_#{address.id}"
@@ -279,7 +281,7 @@ describe 'Address selection during checkout', type: :feature do
       end
 
       # TODO not passing because inline JS validation not working
-      xit 'should see form when new billing address invalid' do
+      it 'should see form when new billing address invalid' do
         address = user.addresses.first
         billing = build(:address, :address1 => nil, :state => state)
         uncheck 'order_use_billing'
@@ -288,11 +290,11 @@ describe 'Address selection during checkout', type: :feature do
           choose I18n.t('address_book.other_address')
           fill_in_address(billing)
         end
-
         click_button 'Save and Continue'
-        within('#baddress1') do
-          expect(page).to have_content("field is required")
-        end
+
+        baddress1_message = page.find('#order_bill_address_attributes_address1').native.attribute('validationMessage')
+        expect(baddress1_message).to eq('Please fill out this field.')
+
         within('#shipping') do
           expect(find("#order_ship_address_id_#{address.id}")).to be_checked
         end
