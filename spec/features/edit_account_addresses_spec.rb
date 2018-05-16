@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'erb'
 
 describe 'User editing addresses for his account', type: :feature, js: true do
   include_context 'user with address'
@@ -33,7 +34,7 @@ describe 'User editing addresses for his account', type: :feature, js: true do
     visit spree.account_path
 
     within('table#user_addresses tr:nth-child(1)') do
-      expect(page).to have_content(new_street)
+      expect(page).to have_content(ERB::Util.html_escape(new_street))
     end
   end
 
