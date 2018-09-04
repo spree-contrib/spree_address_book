@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  spree_version = '>= 3.1.0', '< 4.0'
+  spree_version = '>= 3.2.0', '< 4.0'
   s.add_runtime_dependency 'spree_core', spree_version
   s.add_runtime_dependency 'spree_auth_devise', spree_version
 
@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'ffaker'
   s.add_development_dependency 'factory_bot'
   s.add_development_dependency 'factory_bot_rails'
-  s.add_development_dependency 'mysql2', '~> 0.3.18'
+  s.add_development_dependency 'mysql2', '~> 0.5.1'
   s.add_development_dependency 'pg', '~> 0.18'
   s.add_development_dependency 'pry-nav'
   s.add_development_dependency 'puma'
