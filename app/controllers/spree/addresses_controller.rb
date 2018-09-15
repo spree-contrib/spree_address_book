@@ -40,8 +40,8 @@ class Spree::AddressesController < Spree::StoreController
     else
       new_address = @address.clone
       new_address.attributes = address_params
-      @address.update_attribute(:deleted_at, Time.now)
       if new_address.save
+        @address.update_attribute(:deleted_at, Time.now)
         flash[:notice] = I18n.t(:successfully_updated, scope: :address_book)
         redirect_back_or_default(account_path)
       else
