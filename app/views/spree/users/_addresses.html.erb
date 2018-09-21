@@ -18,6 +18,6 @@
   <%= t(:no_shipping_addresses_on_file, scope: :address_book) %>
 </div>
 <% end %>
-<div id='new_address_link'>
+<div id='new_address_link' class="mb-3">
   <%= link_to t(:add_new_shipping_address, scope: :address_book), controller: :addresses, action: :new %>
 </div>
