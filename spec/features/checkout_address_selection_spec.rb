@@ -315,5 +315,27 @@ describe 'Address selection during checkout', type: :feature do
         end.to_not change { user.addresses.count }
       end
     end
+
+    describe 'using the same address second time', js: true do
+      it 'should not duplicate the address' do
+        expect do
+          address = user.addresses.first
+
+          check 'order_use_billing'
+          within('#billing') do
+            choose "order_bill_address_id_#{address.id}"
+          end
+          complete_checkout
+
+          visit spree.root_path
+          click_link 'Ruby on Rails Mug'
+          click_button 'add-to-cart-button'
+
+          click_button 'Checkout'
+          find('#link-to-cart a').click
+          click_button 'Checkout'
+        end.to_not change { user.addresses.count }
+      end
+    end
   end
 end
