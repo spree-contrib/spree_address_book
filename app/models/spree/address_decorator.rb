@@ -2,20 +2,27 @@
   :user_id, :deleted_at
 ]).flatten!
 
+
 Spree::Address.class_eval do
   belongs_to :user, class_name: Spree.user_class.name
+
+  if Spree.version.to_f >= 3.5
+    EXCLUDED_KEYS_FOR_COMPARISION ||= Spree::Address::EXCLUDED_KEYS_FOR_COMPARISION << 'user_id'
+
+    def clone
+      self.class.new(attributes.except(*EXCLUDED_KEYS_FOR_COMPARISION))
+    end
+  else
+    def same_as?(other)
+      return false if other.nil?
+      attributes.except('id', 'updated_at', 'created_at', 'user_id') == other.attributes.except('id', 'updated_at', 'created_at', 'user_id')
+    end
+  end
 
   def self.required_fields
     Spree::Address.validators.map do |v|
       v.kind_of?(ActiveModel::Validations::PresenceValidator) ? v.attributes : []
     end.flatten
-  end
-
-  # TODO: look into if this is actually needed. I don't want to override methods unless it is really needed
-  # can modify an address if it's not been used in an order
-  def same_as?(other)
-    return false if other.nil?
-    attributes.except('id', 'updated_at', 'created_at', 'user_id') == other.attributes.except('id', 'updated_at', 'created_at', 'user_id')
   end
 
   # can modify an address if it's not been used in an completed order
