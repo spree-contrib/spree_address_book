@@ -25,8 +25,9 @@ describe 'Address selection during checkout', type: :feature do
       end
     end
 
-    it 'should only see shipping address form' do
+    it 'should only see shipping address form', js: true do
       within('#shipping') do
+        uncheck 'order_use_billing'
         should_have_address_fields
         expect(page).to_not have_selector(".select_address")
       end

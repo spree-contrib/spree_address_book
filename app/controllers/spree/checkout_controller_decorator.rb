@@ -36,7 +36,7 @@ if defined?(Spree::Frontend)
 
       bill_address = @order.bill_address
       ship_address = @order.ship_address
-      if @order.bill_address_id != @order.ship_address_id && bill_address.same_as?(ship_address)
+      if @order.bill_address_id != @order.ship_address_id && bill_address == ship_address
         @order.update_column(:bill_address_id, ship_address.id)
         bill_address.destroy
       else

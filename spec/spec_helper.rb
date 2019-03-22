@@ -34,7 +34,7 @@ RSpec.configure do |config|
     # not sure exactly what is happening here, but i think it takes
     # an iteration for the country data to load
     if Spree::Country.count > 0
-      Spree::Config[:default_country_id] = Spree::Country.find_by_iso3('USA').id
+      Spree::Config[:default_country_id] = Spree::Country.find_by_iso3('USA')&.id
     end
     Spree::Config[:address_requires_state]
   end
