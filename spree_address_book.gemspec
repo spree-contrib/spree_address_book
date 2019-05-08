@@ -14,9 +14,10 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  spree_version = '>= 3.2.0', '< 4.0'
+  spree_version = '>= 3.2.0', '< 5.0'
   s.add_runtime_dependency 'spree_core', spree_version
   s.add_runtime_dependency 'spree_auth_devise', spree_version
+  s.add_dependency 'deface', '~> 1.0'
 
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'capybara'
@@ -32,5 +33,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'sass-rails'
   s.add_development_dependency 'selenium-webdriver'
-  s.add_development_dependency 'sqlite3'
+  s.add_development_dependency 'sqlite3', '~> 1.3.6'
 end
