@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   spree_version = '>= 3.2.0', '< 4.0'
   s.add_runtime_dependency 'spree_core', spree_version
   s.add_runtime_dependency 'spree_auth_devise', spree_version
+  s.add_dependency 'deface', '~> 1.0'
 
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'capybara'
