@@ -1,0 +1,15 @@
+cs:
+  address_book:
+    other_address: "Jiná adresa"
+    add_new_shipping_address: "Přidat adresu"
+    new_shipping_address: "Nová adresa"
+    edit_shipping_address: "Upravit adresu"
+    no_shipping_addresses_on_file: "Žádná uložená adresa."
+    shipping_addresses: "Adresy"
+    successfully_created: "Adresa vytvořena."
+    successfully_removed: "Adresa odstraněna."
+    successfully_saved: "Uloženo."
+    unsuccessfully_saved: "Při ukládání adresy se vyskytla chyba."
+    successfully_updated: "Uloženo."
+    unsuccessfully_updated: "Při ukládání adresy se vyskytla chyba."
+    save: "Uložit"
