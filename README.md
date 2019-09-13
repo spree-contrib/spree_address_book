@@ -1,3 +1,7 @@
+## ⚠️ Deprecation notice ⚠️
+
+Since Spree 4.0 this extension is deprecated and not needed. Address Book was [merged into Spree core in Spree 4.0](https://guides.spreecommerce.org/release_notes/4_0_0.html#address-book-support). 
+
 # Spree Address Book
 
 [![Build Status](https://travis-ci.org/spree-contrib/spree_address_book.svg?branch=master)](https://travis-ci.org/spree-contrib/spree_address_book) [![Code Climate](https://codeclimate.com/github/spree-contrib/spree_address_book/badges/gpa.svg)](https://codeclimate.com/github/spree-contrib/spree_address_book)
